@@ -45,4 +45,15 @@
   background-color: orange;
   height: 80%;
   width: 87%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.line_spot {
+  margin: 0 10px 0 10px;
+  display: flex;
+  height: 80%;
+  width: 20%;
+  background-color: peachpuff;
 }

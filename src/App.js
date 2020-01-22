@@ -6,7 +6,7 @@ function App() {
     <div id="flex-container">
       <div id="header">
         <div id="logo">Logo</div>
-        <div id="game_info">Game info</div>
+        <div id="game_info">info</div>
         <div id="lang_settings">Lang Settings</div>
       </div>
 
@@ -17,7 +17,9 @@ function App() {
         </div>
 
         <div id="line_container">
-          line container
+          <div className="line_spot">line spot</div>
+          <div className="line_spot">line spot</div>
+          <div className="line_spot">line spot</div>
           <div className="line_spot">line spot</div>
         </div>
       </div>
