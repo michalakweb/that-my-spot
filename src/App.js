@@ -17,14 +17,44 @@ function App() {
         </div>
 
         <div id="line_container">
-          <div className="line_spot">line spot</div>
-          <div className="line_spot">line spot</div>
-          <div className="line_spot">line spot</div>
-          <div className="line_spot">line spot</div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
+          <div className="line_spot">
+            <div className="line_card">line_card</div>
+            <div className="line_spot_div"></div>
+          </div>
         </div>
       </div>
 
-      <div id="footer">Footer</div>
+      <div id="footer">
+        <div className="card_container"></div>
+      </div>
     </div>
   );
 }
