@@ -53,7 +53,17 @@ function App() {
       </div>
 
       <div id="footer">
-        <div className="card_container"></div>
+        <div className="overall_score">Overall score</div>
+
+        <div className="card_container">
+          <div className="card">card</div>
+          <div className="card">card</div>
+          <div className="card">card</div>
+          <div className="card">card</div>
+          <div className="card">card</div>
+        </div>
+
+        <div className="egmont_logo">egmont logo</div>
       </div>
     </div>
   );
