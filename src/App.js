@@ -63,7 +63,7 @@ function App() {
           <div className="card">card</div>
         </div>
 
-        <div className="egmont_logo">egmont logo</div>
+        <div className="egmont_logo">info</div>
       </div>
     </div>
   );
