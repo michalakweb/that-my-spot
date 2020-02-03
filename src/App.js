@@ -2,7 +2,7 @@ import React from "react";
 import "./App.scss";
 
 // Components
-import Header from "./components/header/header";
+import Header from "./components/header/Header";
 
 function App() {
   return (

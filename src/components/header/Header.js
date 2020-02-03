@@ -1,7 +1,7 @@
 import React from "react";
-import Logo from "./logo";
-import GameInfo from "./gameInfo";
-import LangSettings from "./langSettings";
+import Logo from "./Logo";
+import GameInfo from "./GameInfo";
+import LangSettings from "./LangSettings";
 
 const Header = () => (
   <div id="header">
