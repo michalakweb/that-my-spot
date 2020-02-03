@@ -3,6 +3,7 @@ import "./App.scss";
 
 // Components
 import Header from "./components/header/Header";
+import Body from "./components/body/Body";
 
 function App() {
   return (
@@ -10,47 +11,7 @@ function App() {
       <div id="flex-container">
         <Header />
 
-        <div id="body">
-          <div id="item_container">
-            <div className="item">Item 1</div>
-            <div className="item">Item 2</div>
-          </div>
-
-          <div id="line_container">
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-            <div className="line_spot">
-              <div className="line_card">l</div>
-              <div className="line_spot_div"></div>
-            </div>
-          </div>
-        </div>
+        <Body />
 
         <div id="footer">
           <div className="overall_score">Overall score</div>
