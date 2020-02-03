@@ -7,13 +7,13 @@
   justify-content: space-between;
 }
 
-.overall_score {
+#overall_score {
   display: flex;
   background-color: white;
   width: 15%;
 }
 
-.card_container {
+#card_container {
   display: flex;
   width: 60%;
   height: 100%;
@@ -28,7 +28,7 @@
   width: 20%;
 }
 
-.egmont_logo {
+.extra_info {
   display: flex;
   background-color: white;
   width: 15%;

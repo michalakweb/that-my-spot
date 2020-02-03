@@ -1,9 +1,8 @@
 import React from "react";
 import "./App.scss";
-
-// Components
 import Header from "./components/header/Header";
 import Body from "./components/body/Body";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -13,19 +12,7 @@ function App() {
 
         <Body />
 
-        <div id="footer">
-          <div className="overall_score">Overall score</div>
-
-          <div className="card_container">
-            <div className="card">card</div>
-            <div className="card">card</div>
-            <div className="card">card</div>
-            <div className="card">card</div>
-            <div className="card">card</div>
-          </div>
-
-          <div className="egmont_logo">info</div>
-        </div>
+        <Footer />
       </div>
     </div>
   );
