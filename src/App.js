@@ -1,15 +1,14 @@
 import React from "react";
 import "./App.scss";
 
+// Components
+import Header from "./components/header/header";
+
 function App() {
   return (
     <div id="container">
       <div id="flex-container">
-        <div id="header">
-          <div id="logo">Logo</div>
-          <div id="game_info">info</div>
-          <div id="lang_settings">Lang Settings</div>
-        </div>
+        <Header />
 
         <div id="body">
           <div id="item_container">
