@@ -3,6 +3,7 @@ import "./App.scss";
 import Header from "./components/header/Header";
 import Body from "./components/body/Body";
 import Footer from "./components/footer/Footer";
+import WelcomeScreen from "./components/WelcomeScreen";
 
 // Deck & Items db
 const deckStats = [{ id: 1 }, { id: 2 }];
@@ -36,20 +37,34 @@ class App extends React.Component {
     currentLanguage: "en",
 
     // Modals
-    showWelcomeScreen: false,
+    showWelcomeScreen: true,
     showWinLoseScreen: false,
     showItemsScreen: false
   };
 
+  componentDidMount() {}
+
+  switchWelcomeScreen = () => {
+    this.setState({
+      showWelcomeScreen: false
+    });
+  };
+
   render() {
     return (
-      <div id="container">
-        <div id="flex-container">
-          <Header />
+      <div>
+        {this.state.showWelcomeScreen && (
+          <WelcomeScreen switchWelcomeScreen={this.switchWelcomeScreen} />
+        )}
 
-          <Body />
+        <div id="container">
+          <div id="flex-container">
+            <Header />
 
-          <Footer />
+            <Body />
+
+            <Footer />
+          </div>
         </div>
       </div>
     );
