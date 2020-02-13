@@ -1,5 +1,10 @@
-import React from "react";
+import React from "react"
 
-const Item = () => <div className="item">Item</div>;
+const Item = props => (
+  <div className="item">
+    {props.item.name}
+    {props.item.value}
+  </div>
+)
 
-export default Item;
+export default Item

@@ -1,11 +1,12 @@
-import React from "react";
-import Item from "./Item";
+import React from "react"
+import Item from "./Item"
 
-const ItemContainer = () => (
+const ItemContainer = props => (
   <div id="item_container">
-    <Item />
-    <Item />
+    {props.itemsCurrent.map((el, id) => (
+      <Item item={el} />
+    ))}
   </div>
-);
+)
 
-export default ItemContainer;
+export default ItemContainer

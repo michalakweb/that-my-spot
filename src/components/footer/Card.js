@@ -1,5 +1,10 @@
-import React from "react";
+import React from "react"
 
-const Card = () => <div className="card">card</div>;
+const Card = props => (
+  <div className="card">
+    {props.cardInfo.name}
+    {props.cardInfo.value}
+  </div>
+)
 
-export default Card;
+export default Card

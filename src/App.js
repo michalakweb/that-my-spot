@@ -24,9 +24,13 @@ const itemStats = [
 class App extends React.Component {
   state = {
     // Game info
-    deckPlayer: JSON.parse(JSON.stringify([...deckStats, ...deckStats])),
-    deckComputer: JSON.parse(JSON.stringify([...deckStats, ...deckStats])),
-    currentItems: [],
+    deckPlayer: [...deckStats, ...deckStats],
+    deckComputer: [...deckStats, ...deckStats],
+    handPlayer: [],
+    handComputer: [],
+    items: [...itemStats],
+    itemsLeft: null,
+    itemsCurrent: [],
     playerItems: 0,
     computerItems: 0,
     lineCards: [],
@@ -34,6 +38,8 @@ class App extends React.Component {
     drawnCardComputer: [],
     chosenCard: null,
     lineStats: null,
+    cardsDeckLeftPlayer: 10,
+    cardsDeckLeftComputer: 10,
 
     // Phase tracking
     currentPhase: 0,
@@ -55,15 +61,35 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.shuffleItems(this.state.items)
     this.shuffleCards(this.state.deckComputer, "deckComputer")
-    this.shuffleCards(this.state.deckComputer, "deckPlayer")
-    this.drawCardsFromDeck()
+    this.shuffleCards(this.state.deckPlayer, "deckPlayer")
   }
 
   switchWelcomeScreen = () => {
     this.setState({
       showWelcomeScreen: false
     })
+  }
+
+  shuffleItems = array => {
+    let arr = [...array]
+    console.log("shuffling items")
+    var j, x, i
+    for (i = arr.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1))
+      x = arr[i]
+      arr[i] = arr[j]
+      arr[j] = x
+    }
+    this.setState(
+      {
+        items: [...arr]
+      },
+      () => {
+        this.drawItemsFromDeck([...arr])
+      }
+    )
   }
 
   shuffleCards = (array, stateName) => {
@@ -76,13 +102,62 @@ class App extends React.Component {
       arr[i] = arr[j]
       arr[j] = x
     }
-    this.setState({
-      [stateName]: arr
-    })
+    this.setState(
+      {
+        [stateName]: [...arr]
+      },
+      () => {
+        this.drawCardsFromDeck([...arr], stateName)
+      }
+    )
   }
 
-  drawCardsFromDeck = () => {
-    console.log("drawing cards from deck")
+  drawItemsFromDeck = array => {
+    console.log("drawing items")
+
+    var itemsCurrent = array.splice(-2, 2)
+    this.setState(
+      {
+        items: array,
+        itemsCurrent: itemsCurrent
+      },
+      () => {
+        this.setState({
+          itemsLeft: this.state.items.length
+        })
+      }
+    )
+  }
+
+  drawCardsFromDeck = (array, stateName) => {
+    console.log(`drawing cards for ${stateName}`)
+
+    var currentHand = array.splice(-5, 5)
+    if (stateName === "deckComputer") {
+      this.setState(
+        {
+          [stateName]: array,
+          handComputer: currentHand
+        },
+        () => {
+          this.setState({
+            cardsDeckLeftComputer: this.state.deckPlayer.length
+          })
+        }
+      )
+    } else {
+      this.setState(
+        {
+          [stateName]: array,
+          handPlayer: currentHand
+        },
+        () => {
+          this.setState({
+            cardsDeckLeftPlayer: this.state.deckPlayer.length
+          })
+        }
+      )
+    }
   }
 
   render() {
@@ -97,9 +172,9 @@ class App extends React.Component {
           <div id="flex-container">
             <Header />
 
-            <Body />
+            <Body itemsCurrent={this.state.itemsCurrent} />
 
-            <Footer />
+            <Footer deckPlayer={this.state.deckPlayer} />
           </div>
         </div>
       </div>
