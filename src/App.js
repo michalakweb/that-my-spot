@@ -66,7 +66,8 @@ class App extends React.Component {
     })
   }
 
-  shuffleCards = (arr, stateName) => {
+  shuffleCards = (array, stateName) => {
+    let arr = [...array]
     console.log(`shuffling cards for ${stateName}`)
     var j, x, i
     for (i = arr.length - 1; i > 0; i--) {
