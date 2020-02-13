@@ -43,7 +43,7 @@ class App extends React.Component {
 
     // Phase tracking
     currentPhase: 0,
-    phaseCounter: 0,
+    turnCounter: 0,
 
     // Scores
     playerScore: 0,
