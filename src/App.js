@@ -6,8 +6,20 @@ import Footer from "./components/footer/Footer";
 import WelcomeScreen from "./components/WelcomeScreen";
 
 // Deck & Items db
-const deckStats = [{ id: 1 }, { id: 2 }];
-// const itemStats = [{ id: 1 }, { id: 2 }];
+const deckStats = [
+  { id: 1, name: "jozek", value: 1 },
+  { id: 2, name: "baba", value: 2 },
+  { id: 3, name: "dzieciak", value: 1 },
+  { id: 4, name: "palacz", value: 1 },
+  { id: 5, name: "partyjniak", value: 4 }
+];
+const itemStats = [
+  { id: 1, name: "rower", value: 5 },
+  { id: 2, name: "telefon", value: 10 },
+  { id: 3, name: "krem", value: 3 },
+  { id: 4, name: "papier", value: 3 },
+  { id: 5, name: "ocet", value: 1 }
+];
 
 class App extends React.Component {
   state = {
@@ -53,9 +65,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.state.showWelcomeScreen && (
+        {/* Uncomment to show welcome screen */}
+        {/* {this.state.showWelcomeScreen && (
           <WelcomeScreen switchWelcomeScreen={this.switchWelcomeScreen} />
-        )}
+        )} */}
 
         <div id="container">
           <div id="flex-container">
