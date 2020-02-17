@@ -6,7 +6,7 @@ import ExtraInfo from "./ExtraInfo"
 const Footer = props => (
   <div id="footer">
     <OverallScore />
-    <CardContainer deckPlayer={props.deckPlayer} />
+    <CardContainer deckPlayer={props.deckPlayer} selectCard={props.selectCard} />
     <ExtraInfo />
   </div>
 )

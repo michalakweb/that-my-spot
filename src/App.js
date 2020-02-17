@@ -160,6 +160,10 @@ class App extends React.Component {
     }
   }
 
+  selectCard = () => {
+    console.log("card selected")
+  }
+
   render() {
     return (
       <div>
@@ -174,7 +178,7 @@ class App extends React.Component {
 
             <Body itemsCurrent={this.state.itemsCurrent} />
 
-            <Footer deckPlayer={this.state.deckPlayer} />
+            <Footer deckPlayer={this.state.deckPlayer} selectCard={this.selectCard} />
           </div>
         </div>
       </div>
