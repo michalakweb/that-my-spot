@@ -53,6 +53,7 @@ class App extends React.Component {
 
     // Settings
     currentLanguage: "en",
+    phaseOneFlag: true,
 
     // Modals
     showWelcomeScreen: true,
@@ -64,6 +65,20 @@ class App extends React.Component {
     this.shuffleItems(this.state.items)
     this.shuffleCards(this.state.deckComputer, "deckComputer")
     this.shuffleCards(this.state.deckPlayer, "deckPlayer")
+  }
+
+  componentDidUpdate() {
+	//   name it somehow
+    if(this.state.phaseOneFlag && this.state.currentPhase === 0 && 
+      this.state.itemsCurrent.length > 0 && this.state.handComputer.length > 0 
+      && this.state.handPlayer.length > 0) {
+        this.setState({
+          phaseOneFlag: false,
+          currentPhase: 1
+        }, () => {
+          console.log("switched to phase 1")
+        })
+      }
   }
 
   switchWelcomeScreen = () => {
@@ -161,16 +176,18 @@ class App extends React.Component {
   }
 
   selectCard = () => {
-    console.log("card selected")
+    if (this.state.currentPhase === 1) {
+		console.log("card selected")
+	}	
   }
 
   render() {
     return (
       <div>
         {/* Uncomment to show welcome screen */}
-        {/* {this.state.showWelcomeScreen && (
+        {this.state.showWelcomeScreen && (
           <WelcomeScreen switchWelcomeScreen={this.switchWelcomeScreen} />
-        )} */}
+        )}
 
         <div id="container">
           <div id="flex-container">
