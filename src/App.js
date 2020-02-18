@@ -37,6 +37,7 @@ class App extends React.Component {
     drawnCardPlayer: [],
     drawnCardComputer: [],
     chosenCard: null,
+    chosenCardPosition: null,
     chosenCardConfirm: null,
     lineStats: null,
     cardsDeckLeftPlayer: 10,
@@ -97,11 +98,24 @@ class App extends React.Component {
       this.state.chosenCard === this.state.chosenCardConfirm &&
       this.state.currentPhase === 1
     ) {
-      console.log("can send card to line!")
-      this.setState({
-        phaseTwoFlag: false,
-        lineCards: [...this.state.lineCards, JSON.parse(this.state.chosenCard)]
-      })
+      // delete chosen card from player deck
+      this.state.deckPlayer.splice(this.state.chosenCardPosition, 1)
+
+      this.setState(
+        {
+          phaseTwoFlag: false,
+          currentPhase: 2,
+          chosenCard: null,
+          chosenCardConfirm: null,
+          lineCards: [
+            ...this.state.lineCards,
+            JSON.parse(this.state.chosenCard)
+          ]
+        },
+        () => {
+          console.log("card sent to line by player")
+        }
+      )
     }
   }
 
@@ -199,15 +213,19 @@ class App extends React.Component {
     }
   }
 
-  selectCard = cardInfo => {
+  selectCard = (cardInfo, position) => {
     if (this.state.currentPhase === 1) {
       console.log("the selected card is:", cardInfo)
 
       this.setState({
-        chosenCard: JSON.stringify(cardInfo)
+        chosenCard: JSON.stringify(cardInfo),
+        chosenCardPosition: position
       })
 
-      if (this.state.chosenCard === JSON.stringify(cardInfo)) {
+      if (
+        this.state.chosenCard === JSON.stringify(cardInfo) &&
+        this.state.chosenCardPosition === position
+      ) {
         console.log("clicked twice on the same card")
 
         this.setState({

@@ -4,7 +4,7 @@ const Card = props => (
   <div
     className="card"
     onClick={() => {
-      props.selectCard(props.cardInfo)
+      props.selectCard(props.cardInfo, props.position)
     }}
   >
     {props.cardInfo.name}
