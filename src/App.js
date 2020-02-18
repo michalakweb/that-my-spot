@@ -55,6 +55,7 @@ class App extends React.Component {
     // Settings
     currentLanguage: "en",
     phaseOneFlag: true,
+    phaseTwoFlag: true,
 
     // Modals
     showWelcomeScreen: true,
@@ -88,14 +89,19 @@ class App extends React.Component {
       )
     }
 
-    // sending card to line
+    // sending card to line --player
     if (
+      this.state.phaseTwoFlag &&
       this.state.chosenCard !== null &&
       this.state.chosenCardConfirm !== null &&
       this.state.chosenCard === this.state.chosenCardConfirm &&
       this.state.currentPhase === 1
     ) {
       console.log("can send card to line!")
+      this.setState({
+        phaseTwoFlag: false,
+        lineCards: [...this.state.lineCards, JSON.parse(this.state.chosenCard)]
+      })
     }
   }
 
@@ -223,7 +229,10 @@ class App extends React.Component {
           <div id="flex-container">
             <Header />
 
-            <Body itemsCurrent={this.state.itemsCurrent} />
+            <Body
+              itemsCurrent={this.state.itemsCurrent}
+              lineCards={this.state.lineCards}
+            />
 
             <Footer
               deckPlayer={this.state.deckPlayer}

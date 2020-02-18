@@ -1,12 +1,12 @@
-import React from "react";
-import LineCard from "./LineCard";
-import LineSpotDiv from "./LineSpotDiv";
+import React from "react"
+import LineCard from "./LineCard"
+import LineSpotDiv from "./LineSpotDiv"
 
-const LineSpot = () => (
+const LineSpot = props => (
   <div className="line_spot">
-    <LineCard />
+    <LineCard lineCard={props.lineCard} />
     <LineSpotDiv />
   </div>
-);
+)
 
-export default LineSpot;
+export default LineSpot

@@ -1,5 +1,10 @@
-import React from "react";
+import React from "react"
 
-const LineCard = () => <div className="line_card">Card</div>;
+const LineCard = props => (
+  <div className="line_card">
+    {props.lineCard.name}
+    {props.lineCard.value}
+  </div>
+)
 
-export default LineCard;
+export default LineCard

@@ -5,7 +5,7 @@ import LineContainer from "./LineContainer"
 const Body = props => (
   <div id="body">
     <ItemContainer itemsCurrent={props.itemsCurrent} />
-    <LineContainer />
+    <LineContainer lineCards={props.lineCards} />
   </div>
 )
 
