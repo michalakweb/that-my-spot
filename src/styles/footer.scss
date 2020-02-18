@@ -9,8 +9,14 @@
 
 #overall_score {
   display: flex;
+  flex-direction: column;
   background-color: white;
   width: 15%;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 #card_container {

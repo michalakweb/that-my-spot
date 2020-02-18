@@ -5,8 +5,11 @@ import ExtraInfo from "./ExtraInfo"
 
 const Footer = props => (
   <div id="footer">
-    <OverallScore />
-    <CardContainer deckPlayer={props.deckPlayer} selectCard={props.selectCard} />
+    <OverallScore playerOverallScore={props.playerOverallScore} />
+    <CardContainer
+      deckPlayer={props.deckPlayer}
+      selectCard={props.selectCard}
+    />
     <ExtraInfo />
   </div>
 )

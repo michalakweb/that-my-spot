@@ -98,32 +98,7 @@ class App extends React.Component {
       this.state.chosenCard === this.state.chosenCardConfirm &&
       this.state.currentPhase === 1
     ) {
-      // delete chosen card from player deck
-      this.state.deckPlayer.splice(this.state.chosenCardPosition, 1)
-
-      this.setState(
-        prevState => ({
-          phaseTwoFlag: false,
-          currentPhase: 2,
-          chosenCard: null,
-          chosenCardConfirm: null,
-          lineCards: [
-            ...this.state.lineCards,
-            JSON.parse(this.state.chosenCard)
-          ],
-          turnCounter: prevState.turnCounter + 1
-        }),
-        () => {
-          console.log("card sent to line by player")
-
-          // todo: aff filter, add overall score and prevstate for both
-          this.setState({
-            playerScore: this.state.lineCards.reduce(function(a, b) {
-              return a + b["value"]
-            }, 0)
-          })
-        }
-      )
+      this.sendCardToLinePlayer()
     }
   }
 
@@ -246,6 +221,43 @@ class App extends React.Component {
     }
   }
 
+  sendCardToLinePlayer = () => {
+    // delete chosen card from player deck
+    this.state.deckPlayer.splice(this.state.chosenCardPosition, 1)
+
+    this.setState(
+      prevState => ({
+        phaseTwoFlag: false,
+        currentPhase: 2,
+        chosenCard: null,
+        chosenCardConfirm: null,
+        chosenCardPosition: null,
+        lineCards: [...this.state.lineCards, JSON.parse(this.state.chosenCard)],
+        turnCounter: prevState.turnCounter + 1
+      }),
+      () => {
+        console.log("card sent to line by player")
+
+        // updating the scores for player
+        this.setState(
+          {
+            playerScore: this.state.lineCards
+              .filter(el => el.source === "deckPlayer")
+              .reduce(function(a, b) {
+                return a + b["value"]
+              }, 0)
+          },
+          () => {
+            this.setState(prevState => ({
+              playerOverallScore:
+                prevState.playerOverallScore + this.state.playerScore
+            }))
+          }
+        )
+      }
+    )
+  }
+
   render() {
     return (
       <div>
@@ -266,6 +278,7 @@ class App extends React.Component {
             <Footer
               deckPlayer={this.state.deckPlayer}
               selectCard={this.selectCard}
+              playerOverallScore={this.state.playerOverallScore}
             />
           </div>
         </div>
