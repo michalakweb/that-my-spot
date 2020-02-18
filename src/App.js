@@ -37,6 +37,7 @@ class App extends React.Component {
     drawnCardPlayer: [],
     drawnCardComputer: [],
     chosenCard: null,
+    chosenCardConfirm: null,
     lineStats: null,
     cardsDeckLeftPlayer: 10,
     cardsDeckLeftComputer: 10,
@@ -68,7 +69,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    //   name it somehow
+    //   completion conditions for phase 0
     if (
       this.state.phaseOneFlag &&
       this.state.currentPhase === 0 &&
@@ -85,6 +86,16 @@ class App extends React.Component {
           console.log("switched to phase 1")
         }
       )
+    }
+
+    // sending card to line
+    if (
+      this.state.chosenCard !== null &&
+      this.state.chosenCardConfirm !== null &&
+      this.state.chosenCard === this.state.chosenCardConfirm &&
+      this.state.currentPhase === 1
+    ) {
+      console.log("can send card to line!")
     }
   }
 
@@ -182,9 +193,21 @@ class App extends React.Component {
     }
   }
 
-  selectCard = () => {
+  selectCard = cardInfo => {
     if (this.state.currentPhase === 1) {
-      console.log("card selected")
+      console.log("the selected card is:", cardInfo)
+
+      this.setState({
+        chosenCard: JSON.stringify(cardInfo)
+      })
+
+      if (this.state.chosenCard === JSON.stringify(cardInfo)) {
+        console.log("clicked twice on the same card")
+
+        this.setState({
+          chosenCardConfirm: JSON.stringify(cardInfo)
+        })
+      }
     }
   }
 
@@ -192,9 +215,9 @@ class App extends React.Component {
     return (
       <div>
         {/* Uncomment to show welcome screen */}
-        {this.state.showWelcomeScreen && (
+        {/* {this.state.showWelcomeScreen && (
           <WelcomeScreen switchWelcomeScreen={this.switchWelcomeScreen} />
-        )}
+        )} */}
 
         <div id="container">
           <div id="flex-container">
