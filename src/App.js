@@ -102,7 +102,7 @@ class App extends React.Component {
       this.state.deckPlayer.splice(this.state.chosenCardPosition, 1)
 
       this.setState(
-        {
+        prevState => ({
           phaseTwoFlag: false,
           currentPhase: 2,
           chosenCard: null,
@@ -110,10 +110,18 @@ class App extends React.Component {
           lineCards: [
             ...this.state.lineCards,
             JSON.parse(this.state.chosenCard)
-          ]
-        },
+          ],
+          turnCounter: prevState.turnCounter + 1
+        }),
         () => {
           console.log("card sent to line by player")
+
+          // todo: aff filter, add overall score and prevstate for both
+          this.setState({
+            playerScore: this.state.lineCards.reduce(function(a, b) {
+              return a + b["value"]
+            }, 0)
+          })
         }
       )
     }
