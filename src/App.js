@@ -57,6 +57,7 @@ class App extends React.Component {
     currentLanguage: "en",
     phaseOneFlag: true,
     phaseTwoFlag: true,
+    phaseThreeFlag: true,
 
     // Modals
     showWelcomeScreen: true,
@@ -99,6 +100,49 @@ class App extends React.Component {
       this.state.currentPhase === 1
     ) {
       this.sendCardToLinePlayer()
+    }
+
+    // computer move
+    if (this.state.phaseThreeFlag && this.state.currentPhase === 2) {
+      this.setState(
+        {
+          phaseThreeFlag: false
+        },
+        () => {
+          console.log("computer move")
+
+          // delete first card from computer deck
+          let computerChosenCard = this.state.deckComputer.splice(0, 1)
+
+          this.setState(
+            prevState => ({
+              currentPhase: 3,
+              lineCards: [...this.state.lineCards, ...computerChosenCard],
+              turnCounter: prevState.turnCounter + 1
+            }),
+            () => {
+              console.log("card sent to line by computer")
+
+              // updating the scores for player
+              this.setState(
+                {
+                  computerScore: this.state.lineCards
+                    .filter(el => el.source === "deckComputer")
+                    .reduce(function(a, b) {
+                      return a + b["value"]
+                    }, 0)
+                },
+                () => {
+                  this.setState(prevState => ({
+                    computerOverallScore:
+                      prevState.computerOverallScore + this.state.computerScore
+                  }))
+                }
+              )
+            }
+          )
+        }
+      )
     }
   }
 
@@ -279,6 +323,7 @@ class App extends React.Component {
               deckPlayer={this.state.deckPlayer}
               selectCard={this.selectCard}
               playerOverallScore={this.state.playerOverallScore}
+              computerOverallScore={this.state.computerOverallScore}
             />
           </div>
         </div>
