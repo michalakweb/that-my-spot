@@ -5,7 +5,7 @@ import LineSpotDiv from "./LineSpotDiv"
 const LineSpot = props => (
   <div className="line_spot">
     <LineCard lineCard={props.lineCard} />
-    <LineSpotDiv />
+    <LineSpotDiv lineCardSource={props.lineCard.source} />
   </div>
 )
 

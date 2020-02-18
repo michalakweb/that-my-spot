@@ -1,5 +1,7 @@
-import React from "react";
+import React from "react"
 
-const LineSpotDiv = () => <div className="line_spot_div"></div>;
+const LineSpotDiv = props => (
+  <div className="line_spot_div">{props.lineCardSource}</div>
+)
 
-export default LineSpotDiv;
+export default LineSpotDiv

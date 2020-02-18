@@ -146,7 +146,9 @@ class App extends React.Component {
   }
 
   shuffleCards = (array, stateName) => {
-    let arr = [...array]
+    // add source for card sets
+    let arr = [...array].map(obj => ({ ...obj, source: stateName }))
+
     console.log(`shuffling cards for ${stateName}`)
     var j, x, i
     for (i = arr.length - 1; i > 0; i--) {
@@ -155,6 +157,7 @@ class App extends React.Component {
       arr[i] = arr[j]
       arr[j] = x
     }
+
     this.setState(
       {
         [stateName]: [...arr]
