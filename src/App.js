@@ -135,7 +135,10 @@ class App extends React.Component {
                 () => {
                   this.setState(prevState => ({
                     computerOverallScore:
-                      prevState.computerOverallScore + this.state.computerScore
+                      prevState.computerOverallScore + this.state.computerScore,
+                    phaseTwoFlag: true,
+                    phaseThreeFlag: true,
+                    currentPhase: 1
                   }))
                 }
               )
