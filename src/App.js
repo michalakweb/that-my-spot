@@ -123,14 +123,10 @@ class App extends React.Component {
             () => {
               console.log("card sent to line by computer")
 
-              // updating the scores for player
+              // updating the scores for computer (todo: fix scores conunting)
               this.setState(
                 {
-                  computerScore: this.state.lineCards
-                    .filter(el => el.source === "deckComputer")
-                    .reduce(function(a, b) {
-                      return a + b["value"]
-                    }, 0)
+                  computerScore: computerChosenCard.value
                 },
                 () => {
                   this.setState(prevState => ({
