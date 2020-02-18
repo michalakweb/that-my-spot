@@ -68,17 +68,24 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-	//   name it somehow
-    if(this.state.phaseOneFlag && this.state.currentPhase === 0 && 
-      this.state.itemsCurrent.length > 0 && this.state.handComputer.length > 0 
-      && this.state.handPlayer.length > 0) {
-        this.setState({
+    //   name it somehow
+    if (
+      this.state.phaseOneFlag &&
+      this.state.currentPhase === 0 &&
+      this.state.itemsCurrent.length > 0 &&
+      this.state.handComputer.length > 0 &&
+      this.state.handPlayer.length > 0
+    ) {
+      this.setState(
+        {
           phaseOneFlag: false,
           currentPhase: 1
-        }, () => {
+        },
+        () => {
           console.log("switched to phase 1")
-        })
-      }
+        }
+      )
+    }
   }
 
   switchWelcomeScreen = () => {
@@ -177,8 +184,8 @@ class App extends React.Component {
 
   selectCard = () => {
     if (this.state.currentPhase === 1) {
-		console.log("card selected")
-	}	
+      console.log("card selected")
+    }
   }
 
   render() {
@@ -195,7 +202,10 @@ class App extends React.Component {
 
             <Body itemsCurrent={this.state.itemsCurrent} />
 
-            <Footer deckPlayer={this.state.deckPlayer} selectCard={this.selectCard} />
+            <Footer
+              deckPlayer={this.state.deckPlayer}
+              selectCard={this.selectCard}
+            />
           </div>
         </div>
       </div>
