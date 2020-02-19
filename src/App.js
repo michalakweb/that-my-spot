@@ -309,7 +309,7 @@ class App extends React.Component {
 
         <div id="container">
           <div id="flex-container">
-            <Header />
+            <Header turnCounter={this.state.turnCounter} />
 
             <Body
               itemsCurrent={this.state.itemsCurrent}

@@ -1,14 +1,14 @@
-import React from "react";
-import Logo from "./Logo";
-import GameInfo from "./GameInfo";
-import LangSettings from "./LangSettings";
+import React from "react"
+import Logo from "./Logo"
+import GameInfo from "./GameInfo"
+import LangSettings from "./LangSettings"
 
-const Header = () => (
+const Header = props => (
   <div id="header">
     <Logo />
-    <GameInfo />
+    <GameInfo turnCounter={props.turnCounter} />
     <LangSettings />
   </div>
-);
+)
 
-export default Header;
+export default Header

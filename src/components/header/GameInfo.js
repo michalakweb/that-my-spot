@@ -1,5 +1,9 @@
-import React from "react";
+import React from "react"
 
-const GameInfo = () => <div id="game_info">game info</div>;
+const GameInfo = props => (
+  <div id="game_info">
+    <p>turn counter: {props.turnCounter}</p>
+  </div>
+)
 
-export default GameInfo;
+export default GameInfo
