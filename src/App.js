@@ -111,8 +111,8 @@ class App extends React.Component {
         () => {
           console.log("computer move")
 
-          // delete first card from computer deck
-          let computerChosenCard = this.state.deckComputer.splice(0, 1)
+          // delete first card from computer hand
+          let computerChosenCard = this.state.handComputer.splice(0, 1)
 
           this.setState(
             prevState => ({
@@ -266,7 +266,7 @@ class App extends React.Component {
 
   sendCardToLinePlayer = () => {
     // delete chosen card from player deck
-    let playerChosenCard = this.state.deckPlayer.splice(
+    let playerChosenCard = this.state.handPlayer.splice(
       this.state.chosenCardPosition,
       1
     )[0]
@@ -321,7 +321,7 @@ class App extends React.Component {
             />
 
             <Footer
-              deckPlayer={this.state.deckPlayer}
+              handPlayer={this.state.handPlayer}
               selectCard={this.selectCard}
               playerOverallScore={this.state.playerOverallScore}
               computerOverallScore={this.state.computerOverallScore}

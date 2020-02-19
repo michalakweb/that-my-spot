@@ -10,7 +10,7 @@ const Footer = props => (
       computerOverallScore={props.computerOverallScore}
     />
     <CardContainer
-      deckPlayer={props.deckPlayer}
+      handPlayer={props.handPlayer}
       selectCard={props.selectCard}
     />
     <ExtraInfo />
