@@ -6,7 +6,11 @@ import LangSettings from "./LangSettings"
 const Header = props => (
   <div id="header">
     <Logo />
-    <GameInfo turnCounter={props.turnCounter} />
+    <GameInfo
+      turnCounter={props.turnCounter}
+      playerScore={props.playerScore}
+      computerScore={props.computerScore}
+    />
     <LangSettings />
   </div>
 )
