@@ -125,13 +125,13 @@ class App extends React.Component {
 
               // updating the scores for computer (todo: fix scores conunting)
               this.setState(
-                {
-                  computerScore: computerChosenCard.value
-                },
+                prevState => ({
+                  computerScore:
+                    prevState.computerScore + computerChosenCard[0].value
+                }),
                 () => {
                   this.setState(prevState => ({
-                    computerOverallScore:
-                      prevState.computerOverallScore + this.state.computerScore,
+                    computerOverallScore: this.state.computerScore,
                     phaseTwoFlag: true,
                     phaseThreeFlag: true,
                     currentPhase: 1
@@ -266,7 +266,10 @@ class App extends React.Component {
 
   sendCardToLinePlayer = () => {
     // delete chosen card from player deck
-    this.state.deckPlayer.splice(this.state.chosenCardPosition, 1)
+    let playerChosenCard = this.state.deckPlayer.splice(
+      this.state.chosenCardPosition,
+      1
+    )[0]
 
     this.setState(
       prevState => ({
@@ -283,17 +286,12 @@ class App extends React.Component {
 
         // updating the scores for player
         this.setState(
-          {
-            playerScore: this.state.lineCards
-              .filter(el => el.source === "deckPlayer")
-              .reduce(function(a, b) {
-                return a + b["value"]
-              }, 0)
-          },
+          prevState => ({
+            playerScore: prevState.playerScore + playerChosenCard.value
+          }),
           () => {
             this.setState(prevState => ({
-              playerOverallScore:
-                prevState.playerOverallScore + this.state.playerScore
+              playerOverallScore: this.state.playerScore
             }))
           }
         )
