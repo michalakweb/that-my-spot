@@ -243,8 +243,20 @@ class App extends React.Component {
   }
 
   drawCard = () => {
-    if (this.state.currentPhase === 1 && this.state.handPlayer.length < 5) {
-    }
+    console.log("player one draws a card")
+
+    let drawnCard = this.state.deckPlayer.splice(
+      this.state.deckPlayer.length - 1,
+      1
+    )[0]
+
+    this.setState(prevState => ({
+      handPlayer: [...this.state.handPlayer, drawnCard],
+      cardsDeckLeftPlayer: prevState.cardsDeckLeftPlayer - 1,
+      phaseTwoFlag: false,
+      currentPhase: 2,
+      turnCounter: prevState.turnCounter + 1
+    }))
   }
 
   selectCard = (cardInfo, position) => {
@@ -327,6 +339,7 @@ class App extends React.Component {
 
             <Footer
               handPlayer={this.state.handPlayer}
+              cardsDeckLeftPlayer={this.state.cardsDeckLeftPlayer}
               selectCard={this.selectCard}
               playerOverallScore={this.state.playerOverallScore}
               computerOverallScore={this.state.computerOverallScore}

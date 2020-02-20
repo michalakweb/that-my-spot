@@ -17,6 +17,7 @@ const Footer = props => (
       drawCard={props.drawCard}
       currentPhase={props.currentPhase}
       handPlayer={props.handPlayer}
+      cardsDeckLeftPlayer={props.cardsDeckLeftPlayer}
     />
   </div>
 )
