@@ -104,44 +104,7 @@ class App extends React.Component {
 
     // computer move
     if (this.state.phaseThreeFlag && this.state.currentPhase === 2) {
-      this.setState(
-        {
-          phaseThreeFlag: false
-        },
-        () => {
-          console.log("computer move")
-
-          // delete first card from computer hand
-          let computerChosenCard = this.state.handComputer.splice(0, 1)
-
-          this.setState(
-            prevState => ({
-              currentPhase: 3,
-              lineCards: [...this.state.lineCards, ...computerChosenCard],
-              turnCounter: prevState.turnCounter + 1
-            }),
-            () => {
-              console.log("card sent to line by computer")
-
-              // updating the scores for computer (todo: fix scores conunting)
-              this.setState(
-                prevState => ({
-                  computerScore:
-                    prevState.computerScore + computerChosenCard[0].value
-                }),
-                () => {
-                  this.setState(prevState => ({
-                    computerOverallScore: this.state.computerScore,
-                    phaseTwoFlag: true,
-                    phaseThreeFlag: true,
-                    currentPhase: 1
-                  }))
-                }
-              )
-            }
-          )
-        }
-      )
+      this.sendCardToLineComputer()
     }
   }
 
@@ -310,6 +273,47 @@ class App extends React.Component {
             this.setState(prevState => ({
               playerOverallScore: this.state.playerScore
             }))
+          }
+        )
+      }
+    )
+  }
+
+  sendCardToLineComputer = () => {
+    this.setState(
+      {
+        phaseThreeFlag: false
+      },
+      () => {
+        console.log("computer move")
+
+        // delete first card from computer hand
+        let computerChosenCard = this.state.handComputer.splice(0, 1)
+
+        this.setState(
+          prevState => ({
+            currentPhase: 3,
+            lineCards: [...this.state.lineCards, ...computerChosenCard],
+            turnCounter: prevState.turnCounter + 1
+          }),
+          () => {
+            console.log("card sent to line by computer")
+
+            // updating the scores for computer (todo: fix scores conunting)
+            this.setState(
+              prevState => ({
+                computerScore:
+                  prevState.computerScore + computerChosenCard[0].value
+              }),
+              () => {
+                this.setState(prevState => ({
+                  computerOverallScore: this.state.computerScore,
+                  phaseTwoFlag: true,
+                  phaseThreeFlag: true,
+                  currentPhase: 1
+                }))
+              }
+            )
           }
         )
       }
