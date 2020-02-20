@@ -13,7 +13,11 @@ const Footer = props => (
       handPlayer={props.handPlayer}
       selectCard={props.selectCard}
     />
-    <ExtraInfo drawCard={props.drawCard} currentPhase={props.currentPhase} />
+    <ExtraInfo
+      drawCard={props.drawCard}
+      currentPhase={props.currentPhase}
+      handPlayer={props.handPlayer}
+    />
   </div>
 )
 

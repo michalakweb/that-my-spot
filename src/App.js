@@ -243,7 +243,8 @@ class App extends React.Component {
   }
 
   drawCard = () => {
-    console.log("drawing card player")
+    if (this.state.currentPhase === 1 && this.state.handPlayer.length < 5) {
+    }
   }
 
   selectCard = (cardInfo, position) => {
