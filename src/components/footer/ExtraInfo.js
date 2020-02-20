@@ -1,5 +1,16 @@
-import React from "react";
+import React from "react"
 
-const ExtraInfo = () => <div id="extra_info">info</div>;
+const ExtraInfo = props => (
+  <div id="extra_info">
+    <button
+      disabled={props.currentPhase !== 1}
+      onClick={() => {
+        props.drawCard()
+      }}
+    >
+      Draw card
+    </button>
+  </div>
+)
 
-export default ExtraInfo;
+export default ExtraInfo

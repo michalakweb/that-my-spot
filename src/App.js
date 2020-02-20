@@ -242,6 +242,10 @@ class App extends React.Component {
     }
   }
 
+  drawCard = () => {
+    console.log("drawing card player")
+  }
+
   selectCard = (cardInfo, position) => {
     if (this.state.currentPhase === 1) {
       console.log("the selected card is:", cardInfo)
@@ -325,6 +329,8 @@ class App extends React.Component {
               selectCard={this.selectCard}
               playerOverallScore={this.state.playerOverallScore}
               computerOverallScore={this.state.computerOverallScore}
+              drawCard={this.drawCard}
+              currentPhase={this.state.currentPhase}
             />
           </div>
         </div>
