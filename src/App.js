@@ -106,6 +106,11 @@ class App extends React.Component {
     if (this.state.phaseThreeFlag && this.state.currentPhase === 2) {
       this.sendCardToLineComputer()
     }
+
+    // six turns - time for items
+    if (this.state.turnCounter === 6) {
+      console.log("time to give some items!")
+    }
   }
 
   switchWelcomeScreen = () => {
@@ -164,7 +169,7 @@ class App extends React.Component {
     this.setState(
       {
         items: array,
-        itemsCurrent: itemsCurrent
+        itemsCurrent: itemsCurrent.sort((a, b) => b.value - a.value)
       },
       () => {
         this.setState({
@@ -258,8 +263,7 @@ class App extends React.Component {
         chosenCard: null,
         chosenCardConfirm: null,
         chosenCardPosition: null,
-        lineCards: [...this.state.lineCards, JSON.parse(this.state.chosenCard)],
-        turnCounter: prevState.turnCounter + 1
+        lineCards: [...this.state.lineCards, JSON.parse(this.state.chosenCard)]
       }),
       () => {
         console.log("card sent to line by player")
@@ -271,7 +275,8 @@ class App extends React.Component {
           }),
           () => {
             this.setState(prevState => ({
-              playerOverallScore: this.state.playerScore
+              playerOverallScore: this.state.playerScore,
+              turnCounter: prevState.turnCounter + 1
             }))
           }
         )
@@ -312,8 +317,7 @@ class App extends React.Component {
           this.setState(
             prevState => ({
               currentPhase: 3,
-              lineCards: [...this.state.lineCards, ...computerChosenCard],
-              turnCounter: prevState.turnCounter + 1
+              lineCards: [...this.state.lineCards, ...computerChosenCard]
             }),
             () => {
               console.log("card sent to line by computer")
@@ -329,7 +333,8 @@ class App extends React.Component {
                     computerOverallScore: this.state.computerScore,
                     phaseTwoFlag: true,
                     phaseThreeFlag: true,
-                    currentPhase: 1
+                    currentPhase: 1,
+                    turnCounter: prevState.turnCounter + 1
                   }))
                 }
               )
