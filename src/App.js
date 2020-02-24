@@ -4,6 +4,7 @@ import Header from "./components/header/Header"
 import Body from "./components/body/Body"
 import Footer from "./components/footer/Footer"
 import WelcomeScreen from "./components/WelcomeScreen"
+import ItemScreen from "./components/ItemScreen"
 
 // Deck & Items db
 const deckStats = [
@@ -43,6 +44,11 @@ class App extends React.Component {
     lineStats: null,
     cardsDeckLeftPlayer: 10,
     cardsDeckLeftComputer: 10,
+
+    // Messages
+    itemPlayerMsg: "",
+    itemComputerMsg: "",
+    itemDrawMsg: "It was a draw. Nobody gets anything.",
 
     // Phase tracking
     currentPhase: 0,
@@ -140,6 +146,7 @@ class App extends React.Component {
                     playerOverallScore:
                       prevState.playerOverallScore +
                       this.state.itemsCurrent[0].value,
+                    itemPlayerMsg: `You got a ${this.state.itemsCurrent[0].name}`,
                     computerItems: [
                       ...prevState.computerItems,
                       this.state.itemsCurrent[1]
@@ -147,6 +154,7 @@ class App extends React.Component {
                     computerOverallScore:
                       prevState.computerOverallScore +
                       this.state.itemsCurrent[1].value,
+                    itemComputerMsg: `The AI got a ${this.state.itemsCurrent[1].name}`,
                     lineCards: []
                   }),
                   () => {
@@ -174,6 +182,7 @@ class App extends React.Component {
                     playerOverallScore:
                       prevState.playerOverallScore +
                       this.state.itemsCurrent[1].value,
+                    itemPlayerMsg: `You got a ${this.state.itemsCurrent[1].name}`,
                     computerItems: [
                       ...prevState.computerItems,
                       this.state.itemsCurrent[0]
@@ -181,6 +190,7 @@ class App extends React.Component {
                     computerOverallScore:
                       prevState.computerOverallScore +
                       this.state.itemsCurrent[0].value,
+                    itemComputerMsg: `The AI got a ${this.state.itemsCurrent[0].name}`,
                     lineCards: []
                   }),
                   () => {
@@ -196,7 +206,9 @@ class App extends React.Component {
                 showItemsScreen: true,
                 itemsScreenFlag: true,
                 playerScore: 0,
-                computerScore: 0
+                computerScore: 0,
+                itemPlayerMsg: "",
+                itemComputerMsg: ""
               },
               () => {
                 this.setState({
@@ -213,6 +225,12 @@ class App extends React.Component {
   switchWelcomeScreen = () => {
     this.setState({
       showWelcomeScreen: false
+    })
+  }
+
+  switchItemsScreen = () => {
+    this.setState({
+      showItemsScreen: false
     })
   }
 
@@ -447,6 +465,14 @@ class App extends React.Component {
         {/* {this.state.showWelcomeScreen && (
           <WelcomeScreen switchWelcomeScreen={this.switchWelcomeScreen} />
         )} */}
+
+        {this.state.showItemsScreen && (
+          <ItemScreen
+            switchItemsScreen={this.switchItemsScreen}
+            itemPlayerMsg={this.state.itemPlayerMsg}
+            itemComputerMsg={this.state.itemComputerMsg}
+          />
+        )}
 
         <div id="container">
           <div id="flex-container">
