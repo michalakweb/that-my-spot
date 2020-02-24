@@ -18,7 +18,8 @@ const itemStats = [
   { id: 2, name: "telefon", value: 10 },
   { id: 3, name: "krem", value: 3 },
   { id: 4, name: "papier", value: 3 },
-  { id: 5, name: "ocet", value: 1 }
+  { id: 5, name: "ocet", value: 1 },
+  { id: 6, name: "piwo", value: 2 }
 ]
 
 class App extends React.Component {
@@ -136,10 +137,16 @@ class App extends React.Component {
                       ...prevState.playerItems,
                       this.state.itemsCurrent[0]
                     ],
+                    playerOverallScore:
+                      prevState.playerOverallScore +
+                      this.state.itemsCurrent[0].value,
                     computerItems: [
                       ...prevState.computerItems,
                       this.state.itemsCurrent[1]
                     ],
+                    computerOverallScore:
+                      prevState.computerOverallScore +
+                      this.state.itemsCurrent[1].value,
                     lineCards: []
                   }),
                   () => {
@@ -148,9 +155,7 @@ class App extends React.Component {
                 )
               }
             )
-          } else if (
-            this.state.playerOverallScore < this.state.computerOverallScore
-          ) {
+          } else if (this.state.playerScore < this.state.computerScore) {
             console.log("giving items to computer")
             this.setState(
               {
@@ -166,10 +171,16 @@ class App extends React.Component {
                       ...prevState.playerItems,
                       this.state.itemsCurrent[1]
                     ],
+                    playerOverallScore:
+                      prevState.playerOverallScore +
+                      this.state.itemsCurrent[1].value,
                     computerItems: [
                       ...prevState.computerItems,
                       this.state.itemsCurrent[0]
                     ],
+                    computerOverallScore:
+                      prevState.computerOverallScore +
+                      this.state.itemsCurrent[0].value,
                     lineCards: []
                   }),
                   () => {
@@ -361,7 +372,6 @@ class App extends React.Component {
           }),
           () => {
             this.setState(prevState => ({
-              playerOverallScore: this.state.playerScore,
               turnCounter: prevState.turnCounter + 1
             }))
           }
@@ -408,7 +418,7 @@ class App extends React.Component {
             () => {
               console.log("card sent to line by computer")
 
-              // updating the scores for computer (todo: fix scores conunting)
+              // updating the scores for computer
               this.setState(
                 prevState => ({
                   computerScore:
@@ -416,7 +426,6 @@ class App extends React.Component {
                 }),
                 () => {
                   this.setState(prevState => ({
-                    computerOverallScore: this.state.computerScore,
                     phaseTwoFlag: true,
                     phaseThreeFlag: true,
                     currentPhase: 1,
