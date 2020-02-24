@@ -31,8 +31,8 @@ class App extends React.Component {
     items: [...itemStats],
     itemsLeft: null,
     itemsCurrent: [],
-    playerItems: 0,
-    computerItems: 0,
+    playerItems: [],
+    computerItems: [],
     lineCards: [],
     drawnCardPlayer: [],
     drawnCardComputer: [],
@@ -62,7 +62,8 @@ class App extends React.Component {
     // Modals
     showWelcomeScreen: true,
     showWinLoseScreen: false,
-    showItemsScreen: false
+    showItemsScreen: false,
+    itemsScreenFlag: true
   }
 
   componentDidMount() {
@@ -108,8 +109,93 @@ class App extends React.Component {
     }
 
     // six turns - time for items
-    if (this.state.turnCounter === 6) {
-      console.log("time to give some items!")
+    if (this.state.turnCounter === 6 && this.state.itemsScreenFlag) {
+      console.log("giving items to the winner")
+      this.setState(
+        {
+          itemsScreenFlag: false,
+          turnCounter: 0,
+          phaseOneFlag: false,
+          currentPhase: 1
+        },
+        () => {
+          if (this.state.playerScore > this.state.computerScore) {
+            console.log("giving items to player")
+
+            this.setState(
+              {
+                showItemsScreen: true,
+                itemsScreenFlag: true,
+                playerScore: 0,
+                computerScore: 0
+              },
+              () => {
+                this.setState(
+                  prevState => ({
+                    playerItems: [
+                      ...prevState.playerItems,
+                      this.state.itemsCurrent[0]
+                    ],
+                    computerItems: [
+                      ...prevState.computerItems,
+                      this.state.itemsCurrent[1]
+                    ],
+                    lineCards: []
+                  }),
+                  () => {
+                    this.drawItemsFromDeck(this.state.items)
+                  }
+                )
+              }
+            )
+          } else if (
+            this.state.playerOverallScore < this.state.computerOverallScore
+          ) {
+            console.log("giving items to computer")
+            this.setState(
+              {
+                showItemsScreen: true,
+                itemsScreenFlag: true,
+                playerScore: 0,
+                computerScore: 0
+              },
+              () => {
+                this.setState(
+                  prevState => ({
+                    playerItems: [
+                      ...prevState.playerItems,
+                      this.state.itemsCurrent[1]
+                    ],
+                    computerItems: [
+                      ...prevState.computerItems,
+                      this.state.itemsCurrent[0]
+                    ],
+                    lineCards: []
+                  }),
+                  () => {
+                    this.drawItemsFromDeck(this.state.items)
+                  }
+                )
+              }
+            )
+          } else {
+            console.log("draw - no items given")
+            this.setState(
+              {
+                showItemsScreen: true,
+                itemsScreenFlag: true,
+                playerScore: 0,
+                computerScore: 0
+              },
+              () => {
+                this.setState({
+                  lineCards: []
+                })
+              }
+            )
+          }
+        }
+      )
     }
   }
 
