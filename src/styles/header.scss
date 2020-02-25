@@ -12,7 +12,8 @@
   display: flex;
   width: 20%;
   height: 100%;
-  background-color: blue;
+  background: center no-repeat url("../images/logo.png");
+  background-size: contain;
 }
 
 #game_info {

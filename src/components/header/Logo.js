@@ -1,5 +1,5 @@
-import React from "react";
+import React from "react"
 
-const Logo = () => <div id="logo">Logo</div>;
+const Logo = () => <div id="logo"></div>
 
-export default Logo;
+export default Logo
