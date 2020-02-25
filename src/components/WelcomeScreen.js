@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const WelcomeScreen = props => (
   <div id="welcome_screen">
@@ -6,13 +6,13 @@ const WelcomeScreen = props => (
     <div id="button_container">
       <button
         onClick={() => {
-          props.switchWelcomeScreen();
+          props.switchWelcomeScreen()
         }}
       >
         Start
       </button>
     </div>
   </div>
-);
+)
 
-export default WelcomeScreen;
+export default WelcomeScreen
