@@ -2,7 +2,7 @@ import React from "react"
 
 const Card = props => (
   <div
-    className="card"
+    className={`card card${props.stylePosition}`}
     onClick={() => {
       props.selectCard(props.cardInfo, props.position)
     }}

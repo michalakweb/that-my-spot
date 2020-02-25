@@ -28,10 +28,79 @@
 }
 
 .card {
+  z-index: 0;
   display: flex;
+}
+
+.card:hover {
+  z-index: 1;
+  bottom: 5%;
+}
+
+.card0 {
+  position: relative;
   border: 1px solid black;
   background-color: lightsalmon;
   width: 20%;
+  transform: rotate(-20deg);
+  bottom: -20px;
+  left: 20%;
+}
+
+.card1 {
+  position: relative;
+  border: 1px solid black;
+  background-color: lightsalmon;
+  width: 20%;
+  transform: rotate(-10deg);
+  bottom: -5px;
+  left: 10%;
+}
+
+.card2 {
+  position: relative;
+  border: 1px solid black;
+  background-color: lightsalmon;
+  width: 20%;
+  transform: rotate(3deg);
+}
+
+.card3 {
+  position: relative;
+  border: 1px solid black;
+  background-color: lightsalmon;
+  width: 20%;
+  transform: rotate(10deg);
+  bottom: -5px;
+  left: -10%;
+}
+
+.card4 {
+  position: relative;
+  border: 1px solid black;
+  background-color: lightsalmon;
+  width: 20%;
+  transform: rotate(20deg);
+  bottom: -20px;
+  left: -20%;
+}
+
+.card5 {
+  position: relative;
+  border: 1px solid black;
+  background-color: lightsalmon;
+  width: 20%;
+  transform: rotate(13deg);
+  bottom: -10px;
+  left: -10%;
+}
+
+.card6 {
+  position: relative;
+  border: 1px solid black;
+  background-color: lightsalmon;
+  width: 20%;
+  transform: rotate(-3deg);
 }
 
 .extra_info {
