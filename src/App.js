@@ -20,7 +20,13 @@ const itemStats = [
   { id: 3, name: "krem", value: 3 },
   { id: 4, name: "papier", value: 3 },
   { id: 5, name: "ocet", value: 1 },
-  { id: 6, name: "piwo", value: 2 }
+  { id: 6, name: "piwo", value: 2 },
+  { id: 7, name: "plaszcz", value: 8 },
+  { id: 8, name: "konsola", value: 12 },
+  { id: 9, name: "kawa", value: 3 },
+  { id: 10, name: "kredki", value: 1 },
+  { id: 11, name: "opona", value: 4 },
+  { id: 12, name: "ksiazka", value: 3 }
 ]
 
 class App extends React.Component {
@@ -117,108 +123,16 @@ class App extends React.Component {
 
     // six turns - time for items
     if (this.state.turnCounter === 6 && this.state.itemsScreenFlag) {
-      console.log("giving items to the winner")
-      this.setState(
-        {
-          itemsScreenFlag: false,
-          turnCounter: 0,
-          phaseOneFlag: false,
-          currentPhase: 1
-        },
-        () => {
-          if (this.state.playerScore > this.state.computerScore) {
-            console.log("giving items to player")
+      this.distributeItems()
+    }
 
-            this.setState(
-              {
-                showItemsScreen: true,
-                itemsScreenFlag: true,
-                playerScore: 0,
-                computerScore: 0
-              },
-              () => {
-                this.setState(
-                  prevState => ({
-                    playerItems: [
-                      ...prevState.playerItems,
-                      this.state.itemsCurrent[0]
-                    ],
-                    playerOverallScore:
-                      prevState.playerOverallScore +
-                      this.state.itemsCurrent[0].value,
-                    itemPlayerMsg: `You got a ${this.state.itemsCurrent[0].name}`,
-                    computerItems: [
-                      ...prevState.computerItems,
-                      this.state.itemsCurrent[1]
-                    ],
-                    computerOverallScore:
-                      prevState.computerOverallScore +
-                      this.state.itemsCurrent[1].value,
-                    itemComputerMsg: `The AI got a ${this.state.itemsCurrent[1].name}`,
-                    lineCards: []
-                  }),
-                  () => {
-                    this.drawItemsFromDeck(this.state.items)
-                  }
-                )
-              }
-            )
-          } else if (this.state.playerScore < this.state.computerScore) {
-            console.log("giving items to computer")
-            this.setState(
-              {
-                showItemsScreen: true,
-                itemsScreenFlag: true,
-                playerScore: 0,
-                computerScore: 0
-              },
-              () => {
-                this.setState(
-                  prevState => ({
-                    playerItems: [
-                      ...prevState.playerItems,
-                      this.state.itemsCurrent[1]
-                    ],
-                    playerOverallScore:
-                      prevState.playerOverallScore +
-                      this.state.itemsCurrent[1].value,
-                    itemPlayerMsg: `You got a ${this.state.itemsCurrent[1].name}`,
-                    computerItems: [
-                      ...prevState.computerItems,
-                      this.state.itemsCurrent[0]
-                    ],
-                    computerOverallScore:
-                      prevState.computerOverallScore +
-                      this.state.itemsCurrent[0].value,
-                    itemComputerMsg: `The AI got a ${this.state.itemsCurrent[0].name}`,
-                    lineCards: []
-                  }),
-                  () => {
-                    this.drawItemsFromDeck(this.state.items)
-                  }
-                )
-              }
-            )
-          } else {
-            console.log("draw - no items given")
-            this.setState(
-              {
-                showItemsScreen: true,
-                itemsScreenFlag: true,
-                playerScore: 0,
-                computerScore: 0,
-                itemPlayerMsg: "",
-                itemComputerMsg: ""
-              },
-              () => {
-                this.setState({
-                  lineCards: []
-                })
-              }
-            )
-          }
-        }
-      )
+    // finish game conditions
+    if (
+      (this.state.deckComputer.length === 0 &&
+        this.state.handComputer.length === 0) ||
+      (this.state.deckPlayer.length === 0 && this.state.handPlayer.length === 0)
+    ) {
+      console.log("someone ran out of cards")
     }
   }
 
@@ -451,6 +365,111 @@ class App extends React.Component {
                   }))
                 }
               )
+            }
+          )
+        }
+      }
+    )
+  }
+
+  distributeItems = () => {
+    console.log("giving items to the winner")
+    this.setState(
+      {
+        itemsScreenFlag: false,
+        turnCounter: 0,
+        phaseOneFlag: false,
+        currentPhase: 1
+      },
+      () => {
+        if (this.state.playerScore > this.state.computerScore) {
+          console.log("giving items to player")
+
+          this.setState(
+            {
+              showItemsScreen: true,
+              itemsScreenFlag: true,
+              playerScore: 0,
+              computerScore: 0
+            },
+            () => {
+              this.setState(
+                prevState => ({
+                  playerItems: [
+                    ...prevState.playerItems,
+                    this.state.itemsCurrent[0]
+                  ],
+                  playerOverallScore:
+                    prevState.playerOverallScore +
+                    this.state.itemsCurrent[0].value,
+                  itemPlayerMsg: `You got a ${this.state.itemsCurrent[0].name}`,
+                  computerItems: [
+                    ...prevState.computerItems,
+                    this.state.itemsCurrent[1]
+                  ],
+                  computerOverallScore:
+                    prevState.computerOverallScore +
+                    this.state.itemsCurrent[1].value,
+                  itemComputerMsg: `The AI got a ${this.state.itemsCurrent[1].name}`,
+                  lineCards: []
+                }),
+                () => {
+                  this.drawItemsFromDeck(this.state.items)
+                }
+              )
+            }
+          )
+        } else if (this.state.playerScore < this.state.computerScore) {
+          console.log("giving items to computer")
+          this.setState(
+            {
+              showItemsScreen: true,
+              itemsScreenFlag: true,
+              playerScore: 0,
+              computerScore: 0
+            },
+            () => {
+              this.setState(
+                prevState => ({
+                  playerItems: [
+                    ...prevState.playerItems,
+                    this.state.itemsCurrent[1]
+                  ],
+                  playerOverallScore:
+                    prevState.playerOverallScore +
+                    this.state.itemsCurrent[1].value,
+                  itemPlayerMsg: `You got a ${this.state.itemsCurrent[1].name}`,
+                  computerItems: [
+                    ...prevState.computerItems,
+                    this.state.itemsCurrent[0]
+                  ],
+                  computerOverallScore:
+                    prevState.computerOverallScore +
+                    this.state.itemsCurrent[0].value,
+                  itemComputerMsg: `The AI got a ${this.state.itemsCurrent[0].name}`,
+                  lineCards: []
+                }),
+                () => {
+                  this.drawItemsFromDeck(this.state.items)
+                }
+              )
+            }
+          )
+        } else {
+          console.log("draw - no items given")
+          this.setState(
+            {
+              showItemsScreen: true,
+              itemsScreenFlag: true,
+              playerScore: 0,
+              computerScore: 0,
+              itemPlayerMsg: "",
+              itemComputerMsg: ""
+            },
+            () => {
+              this.setState({
+                lineCards: []
+              })
             }
           )
         }
