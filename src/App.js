@@ -562,7 +562,6 @@ class App extends React.Component {
         <div id="container">
           <div id="flex-container">
             <Header
-              turnCounter={this.state.turnCounter}
               playerScore={this.state.playerScore}
               computerScore={this.state.computerScore}
             />
@@ -580,6 +579,7 @@ class App extends React.Component {
               computerOverallScore={this.state.computerOverallScore}
               drawCard={this.drawCard}
               currentPhase={this.state.currentPhase}
+              turnCounter={this.state.turnCounter}
             />
           </div>
         </div>

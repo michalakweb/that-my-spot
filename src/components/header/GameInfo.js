@@ -4,7 +4,6 @@ import computerImage from "../../images/odra.jpg"
 const GameInfo = props => (
   <div id="game_info">
     <div id="player_info_container">
-      <p>turn left: {3 - props.turnCounter / 2}</p>
       <p>player score: {props.playerScore}</p>
     </div>
     <div id="computer_info_container">

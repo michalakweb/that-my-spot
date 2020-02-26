@@ -8,6 +8,7 @@ const Footer = props => (
     <OverallScore
       playerOverallScore={props.playerOverallScore}
       computerOverallScore={props.computerOverallScore}
+      turnCounter={props.turnCounter}
     />
     <CardContainer
       handPlayer={props.handPlayer}
