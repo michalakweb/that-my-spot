@@ -19,7 +19,7 @@
 #game_info {
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: 40%;
   height: 100%;
   background-color: indigo;
   justify-content: space-evenly;
@@ -34,24 +34,33 @@
   justify-content: center;
 }
 
-#computer_card {
+#card {
   display: flex;
   background-color: pink;
   height: 70%;
+  border: 1px solid black;
+  margin: 5px;
 }
 
-#computer_card_photo {
-  width: 30%;
+#card_photo {
+  display: flex;
+  width: 40%;
 
   img {
     width: 100%;
+    height: 100%;
   }
 }
 
-#computer_card_info {
+#card_info {
   display: flex;
-  width: 70%;
-  align-content: center;
+  width: 60%;
+  justify-content: center;
+  align-self: center;
+
+  p {
+    font-size: 40px;
+  }
 }
 
 #player_info_container {

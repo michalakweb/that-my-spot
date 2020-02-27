@@ -1,18 +1,26 @@
 import React from "react"
 import computerImage from "../../images/odra.jpg"
+import playerImage from "../../images/player.jpg"
 
 const GameInfo = props => (
   <div id="game_info">
     <div id="player_info_container">
-      <p>player score: {props.playerScore}</p>
+      <div id="card">
+        <div id="card_photo">
+          <img src={playerImage} alt="face of communist pioneer" />
+        </div>
+        <div id="card_info">
+          <p>{props.playerScore}</p>
+        </div>
+      </div>
     </div>
     <div id="computer_info_container">
-      <div id="computer_card">
-        <div id="computer_card_photo">
+      <div id="card">
+        <div id="card_photo">
           <img src={computerImage} alt="old computer" />
         </div>
-        <div id="computer_card_info">
-          <p>ai score: {props.computerScore}</p>
+        <div id="card_info">
+          <p>{props.computerScore}</p>
         </div>
       </div>
     </div>

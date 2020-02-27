@@ -1,8 +1,14 @@
 /* Overall */
 
+@font-face {
+  font-family: "Cyrulik";
+  src: local("Cyrulik"), url("./fonts/Cyrulik-Sharp.ttf");
+}
+
 html,
 body {
   height: 100vh;
+  font-family: "Cyrulik";
 }
 
 #root {
