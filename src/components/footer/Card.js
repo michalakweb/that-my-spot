@@ -7,8 +7,10 @@ const Card = props => (
       props.selectCard(props.cardInfo, props.position)
     }}
   >
-    {props.cardInfo.name}
-    {props.cardInfo.value}
+    <div className="card_header">
+      <p>{props.cardInfo.value}</p>
+    </div>
+    <div className="card_body">{props.cardInfo.name}</div>
   </div>
 )
 
