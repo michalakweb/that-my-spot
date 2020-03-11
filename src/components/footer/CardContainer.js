@@ -14,8 +14,6 @@ const CardContainer = props => (
         stylePosition = [2]
       } else if (props.handPlayer.length === 4) {
         stylePosition = [0, 1, 2, 5]
-      } else if (props.handPlayer.length === 1) {
-        stylePosition = [2]
       }
 
       return (
