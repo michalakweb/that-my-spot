@@ -12,8 +12,26 @@
   display: flex;
   width: 20%;
   height: 100%;
-  background: center no-repeat url("../images/logo.png");
-  background-size: contain;
+  align-items: center;
+  justify-content: center;
+  background-color: whitesmoke;
+
+  clip-path: polygon(
+    10% 30%,
+    /* top left */ 20% 25%,
+    /* top left */ 80% 15%,
+    /* top right */ 90% 25%,
+    /* top right */ 90% 75%,
+    /* bottom right */ 30% 80%,
+    /* bottom right */ 5% 90%,
+    /* bottom left */ 15% 80% /* bottom left */
+  );
+
+  img {
+    display: flex;
+    width: 80%;
+    height: 60%;
+  }
 }
 
 #game_info {
@@ -35,11 +53,11 @@
 }
 
 #computer_info_container {
-  background-color: #ed7964b2;
+  background-color: #ed7964ce;
 }
 
 #player_info_container {
-  background-color: #85a99dc7;
+  background-color: #85a99def;
 }
 
 #player_info_container {
@@ -132,5 +150,15 @@
   display: flex;
   width: 10%;
   height: 100%;
-  background-color: yellow;
+  background-color: rgba(255, 255, 0, 0.904);
+  text-align: end;
+  align-items: flex-start;
+  justify-content: flex-end;
+  clip-path: polygon(63% 0, 90% 0, 100% 0, 100% 75%, 55% 40%, 6% 27%, 24% 0);
+
+  button {
+    margin: 5% 5% 0 0;
+    display: flex;
+    text-align: end;
+  }
 }

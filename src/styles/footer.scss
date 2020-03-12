@@ -10,7 +10,7 @@
 #overall_score {
   display: flex;
   flex-direction: column;
-  background-image: url("../images/linedpaper.jpg");
+  background-image: url("../images/linedpaper.png");
   background-size: cover;
   width: 15%;
   align-items: center;
@@ -117,8 +117,25 @@
   bottom: -5px;
 }
 
-.extra_info {
+#extra_info {
   display: flex;
-  background-color: white;
+  flex-direction: column;
+  background-color: #85a99def;
   width: 15%;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(63% 0, 88% 8%, 100% 24%, 100% 66%, 29% 79%, 0 54%, 7% 6%);
+
+  button {
+    display: block;
+    width: auto;
+    font-family: "Cyrulik";
+    font-size: 18px;
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 20%;
+    display: flex;
+  }
 }
