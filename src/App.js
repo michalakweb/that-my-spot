@@ -400,7 +400,8 @@ class App extends React.Component {
               phaseTwoFlag: true,
               phaseThreeFlag: true,
               currentPhase: 1,
-              turnCounter: prevState.turnCounter + 1
+              turnCounter: prevState.turnCounter + 1,
+              computerThinking: false
             }))
           } else {
             // delete first card from computer hand
@@ -433,7 +434,7 @@ class App extends React.Component {
               }
             )
           }
-        }, 5000)
+        }, 1500)
       }
     )
   }

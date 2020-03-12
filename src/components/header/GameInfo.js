@@ -7,7 +7,11 @@ const GameInfo = props => (
     <div id="player_info_container">
       <div id="card">
         <div id="card_photo">
-          <img src={playerImage} alt="face of communist pioneer" />
+          <img
+            src={playerImage}
+            alt="face of communist pioneer"
+            className={!props.computerThinking && "pulsePlayer"}
+          />
         </div>
         <div id="card_info">
           <p>{props.playerScore}</p>
