@@ -68,11 +68,21 @@
   justify-content: space-evenly;
 }
 
-.line_spot_div {
+.line_spot_div_ai,
+.line_spot_div_pl {
   display: flex;
   background-color: blue;
+  border-radius: 30px;
   width: 80%;
-  height: 10%;
+  height: 5%;
+}
+
+.line_spot_div_ai {
+  background-color: #ed7964c0;
+}
+
+.line_spot_div_pl {
+  background-color: #85a99dd3;
 }
 
 .line_card {
