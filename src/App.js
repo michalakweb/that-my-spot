@@ -16,7 +16,7 @@ const deckStats = [
   { id: 5, name: "partyjniak", value: 4 }
 ]
 const itemStats = [
-  { id: 1, name: "magnetofon", value: 8 },
+  { id: 1, name: "magnetofon", value: 7 },
   { id: 2, name: "kotek", value: 1 },
   { id: 3, name: "komputer", value: 10 },
   { id: 4, name: "klawisze", value: 5 },
@@ -30,7 +30,7 @@ const itemStats = [
   { id: 12, name: "rower", value: 4 },
   { id: 13, name: "fajki", value: 1 },
   { id: 14, name: "telewizorek", value: 1 },
-  { id: 15, name: "zelazko", value: 2 }
+  { id: 15, name: "zelazko", value: 4 }
 ]
 
 class App extends React.Component {
