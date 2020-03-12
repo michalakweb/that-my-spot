@@ -5,7 +5,8 @@ const OverallScore = props => (
     <p>Item score:</p>
     <p>player: {props.playerOverallScore}</p>
     <p>pc: {props.computerOverallScore}</p>
-    <p>turn left: {3 - props.turnCounter / 2}</p>
+    <p>__________</p>
+    <p>turns left: {3 - props.turnCounter / 2}</p>
   </div>
 )
 

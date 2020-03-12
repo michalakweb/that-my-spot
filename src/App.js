@@ -434,7 +434,7 @@ class App extends React.Component {
               }
             )
           }
-        }, 1500)
+        }, 700)
       }
     )
   }
