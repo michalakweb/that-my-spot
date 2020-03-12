@@ -17,7 +17,11 @@ const GameInfo = props => (
     <div id="computer_info_container">
       <div id="card">
         <div id="card_photo">
-          <img src={computerImage} alt="old computer" />
+          <img
+            src={computerImage}
+            alt="old computer"
+            className={props.computerThinking && "pulse"}
+          />
         </div>
         <div id="card_info">
           <p>{props.computerScore}</p>

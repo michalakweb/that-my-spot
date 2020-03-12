@@ -9,6 +9,7 @@ const Header = props => (
     <GameInfo
       playerScore={props.playerScore}
       computerScore={props.computerScore}
+      computerThinking={props.computerThinking}
     />
     <LangSettings />
   </div>

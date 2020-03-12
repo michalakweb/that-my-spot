@@ -61,6 +61,7 @@ class App extends React.Component {
     itemDrawMsg: "It was a draw. Nobody gets anything.",
 
     // Phase tracking
+    computerThinking: false,
     currentPhase: 0,
     turnCounter: 0,
 
@@ -122,7 +123,7 @@ class App extends React.Component {
       this.sendCardToLinePlayer()
     }
 
-    // computer move
+    // sending card to line --computer
     if (this.state.phaseThreeFlag && this.state.currentPhase === 2) {
       this.sendCardToLineComputer()
     }
@@ -376,59 +377,63 @@ class App extends React.Component {
   sendCardToLineComputer = () => {
     this.setState(
       {
-        phaseThreeFlag: false
+        phaseThreeFlag: false,
+        computerThinking: true
       },
       () => {
-        console.log("computer move")
+        setTimeout(() => {
+          console.log("computer move")
 
-        // no cards left, so has to draw one
+          // no cards left, so has to draw one
 
-        if (this.state.handComputer.length === 0) {
-          console.log("computer draws a card")
+          if (this.state.handComputer.length === 0) {
+            console.log("computer draws a card")
 
-          let drawnCard = this.state.deckComputer.splice(
-            this.state.deckPlayer.length - 1,
-            1
-          )[0]
+            let drawnCard = this.state.deckComputer.splice(
+              this.state.deckPlayer.length - 1,
+              1
+            )[0]
 
-          this.setState(prevState => ({
-            handComputer: [...this.state.handComputer, drawnCard],
-            cardsDeckLeftComputer: prevState.cardsDeckLeftComputer - 1,
-            phaseTwoFlag: true,
-            phaseThreeFlag: true,
-            currentPhase: 1,
-            turnCounter: prevState.turnCounter + 1
-          }))
-        } else {
-          // delete first card from computer hand
-          let computerChosenCard = this.state.handComputer.splice(0, 1)
+            this.setState(prevState => ({
+              handComputer: [...this.state.handComputer, drawnCard],
+              cardsDeckLeftComputer: prevState.cardsDeckLeftComputer - 1,
+              phaseTwoFlag: true,
+              phaseThreeFlag: true,
+              currentPhase: 1,
+              turnCounter: prevState.turnCounter + 1
+            }))
+          } else {
+            // delete first card from computer hand
+            let computerChosenCard = this.state.handComputer.splice(0, 1)
 
-          this.setState(
-            prevState => ({
-              currentPhase: 3,
-              lineCards: [...this.state.lineCards, ...computerChosenCard]
-            }),
-            () => {
-              console.log("card sent to line by computer")
+            this.setState(
+              prevState => ({
+                currentPhase: 3,
+                lineCards: [...this.state.lineCards, ...computerChosenCard]
+              }),
+              () => {
+                console.log("card sent to line by computer")
 
-              // updating the scores for computer
-              this.setState(
-                prevState => ({
-                  computerScore:
-                    prevState.computerScore + computerChosenCard[0].value
-                }),
-                () => {
-                  this.setState(prevState => ({
-                    phaseTwoFlag: true,
-                    phaseThreeFlag: true,
-                    currentPhase: 1,
-                    turnCounter: prevState.turnCounter + 1
-                  }))
-                }
-              )
-            }
-          )
-        }
+                // updating the scores for computer
+                this.setState(
+                  prevState => ({
+                    computerScore:
+                      prevState.computerScore + computerChosenCard[0].value
+                  }),
+                  () => {
+                    this.setState(prevState => ({
+                      phaseTwoFlag: true,
+                      phaseThreeFlag: true,
+                      currentPhase: 1,
+                      turnCounter: prevState.turnCounter + 1,
+                      computerThinking: false
+                    }))
+                  }
+                )
+              }
+            )
+          }
+        }, 5000)
       }
     )
   }
@@ -567,6 +572,7 @@ class App extends React.Component {
             <Header
               playerScore={this.state.playerScore}
               computerScore={this.state.computerScore}
+              computerThinking={this.state.computerThinking}
             />
 
             <Body
