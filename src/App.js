@@ -16,18 +16,21 @@ const deckStats = [
   { id: 5, name: "partyjniak", value: 4 }
 ]
 const itemStats = [
-  { id: 1, name: "rower", value: 5 },
-  { id: 2, name: "telefon", value: 10 },
-  { id: 3, name: "krem", value: 3 },
-  { id: 4, name: "papier", value: 3 },
-  { id: 5, name: "ocet", value: 1 },
-  { id: 6, name: "piwo", value: 2 },
-  { id: 7, name: "plaszcz", value: 8 },
-  { id: 8, name: "konsola", value: 12 },
-  { id: 9, name: "kawa", value: 3 },
-  { id: 10, name: "kredki", value: 1 },
-  { id: 11, name: "opona", value: 4 },
-  { id: 12, name: "ksiazka", value: 3 }
+  { id: 1, name: "magnetofon", value: 8 },
+  { id: 2, name: "kotek", value: 1 },
+  { id: 3, name: "komputer", value: 10 },
+  { id: 4, name: "klawisze", value: 5 },
+  { id: 5, name: "auto", value: 10 },
+  { id: 6, name: "gra", value: 3 },
+  { id: 7, name: "gumka", value: 1 },
+  { id: 8, name: "herba", value: 2 },
+  { id: 9, name: "herbata", value: 2 },
+  { id: 10, name: "rzutnik", value: 5 },
+  { id: 11, name: "papier", value: 2 },
+  { id: 12, name: "rower", value: 4 },
+  { id: 13, name: "fajki", value: 1 },
+  { id: 14, name: "telewizorek", value: 1 },
+  { id: 15, name: "zelazko", value: 2 }
 ]
 
 class App extends React.Component {
