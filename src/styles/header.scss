@@ -1,164 +1,164 @@
 /* Header */
 
 #header {
-  // background-color: red;
-  height: 20%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+	// background-color: red;
+	height: 20%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 #logo {
-  display: flex;
-  width: 20%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  background-color: whitesmoke;
+	display: flex;
+	width: 20%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	background-color: whitesmoke;
 
-  clip-path: polygon(
-    10% 30%,
-    /* top left */ 20% 25%,
-    /* top left */ 80% 15%,
-    /* top right */ 90% 25%,
-    /* top right */ 90% 75%,
-    /* bottom right */ 30% 80%,
-    /* bottom right */ 5% 90%,
-    /* bottom left */ 15% 80% /* bottom left */
-  );
+	clip-path: polygon(
+		10% 30%,
+		/* top left */ 20% 25%,
+		/* top left */ 80% 15%,
+		/* top right */ 90% 25%,
+		/* top right */ 90% 75%,
+		/* bottom right */ 30% 80%,
+		/* bottom right */ 5% 90%,
+		/* bottom left */ 15% 80% /* bottom left */
+	);
 
-  img {
-    display: flex;
-    width: 80%;
-    height: 60%;
-  }
+	img {
+		display: flex;
+		width: 80%;
+		height: 60%;
+	}
 }
 
 #game_info {
-  display: flex;
-  flex-direction: row;
-  width: 40%;
-  height: 100%;
-  // background-color: indigo;
-  justify-content: space-evenly;
+	display: flex;
+	flex-direction: row;
+	width: 40%;
+	height: 100%;
+	// background-color: indigo;
+	justify-content: space-evenly;
 }
 
 #player_info_container,
 #computer_info_container {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  // background-color: #f5f5f5bd;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	// background-color: #f5f5f5bd;
+	justify-content: center;
 }
 
 #computer_info_container {
-  background-color: #ed7964ce;
+	background-color: #ed7964ce;
 }
 
 #player_info_container {
-  background-color: #85a99def;
+	background-color: #85a99def;
 }
 
 #player_info_container {
-  clip-path: polygon(
-    0% 5%,
-    /* top left */ 55% 10%,
-    /* top left */ 80% 15%,
-    /* top right */ 90% 25%,
-    /* top right */ 100% 95%,
-    /* bottom right */ 27% 90%,
-    /* bottom right */ 5% 100%,
-    /* bottom left */ 2% 90% /* bottom left */
-  );
+	clip-path: polygon(
+		36% 5%,
+		70% 14%,
+		100% 17%,
+		94% 62%,
+		74% 94%,
+		36% 88%,
+		4% 95%,
+		0 9%
+	);
 }
 
 #computer_info_container {
-  clip-path: polygon(
-    5% 10%,
-    /* top left */ 55% 10%,
-    /* top left */ 95% 15%,
-    /* top right */ 100% 25%,
-    /* top right */ 90% 85%,
-    /* bottom right */ 7% 90%,
-    /* bottom right */ 5% 85%,
-    /* bottom left */ 2% 40% /* bottom left */
-  );
+	clip-path: polygon(
+		5% 10%,
+		/* top left */ 55% 10%,
+		/* top left */ 95% 15%,
+		/* top right */ 100% 25%,
+		/* top right */ 90% 85%,
+		/* bottom right */ 7% 90%,
+		/* bottom right */ 5% 85%,
+		/* bottom left */ 2% 40% /* bottom left */
+	);
 }
 
 #card {
-  display: flex;
-  height: 70%;
-  margin: 5px;
+	display: flex;
+	height: 70%;
+	margin: 5px;
 }
 
 #card_photo {
-  display: flex;
-  width: 40%;
-  position: relative;
-  left: 10px;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	width: 40%;
+	position: relative;
+	left: 10px;
+	align-items: center;
+	justify-content: center;
 
-  img {
-    display: flex;
+	img {
+		display: flex;
 
-    width: 85%;
-    height: 85%;
-    border-radius: 100px;
-  }
+		width: 85%;
+		height: 85%;
+		border-radius: 100px;
+	}
 }
 
 .pulse {
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  transform: scale(1);
-  animation: pulse 3s infinite;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	transform: scale(1);
+	animation: pulse 3s infinite;
 }
 
 .pulsePlayer {
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  transform: scale(1);
-  animation: pulse 3s infinite;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	transform: scale(1);
+	animation: pulse 3s infinite;
 }
 
 @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-  }
+	0% {
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
 
-  70% {
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-  }
+	70% {
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
 
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
+	100% {
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
 }
 
 #card_info {
-  display: flex;
-  width: 60%;
-  justify-content: center;
-  align-self: center;
+	display: flex;
+	width: 60%;
+	justify-content: center;
+	align-self: center;
 
-  p {
-    font-size: 40px;
-  }
+	p {
+		font-size: 40px;
+	}
 }
 
 #lang_settings {
-  display: flex;
-  width: 10%;
-  height: 100%;
-  background-color: rgba(255, 255, 0, 0.904);
-  text-align: end;
-  align-items: flex-start;
-  justify-content: flex-end;
-  clip-path: polygon(63% 0, 90% 0, 100% 0, 100% 75%, 55% 40%, 6% 27%, 24% 0);
+	display: flex;
+	width: 10%;
+	height: 100%;
+	background-color: rgba(255, 255, 0, 0.904);
+	text-align: end;
+	align-items: flex-start;
+	justify-content: flex-end;
+	clip-path: polygon(63% 0, 90% 0, 100% 0, 100% 75%, 55% 40%, 6% 27%, 24% 0);
 
-  button {
-    margin: 5% 5% 0 0;
-    display: flex;
-    text-align: end;
-  }
+	button {
+		margin: 5% 5% 0 0;
+		display: flex;
+		text-align: end;
+	}
 }
