@@ -180,8 +180,14 @@ class App extends React.Component {
 						},
 						() => {
 							this.shuffleItems(this.state.items)
-							this.shuffleCards(this.state.deckComputer, "deckComputer")
-							this.shuffleCards(this.state.deckPlayer, "deckPlayer")
+							this.shuffleCards(
+								this.state.deckComputer,
+								"deckComputer"
+							)
+							this.shuffleCards(
+								this.state.deckPlayer,
+								"deckPlayer"
+							)
 						}
 					)
 				}
@@ -352,7 +358,10 @@ class App extends React.Component {
 				chosenCard: null,
 				chosenCardConfirm: null,
 				chosenCardPosition: null,
-				lineCards: [...this.state.lineCards, JSON.parse(this.state.chosenCard)]
+				lineCards: [
+					...this.state.lineCards,
+					JSON.parse(this.state.chosenCard)
+				]
 			}),
 			() => {
 				console.log("card sent to line by player")
@@ -360,7 +369,8 @@ class App extends React.Component {
 				// updating the scores for player
 				this.setState(
 					prevState => ({
-						playerScore: prevState.playerScore + playerChosenCard.value
+						playerScore:
+							prevState.playerScore + playerChosenCard.value
 					}),
 					() => {
 						this.setState(prevState => ({
@@ -393,8 +403,12 @@ class App extends React.Component {
 						)[0]
 
 						this.setState(prevState => ({
-							handComputer: [...this.state.handComputer, drawnCard],
-							cardsDeckLeftComputer: prevState.cardsDeckLeftComputer - 1,
+							handComputer: [
+								...this.state.handComputer,
+								drawnCard
+							],
+							cardsDeckLeftComputer:
+								prevState.cardsDeckLeftComputer - 1,
 							phaseTwoFlag: true,
 							phaseThreeFlag: true,
 							currentPhase: 1,
@@ -403,12 +417,18 @@ class App extends React.Component {
 						}))
 					} else {
 						// delete first card from computer hand
-						let computerChosenCard = this.state.handComputer.splice(0, 1)
+						let computerChosenCard = this.state.handComputer.splice(
+							0,
+							1
+						)
 
 						this.setState(
 							prevState => ({
 								currentPhase: 3,
-								lineCards: [...this.state.lineCards, ...computerChosenCard]
+								lineCards: [
+									...this.state.lineCards,
+									...computerChosenCard
+								]
 							}),
 							() => {
 								console.log("card sent to line by computer")
@@ -417,14 +437,16 @@ class App extends React.Component {
 								this.setState(
 									prevState => ({
 										computerScore:
-											prevState.computerScore + computerChosenCard[0].value
+											prevState.computerScore +
+											computerChosenCard[0].value
 									}),
 									() => {
 										this.setState(prevState => ({
 											phaseTwoFlag: true,
 											phaseThreeFlag: true,
 											currentPhase: 1,
-											turnCounter: prevState.turnCounter + 1,
+											turnCounter:
+												prevState.turnCounter + 1,
 											computerThinking: false
 										}))
 									}
@@ -584,7 +606,9 @@ class App extends React.Component {
 							cardsDeckLeftPlayer={this.state.cardsDeckLeftPlayer}
 							selectCard={this.selectCard}
 							playerOverallScore={this.state.playerOverallScore}
-							computerOverallScore={this.state.computerOverallScore}
+							computerOverallScore={
+								this.state.computerOverallScore
+							}
 							drawCard={this.drawCard}
 							currentPhase={this.state.currentPhase}
 							turnCounter={this.state.turnCounter}
