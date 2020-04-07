@@ -18,13 +18,13 @@
 
 	clip-path: polygon(
 		10% 30%,
-		/* top left */ 20% 25%,
-		/* top left */ 80% 15%,
-		/* top right */ 90% 25%,
-		/* top right */ 90% 75%,
-		/* bottom right */ 30% 80%,
-		/* bottom right */ 5% 90%,
-		/* bottom left */ 15% 80% /* bottom left */
+		20% 25%,
+		80% 15%,
+		90% 25%,
+		90% 75%,
+		30% 80%,
+		5% 90%,
+		15% 80%
 	);
 
 	img {
@@ -76,13 +76,34 @@
 #computer_info_container {
 	clip-path: polygon(
 		5% 10%,
-		/* top left */ 55% 10%,
-		/* top left */ 95% 15%,
-		/* top right */ 100% 25%,
-		/* top right */ 90% 85%,
-		/* bottom right */ 7% 90%,
-		/* bottom right */ 5% 85%,
-		/* bottom left */ 2% 40% /* bottom left */
+		55% 10%,
+		95% 15%,
+		100% 25%,
+		90% 85%,
+		7% 90%,
+		5% 85%,
+		2% 40%
+	);
+}
+
+.turnScorePlayer {
+	background-color: whitesmoke;
+	padding: 0 20px;
+	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
+
+.turnScoreComputer {
+	background-color: whitesmoke;
+	padding: 0 10px;
+	clip-path: polygon(
+		30% 0%,
+		90% 4%,
+		98% 38%,
+		100% 69%,
+		84% 93%,
+		33% 97%,
+		4% 80%,
+		5% 19%
 	);
 }
 

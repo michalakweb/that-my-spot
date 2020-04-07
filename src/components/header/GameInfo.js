@@ -2,7 +2,7 @@ import React from "react"
 import computerImage from "../../images/odra.jpg"
 import playerImage from "../../images/player.jpg"
 
-const GameInfo = props => (
+const GameInfo = (props) => (
 	<div id="game_info">
 		<div id="player_info_container">
 			<div id="card">
@@ -10,11 +10,15 @@ const GameInfo = props => (
 					<img
 						src={playerImage}
 						alt="face of communist pioneer"
-						className={!props.computerThinking ? "pulsePlayer" : "undefined"}
+						className={
+							!props.computerThinking
+								? "pulsePlayer"
+								: "undefined"
+						}
 					/>
 				</div>
 				<div id="card_info">
-					<p>{props.playerScore}</p>
+					<p className="turnScorePlayer">{props.playerScore}</p>
 				</div>
 			</div>
 		</div>
@@ -24,11 +28,13 @@ const GameInfo = props => (
 					<img
 						src={computerImage}
 						alt="old computer"
-						className={props.computerThinking ? "pulse" : "undefined"}
+						className={
+							props.computerThinking ? "pulse" : "undefined"
+						}
 					/>
 				</div>
 				<div id="card_info">
-					<p>{props.computerScore}</p>
+					<p className="turnScoreComputer">{props.computerScore}</p>
 				</div>
 			</div>
 		</div>
