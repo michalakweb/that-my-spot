@@ -37,17 +37,54 @@
 #game_info {
 	display: flex;
 	flex-direction: row;
-	width: 40%;
+	width: 55%;
 	height: 100%;
 	// background-color: indigo;
 	justify-content: space-evenly;
+}
+
+#turns_left_container {
+	display: flex;
+	flex-direction: row;
+	width: 30%;
+	align-items: center;
+}
+
+#turns_left_image {
+	padding-left: 20px;
+	width: auto;
+	height: 65%;
+	clip-path: polygon(
+		74% 5%,
+		100% 0,
+		94% 51%,
+		98% 94%,
+		76% 100%,
+		50% 100%,
+		32% 75%,
+		3% 75%,
+		14% 4%,
+		31% 9%
+	);
+}
+
+#turns_left_text {
+	color: white;
+	background-color: black;
+	padding: 5px 10px;
+	margin: 0px;
+	font-size: 40px;
+	transform: rotate(5deg);
+	position: relative;
+	left: -5%;
+	z-index: -1;
 }
 
 #player_info_container,
 #computer_info_container {
 	display: flex;
 	flex-direction: column;
-	width: 50%;
+	width: 35%;
 	// background-color: #f5f5f5bd;
 	justify-content: center;
 }

@@ -13,7 +13,7 @@ const deckStats = [
 	{ id: 2, name: "baba", value: 2 },
 	{ id: 3, name: "dzieciak", value: 1 },
 	{ id: 4, name: "palacz", value: 1 },
-	{ id: 5, name: "partyjniak", value: 4 }
+	{ id: 5, name: "partyjniak", value: 4 },
 ]
 const itemStats = [
 	{ id: 1, name: "magnetofon", value: 7 },
@@ -28,7 +28,7 @@ const itemStats = [
 	{ id: 10, name: "rzutnik", value: 5 },
 	{ id: 11, name: "papier", value: 2 },
 	{ id: 12, name: "fajki", value: 1 },
-	{ id: 13, name: "telewizorek", value: 1 }
+	{ id: 13, name: "telewizorek", value: 1 },
 ]
 
 class App extends React.Component {
@@ -80,7 +80,7 @@ class App extends React.Component {
 		showWinLoseScreen: false,
 		showItemsScreen: false,
 		itemsScreenFlag: true,
-		winLoseScreenFlag: true
+		winLoseScreenFlag: true,
 	}
 
 	componentDidMount() {
@@ -102,7 +102,7 @@ class App extends React.Component {
 				{
 					phaseOneFlag: false,
 					currentPhase: 1,
-					turnCounter: 0
+					turnCounter: 0,
 				},
 				() => {
 					console.log("switched to phase 1")
@@ -146,7 +146,7 @@ class App extends React.Component {
 					showWinLoseScreen: true,
 					winLoseScreenFlag: false,
 					currentPhase: 0,
-					turnCounter: 0
+					turnCounter: 0,
 				},
 				() => {
 					this.setState(
@@ -176,7 +176,7 @@ class App extends React.Component {
 
 							// Modals
 							showItemsScreen: false,
-							itemsScreenFlag: true
+							itemsScreenFlag: true,
 						},
 						() => {
 							this.shuffleItems(this.state.items)
@@ -197,24 +197,24 @@ class App extends React.Component {
 
 	switchWelcomeScreen = () => {
 		this.setState({
-			showWelcomeScreen: false
+			showWelcomeScreen: false,
 		})
 	}
 
 	switchItemsScreen = () => {
 		this.setState({
-			showItemsScreen: false
+			showItemsScreen: false,
 		})
 	}
 
 	switchWinLoseScreen = () => {
 		this.setState({
 			showWinLoseScreen: false,
-			winLoseScreenFlag: true
+			winLoseScreenFlag: true,
 		})
 	}
 
-	shuffleItems = array => {
+	shuffleItems = (array) => {
 		let arr = [...array]
 		console.log("shuffling items")
 		var j, x, i
@@ -226,7 +226,7 @@ class App extends React.Component {
 		}
 		this.setState(
 			{
-				items: [...arr]
+				items: [...arr],
 			},
 			() => {
 				this.drawItemsFromDeck([...arr])
@@ -236,7 +236,7 @@ class App extends React.Component {
 
 	shuffleCards = (array, stateName) => {
 		// add source for card sets
-		let arr = [...array].map(obj => ({ ...obj, source: stateName }))
+		let arr = [...array].map((obj) => ({ ...obj, source: stateName }))
 
 		console.log(`shuffling cards for ${stateName}`)
 		var j, x, i
@@ -249,7 +249,7 @@ class App extends React.Component {
 
 		this.setState(
 			{
-				[stateName]: [...arr]
+				[stateName]: [...arr],
 			},
 			() => {
 				this.drawCardsFromDeck([...arr], stateName)
@@ -257,18 +257,18 @@ class App extends React.Component {
 		)
 	}
 
-	drawItemsFromDeck = array => {
+	drawItemsFromDeck = (array) => {
 		console.log("drawing items")
 
 		var itemsCurrent = array.splice(-2, 2)
 		this.setState(
 			{
 				items: array,
-				itemsCurrent: itemsCurrent.sort((a, b) => b.value - a.value)
+				itemsCurrent: itemsCurrent.sort((a, b) => b.value - a.value),
 			},
 			() => {
 				this.setState({
-					itemsLeft: this.state.items.length
+					itemsLeft: this.state.items.length,
 				})
 			}
 		)
@@ -282,11 +282,11 @@ class App extends React.Component {
 			this.setState(
 				{
 					[stateName]: array,
-					handComputer: currentHand
+					handComputer: currentHand,
 				},
 				() => {
 					this.setState({
-						cardsDeckLeftComputer: this.state.deckPlayer.length
+						cardsDeckLeftComputer: this.state.deckPlayer.length,
 					})
 				}
 			)
@@ -294,11 +294,11 @@ class App extends React.Component {
 			this.setState(
 				{
 					[stateName]: array,
-					handPlayer: currentHand
+					handPlayer: currentHand,
 				},
 				() => {
 					this.setState({
-						cardsDeckLeftPlayer: this.state.deckPlayer.length
+						cardsDeckLeftPlayer: this.state.deckPlayer.length,
 					})
 				}
 			)
@@ -313,12 +313,12 @@ class App extends React.Component {
 			1
 		)[0]
 
-		this.setState(prevState => ({
+		this.setState((prevState) => ({
 			handPlayer: [...this.state.handPlayer, drawnCard],
 			cardsDeckLeftPlayer: prevState.cardsDeckLeftPlayer - 1,
 			phaseTwoFlag: false,
 			currentPhase: 2,
-			turnCounter: prevState.turnCounter + 1
+			turnCounter: prevState.turnCounter + 1,
 		}))
 	}
 
@@ -328,7 +328,7 @@ class App extends React.Component {
 
 			this.setState({
 				chosenCard: JSON.stringify(cardInfo),
-				chosenCardPosition: position
+				chosenCardPosition: position,
 			})
 
 			if (
@@ -338,7 +338,7 @@ class App extends React.Component {
 				console.log("clicked twice on the same card")
 
 				this.setState({
-					chosenCardConfirm: JSON.stringify(cardInfo)
+					chosenCardConfirm: JSON.stringify(cardInfo),
 				})
 			}
 		}
@@ -352,7 +352,7 @@ class App extends React.Component {
 		)[0]
 
 		this.setState(
-			prevState => ({
+			(prevState) => ({
 				phaseTwoFlag: false,
 				currentPhase: 2,
 				chosenCard: null,
@@ -360,21 +360,21 @@ class App extends React.Component {
 				chosenCardPosition: null,
 				lineCards: [
 					...this.state.lineCards,
-					JSON.parse(this.state.chosenCard)
-				]
+					JSON.parse(this.state.chosenCard),
+				],
 			}),
 			() => {
 				console.log("card sent to line by player")
 
 				// updating the scores for player
 				this.setState(
-					prevState => ({
+					(prevState) => ({
 						playerScore:
-							prevState.playerScore + playerChosenCard.value
+							prevState.playerScore + playerChosenCard.value,
 					}),
 					() => {
-						this.setState(prevState => ({
-							turnCounter: prevState.turnCounter + 1
+						this.setState((prevState) => ({
+							turnCounter: prevState.turnCounter + 1,
 						}))
 					}
 				)
@@ -386,7 +386,7 @@ class App extends React.Component {
 		this.setState(
 			{
 				phaseThreeFlag: false,
-				computerThinking: true
+				computerThinking: true,
 			},
 			() => {
 				setTimeout(() => {
@@ -402,10 +402,10 @@ class App extends React.Component {
 							1
 						)[0]
 
-						this.setState(prevState => ({
+						this.setState((prevState) => ({
 							handComputer: [
 								...this.state.handComputer,
-								drawnCard
+								drawnCard,
 							],
 							cardsDeckLeftComputer:
 								prevState.cardsDeckLeftComputer - 1,
@@ -413,7 +413,7 @@ class App extends React.Component {
 							phaseThreeFlag: true,
 							currentPhase: 1,
 							turnCounter: prevState.turnCounter + 1,
-							computerThinking: false
+							computerThinking: false,
 						}))
 					} else {
 						// delete first card from computer hand
@@ -423,31 +423,31 @@ class App extends React.Component {
 						)
 
 						this.setState(
-							prevState => ({
+							(prevState) => ({
 								currentPhase: 3,
 								lineCards: [
 									...this.state.lineCards,
-									...computerChosenCard
-								]
+									...computerChosenCard,
+								],
 							}),
 							() => {
 								console.log("card sent to line by computer")
 
 								// updating the scores for computer
 								this.setState(
-									prevState => ({
+									(prevState) => ({
 										computerScore:
 											prevState.computerScore +
-											computerChosenCard[0].value
+											computerChosenCard[0].value,
 									}),
 									() => {
-										this.setState(prevState => ({
+										this.setState((prevState) => ({
 											phaseTwoFlag: true,
 											phaseThreeFlag: true,
 											currentPhase: 1,
 											turnCounter:
 												prevState.turnCounter + 1,
-											computerThinking: false
+											computerThinking: false,
 										}))
 									}
 								)
@@ -466,7 +466,7 @@ class App extends React.Component {
 				itemsScreenFlag: false,
 				turnCounter: 0,
 				phaseOneFlag: false,
-				currentPhase: 1
+				currentPhase: 1,
 			},
 			() => {
 				if (this.state.playerScore > this.state.computerScore) {
@@ -477,14 +477,14 @@ class App extends React.Component {
 							showItemsScreen: true,
 							itemsScreenFlag: true,
 							playerScore: 0,
-							computerScore: 0
+							computerScore: 0,
 						},
 						() => {
 							this.setState(
-								prevState => ({
+								(prevState) => ({
 									playerItems: [
 										...prevState.playerItems,
-										this.state.itemsCurrent[0]
+										this.state.itemsCurrent[0],
 									],
 									playerOverallScore:
 										prevState.playerOverallScore +
@@ -492,13 +492,13 @@ class App extends React.Component {
 									itemPlayerMsg: `You got a ${this.state.itemsCurrent[0].name}`,
 									computerItems: [
 										...prevState.computerItems,
-										this.state.itemsCurrent[1]
+										this.state.itemsCurrent[1],
 									],
 									computerOverallScore:
 										prevState.computerOverallScore +
 										this.state.itemsCurrent[1].value,
 									itemComputerMsg: `The AI got a ${this.state.itemsCurrent[1].name}`,
-									lineCards: []
+									lineCards: [],
 								}),
 								() => {
 									this.drawItemsFromDeck(this.state.items)
@@ -513,14 +513,14 @@ class App extends React.Component {
 							showItemsScreen: true,
 							itemsScreenFlag: true,
 							playerScore: 0,
-							computerScore: 0
+							computerScore: 0,
 						},
 						() => {
 							this.setState(
-								prevState => ({
+								(prevState) => ({
 									playerItems: [
 										...prevState.playerItems,
-										this.state.itemsCurrent[1]
+										this.state.itemsCurrent[1],
 									],
 									playerOverallScore:
 										prevState.playerOverallScore +
@@ -528,13 +528,13 @@ class App extends React.Component {
 									itemPlayerMsg: `You got a ${this.state.itemsCurrent[1].name}`,
 									computerItems: [
 										...prevState.computerItems,
-										this.state.itemsCurrent[0]
+										this.state.itemsCurrent[0],
 									],
 									computerOverallScore:
 										prevState.computerOverallScore +
 										this.state.itemsCurrent[0].value,
 									itemComputerMsg: `The AI got a ${this.state.itemsCurrent[0].name}`,
-									lineCards: []
+									lineCards: [],
 								}),
 								() => {
 									this.drawItemsFromDeck(this.state.items)
@@ -551,11 +551,11 @@ class App extends React.Component {
 							playerScore: 0,
 							computerScore: 0,
 							itemPlayerMsg: "",
-							itemComputerMsg: ""
+							itemComputerMsg: "",
 						},
 						() => {
 							this.setState({
-								lineCards: []
+								lineCards: [],
 							})
 						}
 					)
@@ -594,6 +594,7 @@ class App extends React.Component {
 							playerScore={this.state.playerScore}
 							computerScore={this.state.computerScore}
 							computerThinking={this.state.computerThinking}
+							turnCounter={this.state.turnCounter}
 						/>
 
 						<Body
@@ -611,7 +612,6 @@ class App extends React.Component {
 							}
 							drawCard={this.drawCard}
 							currentPhase={this.state.currentPhase}
-							turnCounter={this.state.turnCounter}
 						/>
 					</div>
 				</div>

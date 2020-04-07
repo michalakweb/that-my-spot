@@ -1,6 +1,7 @@
 import React from "react"
 import computerImage from "../../images/odra.jpg"
 import playerImage from "../../images/player.jpg"
+import turnsLeftImage from "../../images/turnsleft.png"
 
 const GameInfo = (props) => (
 	<div id="game_info">
@@ -37,6 +38,10 @@ const GameInfo = (props) => (
 					<p className="turnScoreComputer">{props.computerScore}</p>
 				</div>
 			</div>
+		</div>
+		<div id="turns_left_container">
+			<img src={turnsLeftImage} alt="turns left" id="turns_left_image" />
+			<p id="turns_left_text">{Math.floor(3 - props.turnCounter / 2)}</p>
 		</div>
 	</div>
 )
