@@ -1,10 +1,14 @@
 import React from "react"
+import itemsValueImg from "../../images/itemsvalue.png"
 
 const OverallScore = (props) => (
 	<div id="overall_score">
-		<p>Item score:</p>
-		<p>player: {props.playerOverallScore}</p>
-		<p>pc: {props.computerOverallScore}</p>
+		<img src={itemsValueImg} id="items_value_img" />
+		<div id="items_value_container">
+			<p id="items_value_player">{props.playerOverallScore}</p>
+			<p id="items_value_break">/</p>
+			<p id="items_value_computer">{props.computerOverallScore}</p>
+		</div>
 	</div>
 )
 
