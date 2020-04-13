@@ -577,6 +577,8 @@ class App extends React.Component {
 						switchItemsScreen={this.switchItemsScreen}
 						itemPlayerMsg={this.state.itemPlayerMsg}
 						itemComputerMsg={this.state.itemComputerMsg}
+						playerItems={this.state.playerItems}
+						computerItems={this.state.computerItems}
 					/>
 				)}
 
