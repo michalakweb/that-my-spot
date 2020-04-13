@@ -16,19 +16,39 @@ const deckStats = [
 	{ id: 5, name: "partyjniak", value: 4 },
 ]
 const itemStats = [
-	{ id: 1, name: "magnetofon", value: 7 },
-	{ id: 2, name: "kotek", value: 1 },
-	{ id: 3, name: "komputer", value: 10 },
-	{ id: 4, name: "klawisze", value: 5 },
-	{ id: 5, name: "auto", value: 10 },
-	{ id: 6, name: "gra", value: 3 },
-	{ id: 7, name: "gumka", value: 1 },
-	{ id: 8, name: "herba", value: 2 },
-	{ id: 9, name: "herbata", value: 2 },
-	{ id: 10, name: "rzutnik", value: 5 },
-	{ id: 11, name: "papier", value: 2 },
-	{ id: 12, name: "fajki", value: 1 },
-	{ id: 13, name: "telewizorek", value: 1 },
+	{
+		id: 1,
+		name: "magnetofon",
+		value: 7,
+		trueName: "Magnetofon szpulowy AKAI 4000DS",
+	},
+	{ id: 2, name: "kotek", value: 1, trueName: "Tania plastikowa zabawka" },
+	{
+		id: 3,
+		name: "komputer",
+		value: 10,
+		trueName: "Mikrokomputer ELWRO 800 JUNIOR",
+	},
+	{
+		id: 4,
+		name: "klawisze",
+		value: 5,
+		trueName: "Organy elektroniczne Elwirka",
+	},
+	{ id: 5, name: "auto", value: 10, trueName: "Samochód Fiat 126P" },
+	{ id: 6, name: "gra", value: 3, truenName: "Gra rodzinna Pilkarzyki" },
+	{ id: 7, name: "gumka", value: 1, trueName: "Gumka recepturka" },
+	{ id: 8, name: "herba", value: 2, trueName: "Herbata indyjska Darjeeling" },
+	{ id: 9, name: "herbata", value: 2, trueName: "Herbata Popularna" },
+	{ id: 10, name: "rzutnik", value: 5, trueName: "Diaskop Jota (typ B-6)" },
+	{ id: 11, name: "papier", value: 2, trueName: "Papier toaletowy" },
+	{ id: 12, name: "fajki", value: 1, trueName: "Papierosy Sporty" },
+	{
+		id: 13,
+		name: "telewizorek",
+		value: 1,
+		trueName: "Plastikowy rzutnik-zabawka",
+	},
 ]
 
 class App extends React.Component {

@@ -26,7 +26,7 @@ const ItemScreen = (props) => (
 					<p>
 						{props.playerItems.length > 0
 							? props.playerItems[props.playerItems.length - 1]
-									.name
+									.trueName
 							: ""}
 						<span> is yours!</span>
 					</p>
@@ -64,7 +64,7 @@ const ItemScreen = (props) => (
 						{props.computerItems.length > 0
 							? props.computerItems[
 									props.computerItems.length - 1
-							  ].name
+							  ].trueName
 							: ""}
 						<span> goes to the opponent.</span>
 					</p>
