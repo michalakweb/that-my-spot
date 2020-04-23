@@ -6,11 +6,12 @@ const ExtraInfo = (props) => (
 		<div id="cards_left_container">
 			{props.cardsDeckLeftPlayer > 0 && props.handPlayer.length < 5 && (
 				<img
-					className={props.handPlayer.length == 0 ? "pulse" : ""}
+					className={props.handPlayer.length === 0 ? "pulse" : ""}
 					src={plusImg}
+					alt="add cards icon"
 					onClick={() => {
 						if (
-							props.currentPhase == 1 &&
+							props.currentPhase === 1 &&
 							props.handPlayer.length < 5
 						) {
 							props.drawCard()

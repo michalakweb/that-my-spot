@@ -28,7 +28,7 @@
 	position: relative;
 	top: -10%;
 	justify-content: space-evenly;
-	font-size: 40px;
+	font-size: 3vw;
 }
 
 #items_value_player,
@@ -36,7 +36,7 @@
 #items_value_break {
 	display: inline-flex;
 	margin: 0;
-	padding-top: 30px;
+	padding-top: 25%;
 	justify-content: center;
 	position: relative;
 	top: -20%;
@@ -80,6 +80,7 @@
 	background-color: #f5f5f5;
 	width: 20%;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
 }
@@ -92,6 +93,7 @@
 .card_header {
 	display: flex;
 	position: absolute;
+	z-index: 1;
 
 	p {
 		margin: 0;
@@ -114,6 +116,13 @@
 	width: 100%;
 	transform: scale(2.5);
 	top: 70%;
+}
+
+.deckCardPhotoKid {
+	position: relative;
+	width: 100%;
+	transform: scale(2.5);
+	top: 40%;
 }
 
 .card0 {

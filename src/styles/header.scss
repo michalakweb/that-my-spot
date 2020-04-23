@@ -123,6 +123,11 @@
 	);
 }
 
+.turnScorePlayer,
+.turnScoreComputer {
+	font-size: 3vw;
+}
+
 .turnScorePlayer {
 	background-color: whitesmoke;
 	padding: 0 20px;
@@ -190,10 +195,6 @@
 	justify-content: center;
 	align-self: center;
 	filter: drop-shadow(-4px -8px black);
-
-	p {
-		font-size: 40px;
-	}
 }
 
 #lang_settings {
