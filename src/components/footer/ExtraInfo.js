@@ -1,22 +1,25 @@
 import React from "react"
+import plusImg from "../../images/plus.png"
 
 const ExtraInfo = (props) => (
 	<div id="extra_info">
-		{props.cardsDeckLeftPlayer > 0 ? (
-			<button
-				disabled={
-					props.currentPhase === 1 && props.handPlayer.length === 5
-				}
-				onClick={() => {
-					props.drawCard()
-				}}
-			>
-				Draw card
-			</button>
-		) : (
-			""
-		)}
-		<p>Cards left: {props.cardsDeckLeftPlayer}</p>
+		<div id="cards_left_container">
+			{props.cardsDeckLeftPlayer > 0 && props.handPlayer.length < 5 && (
+				<img
+					className={props.handPlayer.length == 0 ? "pulse" : ""}
+					src={plusImg}
+					onClick={() => {
+						if (
+							props.currentPhase == 1 &&
+							props.handPlayer.length < 5
+						) {
+							props.drawCard()
+						}
+					}}
+				/>
+			)}
+			<p>{props.cardsDeckLeftPlayer}</p>
+		</div>
 	</div>
 )
 

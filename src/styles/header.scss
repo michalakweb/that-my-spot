@@ -205,10 +205,22 @@
 	align-items: flex-start;
 	justify-content: flex-end;
 	clip-path: polygon(63% 0, 90% 0, 100% 0, 100% 75%, 55% 40%, 6% 27%, 24% 0);
+}
 
-	button {
-		margin: 5% 5% 0 0;
-		display: flex;
-		text-align: end;
+#settings_icon {
+	width: 25%;
+	margin: 10%;
+}
+
+#settings_icon:hover {
+	animation: spin 4s infinite linear;
+}
+
+@keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
 	}
 }
