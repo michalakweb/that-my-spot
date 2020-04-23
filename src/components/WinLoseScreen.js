@@ -3,8 +3,7 @@ import React from "react"
 const WinLoseScreen = (props) => (
 	<div id="welcome_screen">
 		<div id="welcome_logo">
-			{console.log(props.playerOverallScore, props.computerOverallScore)}
-			{props.playerOverallScore > props.computerOverallScore ? (
+			{props.playerFinalScore > props.computerFinalScore ? (
 				<p>You won!</p>
 			) : (
 				<p>The AI won! You lost!</p>

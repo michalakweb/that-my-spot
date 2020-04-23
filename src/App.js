@@ -36,13 +36,13 @@ const itemStats = [
 		trueName: "Organy elektroniczne Elwirka",
 	},
 	{ id: 5, name: "auto", value: 10, trueName: "Samochód Fiat 126P" },
-	{ id: 6, name: "gra", value: 3, truenName: "Gra rodzinna Pilkarzyki" },
+	{ id: 6, name: "gra", value: 3, trueName: "Gra rodzinna 'Piłkarzyki'" },
 	{ id: 7, name: "gumka", value: 1, trueName: "Gumka recepturka" },
 	{ id: 8, name: "herba", value: 2, trueName: "Herbata indyjska Darjeeling" },
 	{ id: 9, name: "herbata", value: 2, trueName: "Herbata Popularna" },
 	{ id: 10, name: "rzutnik", value: 5, trueName: "Diaskop Jota (typ B-6)" },
 	{ id: 11, name: "papier", value: 2, trueName: "Papier toaletowy" },
-	{ id: 12, name: "fajki", value: 1, trueName: "Papierosy Sporty" },
+	{ id: 12, name: "fajki", value: 1, trueName: "Papierosy 'Sporty'" },
 	{
 		id: 13,
 		name: "telewizorek",
@@ -167,6 +167,8 @@ class App extends React.Component {
 					winLoseScreenFlag: false,
 					currentPhase: 0,
 					turnCounter: 0,
+					playerFinalScore: this.state.playerOverallScore,
+					computerFinalScore: this.state.computerOverallScore,
 				},
 				() => {
 					this.setState(
@@ -605,8 +607,8 @@ class App extends React.Component {
 				{this.state.showWinLoseScreen && (
 					<WinLoseScreen
 						switchWinLoseScreen={this.switchWinLoseScreen}
-						playerOverallScore={this.state.playerOverallScore}
-						computerOverallScore={this.state.computerOverallScore}
+						playerFinalScore={this.state.playerFinalScore}
+						computerFinalScore={this.state.computerFinalScore}
 					/>
 				)}
 
