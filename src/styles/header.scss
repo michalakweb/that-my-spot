@@ -130,13 +130,13 @@
 
 .turnScorePlayer {
 	background-color: whitesmoke;
-	padding: 0 20px;
+	padding: 0 2vw;
 	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
 }
 
 .turnScoreComputer {
 	background-color: whitesmoke;
-	padding: 5px 15px;
+	padding: 5px 1.6vw;
 	clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
@@ -194,7 +194,7 @@
 	width: 60%;
 	justify-content: center;
 	align-self: center;
-	filter: drop-shadow(-4px -8px black);
+	filter: drop-shadow(-0.3vw -0.7vw black);
 }
 
 #lang_settings {
