@@ -71,6 +71,7 @@ const ItemScreen = (props) => (
 				</div>
 			</div>
 		</div>
+		<div id="win_item_screen_btn_background"></div>
 		<div
 			id="win_item_screen_btn"
 			onClick={() => {

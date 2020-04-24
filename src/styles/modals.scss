@@ -44,8 +44,8 @@
 	position: fixed;
 	width: 40px;
 	height: 40px;
-	right: 3%;
-	top: 5%;
+	right: 20px;
+	top: 20px;
 	clip-path: polygon(
 		20% 0%,
 		0% 20%,
@@ -64,6 +64,16 @@
 
 #win_item_screen_btn:hover {
 	cursor: pointer;
+}
+
+#win_item_screen_btn_background {
+	background-color: yellow;
+	position: fixed;
+	width: 150px;
+	height: 150px;
+	right: 0%;
+	top: 0%;
+	clip-path: polygon(100% 0, 0 0, 100% 100%);
 }
 
 // win_item_screen_player
