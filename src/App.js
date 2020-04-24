@@ -591,8 +591,10 @@ class App extends React.Component {
 			<div>
 				{/* Uncomment to show welcome screen */}
 				{/* {this.state.showWelcomeScreen && (
-          <WelcomeScreen switchWelcomeScreen={this.switchWelcomeScreen} />
-        )} */}
+					<WelcomeScreen
+						switchWelcomeScreen={this.switchWelcomeScreen}
+					/>
+				)} */}
 
 				{this.state.showItemsScreen && (
 					<ItemScreen
