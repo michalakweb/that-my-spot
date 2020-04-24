@@ -47,7 +47,7 @@ const itemStats = [
 		id: 13,
 		name: "telewizorek",
 		value: 1,
-		trueName: "mini-TV with slides",
+		trueName: "Mini-TV with slides",
 	},
 ]
 
@@ -590,11 +590,11 @@ class App extends React.Component {
 		return (
 			<div>
 				{/* Uncomment to show welcome screen */}
-				{/* {this.state.showWelcomeScreen && (
+				{this.state.showWelcomeScreen && (
 					<WelcomeScreen
 						switchWelcomeScreen={this.switchWelcomeScreen}
 					/>
-				)} */}
+				)}
 
 				{this.state.showItemsScreen && (
 					<ItemScreen
