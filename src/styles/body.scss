@@ -110,8 +110,7 @@
 	width: 1px;
 	height: 160px;
 	position: relative;
-	left: 25%;
-	bottom: 5%;
+	left: 20%;
 }
 
 /* smoke balls */
@@ -119,11 +118,10 @@
 #smoke span {
 	position: absolute;
 	display: block;
-	margin-left: -20px;
 	height: 0px;
 	width: 0px;
-	border: 35px solid #3a3a3a;
-	border-radius: 35px;
+	border: 2vw solid #3a3a3a;
+	border-radius: 2vw;
 	opacity: 0;
 	transform: scale(0.2);
 }
