@@ -4,7 +4,9 @@ const Card = (props) => (
 	<div
 		className={`card card${props.stylePosition}`}
 		onClick={() => {
-			props.selectCard(props.cardInfo, props.position)
+			if (props.lineCards.length <= 6) {
+				props.selectCard(props.cardInfo, props.position)
+			}
 		}}
 	>
 		<div className="card_header">

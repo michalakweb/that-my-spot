@@ -94,6 +94,7 @@ class App extends React.Component {
 		phaseOneFlag: true,
 		phaseTwoFlag: true,
 		phaseThreeFlag: true,
+		noClicking: false,
 
 		// Modals
 		showWelcomeScreen: true,
@@ -147,8 +148,21 @@ class App extends React.Component {
 		}
 
 		// six turns - time for items
-		if (this.state.turnCounter === 6 && this.state.itemsScreenFlag) {
-			this.distributeItems()
+		if (
+			this.state.turnCounter === 6 &&
+			this.state.itemsScreenFlag &&
+			this.state.noClicking === false
+		) {
+			this.setState(
+				{
+					noClicking: true,
+				},
+				() => {
+					setTimeout(() => {
+						this.distributeItems()
+					}, 3000)
+				}
+			)
 		}
 
 		// finish game conditions
@@ -485,6 +499,7 @@ class App extends React.Component {
 		console.log("giving items to the winner")
 		this.setState(
 			{
+				noClicking: false,
 				itemsScreenFlag: false,
 				turnCounter: 0,
 				phaseOneFlag: false,
@@ -614,7 +629,10 @@ class App extends React.Component {
 					/>
 				)}
 
-				<div id="container">
+				<div
+					id="container"
+					className={this.state.noClicking ? "noClicking" : ""}
+				>
 					<div id="flex-container">
 						<Header
 							playerScore={this.state.playerScore}
@@ -629,6 +647,7 @@ class App extends React.Component {
 						/>
 
 						<Footer
+							lineCards={this.state.lineCards}
 							handPlayer={this.state.handPlayer}
 							cardsDeckLeftPlayer={this.state.cardsDeckLeftPlayer}
 							selectCard={this.selectCard}

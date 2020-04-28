@@ -12,6 +12,7 @@ const Footer = (props) => (
 		<CardContainer
 			handPlayer={props.handPlayer}
 			selectCard={props.selectCard}
+			lineCards={props.lineCards}
 		/>
 		<ExtraInfo
 			drawCard={props.drawCard}

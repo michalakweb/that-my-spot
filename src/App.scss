@@ -12,6 +12,10 @@ body {
 	font-family: "Cyrulik";
 }
 
+.noClicking {
+	pointer-events: none;
+}
+
 #root {
 	position: relative;
 	z-index: 1;
