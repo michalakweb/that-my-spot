@@ -1,4 +1,5 @@
 import React from "react"
+import leninImg from "../images/lenin.jpg"
 
 const ItemScreen = (props) => (
 	<div id="win_item_screen">
@@ -32,11 +33,6 @@ const ItemScreen = (props) => (
 					</p>
 				</div>
 			</div>
-			{/* <p>{props.itemPlayerMsg}</p>
-			<p>{props.itemComputerMsg}</p>
-			{props.itemPlayerMsg === "" && props.itemComputerMsg === "" && (
-				<p>A draw - nobody gets anything</p>
-			)} */}
 		</div>
 		<div id="win_item_screen_divider"></div>
 		<div id="win_item_screen_computer">
@@ -78,6 +74,11 @@ const ItemScreen = (props) => (
 				props.switchItemsScreen()
 			}}
 		></div>
+		{props.itemPlayerMsg === "" && props.itemComputerMsg === "" && (
+			<div id="drawScreen">
+				<img src={leninImg} alt="Lenin saying 'It's a draw'"></img>
+			</div>
+		)}
 	</div>
 )
 

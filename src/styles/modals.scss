@@ -4,10 +4,10 @@
 
 #welcome_screen {
 	height: 100vh;
-	// background-color: rgb(133, 169, 157);
-	background-image: url("../images/lineWelcome.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
+	background-color: rgb(133, 169, 157);
+	// background-image: url("../images/lineWelcome.jpg");
+	// background-repeat: no-repeat;
+	// background-size: cover;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -100,6 +100,7 @@
 		80% 0%,
 		50% 30%
 	);
+	z-index: 1;
 }
 
 #win_item_screen_btn:hover {
@@ -114,6 +115,7 @@
 	right: 0%;
 	top: 0%;
 	clip-path: polygon(100% 0, 0 0, 100% 100%);
+	z-index: 1;
 }
 
 // win_item_screen_player
@@ -244,4 +246,22 @@
 #wisc_container_text span {
 	font-size: 2vw;
 	padding-right: 20px;
+}
+
+// draw screen
+
+#drawScreen {
+	position: absolute;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	background-color: #85a99d;
+	top: 0;
+	justify-content: center;
+
+	img {
+		display: flex;
+		height: 100vh;
+		position: absolute;
+	}
 }
