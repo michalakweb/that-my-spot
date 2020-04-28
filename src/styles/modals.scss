@@ -4,7 +4,10 @@
 
 #welcome_screen {
 	height: 100vh;
-	background-color: rgb(133, 169, 157);
+	// background-color: rgb(133, 169, 157);
+	background-image: url("../images/lineWelcome.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -30,6 +33,7 @@
 	max-width: 400px;
 	max-height: 200px;
 	z-index: 2;
+	position: relative;
 
 	img {
 		display: flex;
@@ -57,24 +61,6 @@
 	background-color: #ed6464;
 	cursor: pointer;
 	box-shadow: 5px -5px black;
-}
-
-#film_roll_1 {
-	position: absolute;
-	z-index: 1;
-	bottom: 65px;
-	right: -250px;
-	width: 65%;
-
-	img {
-		transform: rotate(-45deg);
-	}
-}
-
-#lenin {
-	position: fixed;
-	top: 10px;
-	left: -10%;
 }
 
 //
