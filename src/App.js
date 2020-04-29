@@ -160,7 +160,7 @@ class App extends React.Component {
 				() => {
 					setTimeout(() => {
 						this.distributeItems()
-					}, 3000)
+					}, 2000)
 				}
 			)
 		}
@@ -418,6 +418,7 @@ class App extends React.Component {
 		)
 	}
 
+	// Computer move logic
 	sendCardToLineComputer = () => {
 		this.setState(
 			{
