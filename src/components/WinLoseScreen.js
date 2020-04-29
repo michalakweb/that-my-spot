@@ -5,6 +5,8 @@ const WinLoseScreen = (props) => (
 		<div id="win_lose_info_container">
 			{props.playerFinalScore > props.computerFinalScore ? (
 				<p>You won!</p>
+			) : props.playerFinalScore === props.computerFinalScore ? (
+				<p>It's a draw!</p>
 			) : (
 				<p>You lost!</p>
 			)}
