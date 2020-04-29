@@ -16,6 +16,20 @@ body {
 	pointer-events: none;
 }
 
+#madeBy {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 10px;
+	color: whitesmoke;
+	background-color: black;
+
+	a {
+		text-decoration: none;
+		color: #85a99d;
+	}
+}
+
 #root {
 	position: relative;
 	z-index: 1;
