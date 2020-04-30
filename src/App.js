@@ -72,6 +72,7 @@ class App extends React.Component {
 		lineStats: null,
 		cardsDeckLeftPlayer: 10,
 		cardsDeckLeftComputer: 10,
+		computerDrawsCard: false,
 
 		// Messages
 		itemPlayerMsg: "",
@@ -420,6 +421,12 @@ class App extends React.Component {
 
 	// Computer move logic
 	sendCardToLineComputer = () => {
+		if (this.state.handComputer.length === 0) {
+			this.setState({
+				computerDrawsCard: true,
+			})
+		}
+
 		this.setState(
 			{
 				phaseThreeFlag: false,
@@ -429,9 +436,8 @@ class App extends React.Component {
 				setTimeout(() => {
 					console.log("computer move")
 
-					// no cards left, so has to draw one
-
 					if (this.state.handComputer.length === 0) {
+						// no cards left, so has to draw one
 						console.log("computer draws a card")
 
 						let drawnCard = this.state.deckComputer.splice(
@@ -451,6 +457,7 @@ class App extends React.Component {
 							currentPhase: 1,
 							turnCounter: prevState.turnCounter + 1,
 							computerThinking: false,
+							computerDrawsCard: false,
 						}))
 					} else {
 						// delete first card from computer hand
@@ -491,7 +498,7 @@ class App extends React.Component {
 							}
 						)
 					}
-				}, 700)
+				}, 1000)
 			}
 		)
 	}
@@ -605,7 +612,6 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				{/* Uncomment to show welcome screen */}
 				{this.state.showWelcomeScreen && (
 					<WelcomeScreen
 						switchWelcomeScreen={this.switchWelcomeScreen}
@@ -640,6 +646,7 @@ class App extends React.Component {
 							computerScore={this.state.computerScore}
 							computerThinking={this.state.computerThinking}
 							turnCounter={this.state.turnCounter}
+							computerDrawsCard={this.state.computerDrawsCard}
 						/>
 
 						<Body

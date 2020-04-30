@@ -11,6 +11,7 @@ const Header = (props) => (
 			computerScore={props.computerScore}
 			computerThinking={props.computerThinking}
 			turnCounter={props.turnCounter}
+			computerDrawsCard={props.computerDrawsCard}
 		/>
 		<LangSettings />
 	</div>

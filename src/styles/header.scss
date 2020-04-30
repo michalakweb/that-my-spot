@@ -91,6 +91,7 @@
 
 #computer_info_container {
 	background-color: #ed7964ce;
+	position: relative;
 }
 
 #player_info_container {
@@ -121,6 +122,30 @@
 		5% 85%,
 		2% 40%
 	);
+}
+
+#computer_takes_card_info {
+	position: absolute;
+	background-color: black;
+	color: whitesmoke;
+	padding: 2px 6px;
+	font-size: 2vw;
+	left: 10%;
+	bottom: 20%;
+	animation: zoominout 2s infinite;
+	border-radius: 5px;
+}
+
+@keyframes zoominout {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 
 .turnScorePlayer,

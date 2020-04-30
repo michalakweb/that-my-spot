@@ -38,6 +38,9 @@ const GameInfo = (props) => (
 					<p className="turnScoreComputer">{props.computerScore}</p>
 				</div>
 			</div>
+			{props.computerDrawsCard && (
+				<div id="computer_takes_card_info">takes card...</div>
+			)}
 		</div>
 		<div id="turns_left_container">
 			<img src={turnsLeftImage} alt="turns left" id="turns_left_image" />
