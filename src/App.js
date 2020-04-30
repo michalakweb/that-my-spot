@@ -37,8 +37,8 @@ const itemStats = [
 	},
 	{ id: 5, name: "auto", value: 10, trueName: "Fiat 126P" },
 	{ id: 6, name: "gra", value: 3, trueName: "Football family game" },
-	{ id: 7, name: "gumka", value: 1, trueName: "Eraser" },
-	{ id: 8, name: "herba", value: 2, trueName: "Indian tea 'Darjeeling'" },
+	{ id: 7, name: "gumka", value: 1, trueName: "Pencil eraser" },
+	{ id: 8, name: "herba", value: 3, trueName: "Indian tea 'Darjeeling'" },
 	{ id: 9, name: "herbata", value: 2, trueName: "'Popular' tea" },
 	{ id: 10, name: "rzutnik", value: 5, trueName: "Diascope Jota (type B-6)" },
 	{ id: 11, name: "papier", value: 2, trueName: "Toilet paper" },
@@ -48,6 +48,12 @@ const itemStats = [
 		name: "telewizorek",
 		value: 1,
 		trueName: "Mini-TV with slides",
+	},
+	{
+		id: 14,
+		name: "sokowirowka",
+		value: 4,
+		trueName: "Juicer 'Katarzyna'",
 	},
 ]
 
@@ -251,22 +257,42 @@ class App extends React.Component {
 		})
 	}
 
-	shuffleItems = (array) => {
-		let arr = [...array]
+	shuffleItems = (items) => {
+		let itemsCopy = [...items]
 		console.log("shuffling items")
-		var j, x, i
-		for (i = arr.length - 1; i > 0; i--) {
-			j = Math.floor(Math.random() * (i + 1))
-			x = arr[i]
-			arr[i] = arr[j]
-			arr[j] = x
+
+		function randomizeItems(items) {
+			let j, x, i
+			for (i = items.length - 1; i > 0; i--) {
+				j = Math.floor(Math.random() * (i + 1))
+				x = items[i]
+				items[i] = items[j]
+				items[j] = x
+			}
 		}
+
+		// sorting items
+		let sortedItems = itemsCopy.sort((a, b) => a.value - b.value)
+		let lowValItems = sortedItems.splice(0, items.length / 2)
+		let highValItems = sortedItems
+
+		// randomizing
+		randomizeItems(lowValItems)
+		randomizeItems(highValItems)
+
+		// combining items into low/high pairs
+		let combinedItems = []
+		lowValItems.forEach((el, id) => {
+			combinedItems = [...combinedItems, lowValItems[id]]
+			combinedItems = [...combinedItems, highValItems[id]]
+		})
+
 		this.setState(
 			{
-				items: [...arr],
+				items: [...combinedItems],
 			},
 			() => {
-				this.drawItemsFromDeck([...arr])
+				this.drawItemsFromDeck([...combinedItems])
 			}
 		)
 	}
