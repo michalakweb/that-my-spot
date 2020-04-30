@@ -62,6 +62,19 @@
 	box-shadow: 5px -5px black;
 }
 
+@media screen and (max-width: 700px) {
+	#welcome_logo {
+		max-width: 150px;
+		max-height: 70px;
+	}
+
+	#start_game_btn {
+		width: 70px;
+		font-size: 20px;
+		height: 40px;
+	}
+}
+
 //
 // win_item_screen
 //
