@@ -29,7 +29,8 @@ const LineCard = (props) => (
 			)}
 		{!!props.lineCard.effect &&
 			(props.lineCard.effect === "scared" ||
-				props.lineCard.effect === -1) && (
+				props.lineCard.effect === -1 ||
+				props.lineCard.effect === -2) && (
 				<div id="sad">
 					<img src={sadImg} alt={"expression of sadness"}></img>
 				</div>

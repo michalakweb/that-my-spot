@@ -666,7 +666,11 @@ class App extends React.Component {
 						cardBefore.name !== "palacz"
 					) {
 						let lineCardsCopy = [...this.state.lineCards]
-						lineCardsCopy[id - 1].effect = -1
+						if (lineCardsCopy[id - 1].name === "partyjniak") {
+							lineCardsCopy[id - 1].effect = -2
+						} else {
+							lineCardsCopy[id - 1].effect = -1
+						}
 
 						this.setState({
 							lineCards: [...lineCardsCopy],
@@ -678,7 +682,11 @@ class App extends React.Component {
 						cardAfter.name !== "palacz"
 					) {
 						let lineCardsCopy = [...this.state.lineCards]
-						lineCardsCopy[id + 1].effect = -1
+						if (lineCardsCopy[id + 1].name === "partyjniak") {
+							lineCardsCopy[id + 1].effect = -2
+						} else {
+							lineCardsCopy[id + 1].effect = -1
+						}
 
 						this.setState({
 							lineCards: [...lineCardsCopy],
@@ -690,7 +698,8 @@ class App extends React.Component {
 					if (
 						!!lineCardsCopy[id - 1] &&
 						!!lineCardsCopy[id - 1].effect &&
-						lineCardsCopy[id - 1].effect === -1
+						(lineCardsCopy[id - 1].effect === -1 ||
+							lineCardsCopy[id - 1].effect === -2)
 					) {
 						delete lineCardsCopy[id - 1].effect
 					}
@@ -698,7 +707,8 @@ class App extends React.Component {
 					if (
 						!!lineCardsCopy[id + 1] &&
 						!!lineCardsCopy[id + 1].effect &&
-						lineCardsCopy[id + 1].effect === -1
+						(lineCardsCopy[id + 1].effect === -1 ||
+							lineCardsCopy[id + 1].effect === -2)
 					) {
 						delete lineCardsCopy[id + 1].effect
 					}
@@ -718,7 +728,8 @@ class App extends React.Component {
 					if (
 						!!lineCardsCopy[id - 2] &&
 						!!lineCardsCopy[id - 2].effect &&
-						lineCardsCopy[id - 2].effect === -1
+						(lineCardsCopy[id - 2].effect === -1 ||
+							lineCardsCopy[id - 2].effect === -2)
 					) {
 						delete lineCardsCopy[id - 2].effect
 					}
@@ -737,7 +748,8 @@ class App extends React.Component {
 					if (
 						!!lineCardsCopy[id + 2] &&
 						!!lineCardsCopy[id + 2].effect &&
-						lineCardsCopy[id + 2].effect === -1
+						(lineCardsCopy[id + 2].effect === -1 ||
+							lineCardsCopy[id + 2].effect === -2)
 					) {
 						delete lineCardsCopy[id + 2].effect
 					}
@@ -756,8 +768,8 @@ class App extends React.Component {
 		]
 		let playerPenalty = 0
 		playerCards.forEach((el) => {
-			if (!!el.effect && el.effect === -1) {
-				playerPenalty++
+			if (!!el.effect && (el.effect === -1 || el.effect === -2)) {
+				playerPenalty -= el.effect
 			}
 		})
 		console.log("playerPenalty", playerPenalty)
@@ -769,8 +781,8 @@ class App extends React.Component {
 		]
 		let computerPenalty = 0
 		computerCards.forEach((el) => {
-			if (!!el.effect && el.effect === -1) {
-				computerPenalty++
+			if (!!el.effect && (el.effect === -1 || el.effect === -2)) {
+				computerPenalty -= el.effect
 			}
 		})
 		console.log("computerPenalty", computerPenalty)
