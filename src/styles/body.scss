@@ -106,7 +106,10 @@
 	position: absolute;
 	left: 50%;
 	top: -2vw;
-	animation: anger 1.5s steps(2) infinite;
+	animation-name: anger;
+	animation-duration: 1.5s;
+	animation-timing-function: steps(2);
+	animation-iteration-count: 3;
 
 	img {
 		width: 20px;
@@ -126,9 +129,10 @@
 	position: absolute;
 	left: 50%;
 	top: -2vw;
-	animation: sadness 1.5s linear 0s 900 none;
-	// animation-iteration-count: 4;
-	// animation-timing-function: linear;
+	animation-name: sadness;
+	animation-duration: 1.2s;
+	animation-timing-function: linear;
+	animation-iteration-count: 3;
 
 	img {
 		width: 40px;

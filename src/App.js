@@ -821,6 +821,7 @@ class App extends React.Component {
 							computerThinking={this.state.computerThinking}
 							turnCounter={this.state.turnCounter}
 							computerDrawsCard={this.state.computerDrawsCard}
+							showWelcomeScreen={this.state.showWelcomeScreen}
 						/>
 
 						<Body

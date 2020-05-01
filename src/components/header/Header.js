@@ -5,7 +5,7 @@ import LangSettings from "./LangSettings"
 
 const Header = (props) => (
 	<div id="header">
-		<Logo />
+		<Logo showWelcomeScreen={props.showWelcomeScreen} />
 		<GameInfo
 			playerScore={props.playerScore}
 			computerScore={props.computerScore}

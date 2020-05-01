@@ -8,6 +8,31 @@
 	justify-content: space-between;
 }
 
+.zoomInLogo {
+	animation-name: zoomInLogo;
+	animation-duration: 1s;
+	animation-timing-function: ease-out;
+	animation-iteration-count: 1;
+}
+
+@keyframes zoomInLogo {
+	0% {
+		transform: scale(0);
+	}
+
+	60% {
+		transform: scale(1);
+	}
+
+	85% {
+		transform: scale(0.8);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
 #logo {
 	display: flex;
 	width: 20%;
