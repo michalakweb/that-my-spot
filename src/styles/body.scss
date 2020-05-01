@@ -97,12 +97,59 @@
 
 .line_card {
 	display: flex;
+	position: relative;
 	width: 100%;
 	height: 70%;
 }
 
-.line_card:hover {
-	// background-color: green;
+#angry {
+	position: absolute;
+	left: 50%;
+	top: -2vw;
+	animation: anger 1.5s steps(2) infinite;
+
+	img {
+		width: 20px;
+	}
+}
+
+@keyframes anger {
+	0% {
+		left: 35%;
+	}
+	100% {
+		left: 65%;
+	}
+}
+
+#sad {
+	position: absolute;
+	left: 50%;
+	top: -2vw;
+	animation: sadness 1.5s linear 0s 900 none;
+	// animation-iteration-count: 4;
+	// animation-timing-function: linear;
+
+	img {
+		width: 40px;
+	}
+}
+
+@keyframes sadness {
+	0% {
+		left: 45%;
+		opacity: 0.5;
+	}
+
+	50% {
+		opacity: 0.8;
+	}
+
+	100% {
+		opacity: 1;
+		left: 55%;
+		top: -1vw;
+	}
 }
 
 #smoke {

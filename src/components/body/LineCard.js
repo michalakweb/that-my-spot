@@ -1,4 +1,6 @@
 import React from "react"
+import angryImg from "../../images/angry.png"
+import sadImg from "../../images/sad.png"
 
 const LineCard = (props) => (
 	<div className="line_card">
@@ -18,8 +20,22 @@ const LineCard = (props) => (
 					<span className="s9"></span>
 				</div>
 			)}
+		{props.lineCard.name === "pielegniarka" &&
+			!!props.lineCard.effect &&
+			props.lineCard.effect === "angry" && (
+				<div id="angry">
+					<img src={angryImg} alt={"expression of anger"}></img>
+				</div>
+			)}
+		{!!props.lineCard.effect &&
+			(props.lineCard.effect === "scared" ||
+				props.lineCard.effect === -1) && (
+				<div id="sad">
+					<img src={sadImg} alt={"expression of sadness"}></img>
+				</div>
+			)}
 		<img
-			alt="nurse card"
+			alt={props.lineCard.name}
 			className="cardPhoto"
 			src={`/cards/${props.lineCard.id}${props.lineCard.name}.png`}
 		/>
