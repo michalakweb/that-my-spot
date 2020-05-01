@@ -436,9 +436,14 @@ class App extends React.Component {
 							prevState.playerScore + playerChosenCard.value,
 					}),
 					() => {
-						this.setState((prevState) => ({
-							turnCounter: prevState.turnCounter + 1,
-						}))
+						this.setState(
+							(prevState) => ({
+								turnCounter: prevState.turnCounter + 1,
+							}),
+							() => {
+								this.calculateBonus()
+							}
+						)
 					}
 				)
 			}
@@ -511,14 +516,19 @@ class App extends React.Component {
 											computerChosenCard[0].value,
 									}),
 									() => {
-										this.setState((prevState) => ({
-											phaseTwoFlag: true,
-											phaseThreeFlag: true,
-											currentPhase: 1,
-											turnCounter:
-												prevState.turnCounter + 1,
-											computerThinking: false,
-										}))
+										this.setState(
+											(prevState) => ({
+												phaseTwoFlag: true,
+												phaseThreeFlag: true,
+												currentPhase: 1,
+												turnCounter:
+													prevState.turnCounter + 1,
+												computerThinking: false,
+											}),
+											() => {
+												this.calculateBonus()
+											}
+										)
 									}
 								)
 							}
@@ -633,6 +643,102 @@ class App extends React.Component {
 				}
 			}
 		)
+	}
+
+	calculateBonus = () => {
+		this.state.lineCards.forEach((el, id) => {
+			let cardBefore = this.state.lineCards[id - 1]
+			let cardAfter = this.state.lineCards[id + 1]
+
+			if (el.name === "palacz") {
+				if (el.effect === undefined) {
+					if (
+						cardBefore !== undefined &&
+						cardBefore.name !== "palacz"
+					) {
+						let lineCardsCopy = [...this.state.lineCards]
+						lineCardsCopy[id - 1].effect = -1
+
+						this.setState({
+							lineCards: [...lineCardsCopy],
+						})
+					}
+
+					if (
+						cardAfter !== undefined &&
+						cardAfter.name !== "palacz"
+					) {
+						let lineCardsCopy = [...this.state.lineCards]
+						lineCardsCopy[id + 1].effect = -1
+
+						this.setState({
+							lineCards: [...lineCardsCopy],
+						})
+					}
+				} else if (el.effect === "scared") {
+					let lineCardsCopy = [...this.state.lineCards]
+
+					if (
+						!!lineCardsCopy[id - 1] &&
+						!!lineCardsCopy[id - 1].effect &&
+						lineCardsCopy[id - 1].effect === -1
+					) {
+						delete lineCardsCopy[id - 1].effect
+					}
+
+					if (
+						!!lineCardsCopy[id + 1] &&
+						!!lineCardsCopy[id + 1].effect &&
+						lineCardsCopy[id + 1].effect === -1
+					) {
+						delete lineCardsCopy[id + 1].effect
+					}
+
+					this.setState({
+						lineCards: [...lineCardsCopy],
+					})
+				}
+			}
+
+			if (el.name === "pielegniarka") {
+				if (cardBefore !== undefined && cardBefore.name === "palacz") {
+					let lineCardsCopy = [...this.state.lineCards]
+					lineCardsCopy[id - 1].effect = "scared"
+					lineCardsCopy[id].effect = "angry"
+
+					if (
+						!!lineCardsCopy[id - 2] &&
+						!!lineCardsCopy[id - 2].effect &&
+						lineCardsCopy[id - 2].effect === -1
+					) {
+						delete lineCardsCopy[id - 2].effect
+					}
+
+					this.setState({
+						lineCards: [...lineCardsCopy],
+					})
+				}
+
+				if (cardAfter !== undefined && cardAfter.name === "palacz") {
+					let lineCardsCopy = [...this.state.lineCards]
+					lineCardsCopy[id + 1].effect = "scared"
+					console.log("pielegniarka", lineCardsCopy[id])
+					lineCardsCopy[id].effect = "angry"
+
+					if (
+						!!lineCardsCopy[id + 2] &&
+						!!lineCardsCopy[id + 2].effect &&
+						lineCardsCopy[id + 2].effect === -1
+					) {
+						delete lineCardsCopy[id + 2].effect
+					}
+
+					this.setState({
+						lineCards: [...lineCardsCopy],
+					})
+				}
+			}
+		})
 	}
 
 	render() {
