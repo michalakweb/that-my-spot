@@ -19,7 +19,9 @@ const GameInfo = (props) => (
 					/>
 				</div>
 				<div id="card_info">
-					<p className="turnScorePlayer">{props.playerScore}</p>
+					<p className="turnScorePlayer">
+						{props.playerScore - props.playerPenalty}
+					</p>
 				</div>
 			</div>
 		</div>
@@ -35,7 +37,9 @@ const GameInfo = (props) => (
 					/>
 				</div>
 				<div id="card_info">
-					<p className="turnScoreComputer">{props.computerScore}</p>
+					<p className="turnScoreComputer">
+						{props.computerScore - props.computerPenalty}
+					</p>
 				</div>
 			</div>
 			{props.computerDrawsCard && (

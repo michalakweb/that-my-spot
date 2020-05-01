@@ -9,6 +9,8 @@ const Header = (props) => (
 		<GameInfo
 			playerScore={props.playerScore}
 			computerScore={props.computerScore}
+			playerPenalty={props.playerPenalty}
+			computerPenalty={props.computerPenalty}
 			computerThinking={props.computerThinking}
 			turnCounter={props.turnCounter}
 			computerDrawsCard={props.computerDrawsCard}

@@ -95,6 +95,8 @@ class App extends React.Component {
 		computerScore: 0,
 		playerOverallScore: 0,
 		computerOverallScore: 0,
+		playerPenalty: 0,
+		computerPenalty: 0,
 
 		// Settings
 		currentLanguage: "en",
@@ -442,6 +444,7 @@ class App extends React.Component {
 							}),
 							() => {
 								this.calculateBonus()
+								this.applyPenalty()
 							}
 						)
 					}
@@ -527,6 +530,7 @@ class App extends React.Component {
 											}),
 											() => {
 												this.calculateBonus()
+												this.applyPenalty()
 											}
 										)
 									}
@@ -542,13 +546,18 @@ class App extends React.Component {
 	distributeItems = () => {
 		console.log("giving items to the winner")
 		this.setState(
-			{
+			(prevState) => ({
 				noClicking: false,
 				itemsScreenFlag: false,
 				turnCounter: 0,
 				phaseOneFlag: false,
 				currentPhase: 1,
-			},
+				playerScore: prevState.playerScore - this.state.playerPenalty,
+				computerScore:
+					prevState.computerScore - this.state.computerPenalty,
+				playerPenalty: 0,
+				computerPenalty: 0,
+			}),
 			() => {
 				if (this.state.playerScore > this.state.computerScore) {
 					console.log("giving items to player")
@@ -741,6 +750,37 @@ class App extends React.Component {
 		})
 	}
 
+	applyPenalty = () => {
+		let playerCards = [
+			...this.state.lineCards.filter((el) => el.source === "deckPlayer"),
+		]
+		let playerPenalty = 0
+		playerCards.forEach((el) => {
+			if (!!el.effect && el.effect === -1) {
+				playerPenalty++
+			}
+		})
+		console.log("playerPenalty", playerPenalty)
+
+		let computerCards = [
+			...this.state.lineCards.filter(
+				(el) => el.source === "deckComputer"
+			),
+		]
+		let computerPenalty = 0
+		computerCards.forEach((el) => {
+			if (!!el.effect && el.effect === -1) {
+				computerPenalty++
+			}
+		})
+		console.log("computerPenalty", computerPenalty)
+
+		this.setState({
+			playerPenalty: playerPenalty,
+			computerPenalty: computerPenalty,
+		})
+	}
+
 	render() {
 		return (
 			<div>
@@ -776,6 +816,8 @@ class App extends React.Component {
 						<Header
 							playerScore={this.state.playerScore}
 							computerScore={this.state.computerScore}
+							playerPenalty={this.state.playerPenalty}
+							computerPenalty={this.state.computerPenalty}
 							computerThinking={this.state.computerThinking}
 							turnCounter={this.state.turnCounter}
 							computerDrawsCard={this.state.computerDrawsCard}
