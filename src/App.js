@@ -169,7 +169,7 @@ class App extends React.Component {
 				() => {
 					setTimeout(() => {
 						this.distributeItems()
-					}, 2000)
+					}, 2100)
 				}
 			)
 		}
@@ -183,60 +183,60 @@ class App extends React.Component {
 				this.state.handPlayer.length === 0 &&
 				this.state.winLoseScreenFlag)
 		) {
-			console.log("someone ran out of cards")
-			this.setState(
-				{
-					showWinLoseScreen: true,
-					winLoseScreenFlag: false,
-					currentPhase: 0,
-					turnCounter: 0,
-					playerFinalScore: this.state.playerOverallScore,
-					computerFinalScore: this.state.computerOverallScore,
-				},
-				() => {
-					this.setState(
-						{
-							deckPlayer: [...deckStats, ...deckStats],
-							deckComputer: [...deckStats, ...deckStats],
-							items: [...itemStats],
-							itemsLeft: null,
-							itemsCurrent: [],
-							playerItems: [],
-							computerItems: [],
-							lineCards: [],
-							cardsDeckLeftPlayer: 10,
-							cardsDeckLeftComputer: 10,
-							turnCounter: 0,
+			setTimeout(() => {
+				console.log("someone ran out of cards")
+				this.setState(
+					{
+						showWinLoseScreen: true,
+						winLoseScreenFlag: false,
+						currentPhase: 0,
+						turnCounter: 0,
+						playerFinalScore: this.state.playerOverallScore,
+						computerFinalScore: this.state.computerOverallScore,
+					},
+					() => {
+						this.setState(
+							{
+								deckPlayer: [...deckStats, ...deckStats],
+								deckComputer: [...deckStats, ...deckStats],
+								items: [...itemStats],
+								itemsLeft: null,
+								itemsCurrent: [],
+								playerItems: [],
+								computerItems: [],
+								lineCards: [],
+								cardsDeckLeftPlayer: 10,
+								cardsDeckLeftComputer: 10,
+								turnCounter: 0,
 
-							// Scores
-							playerScore: 0,
-							computerScore: 0,
-							playerOverallScore: 0,
-							computerOverallScore: 0,
+								// Scores
+								playerScore: 0,
+								computerScore: 0,
 
-							// Settings
-							phaseOneFlag: true,
-							phaseTwoFlag: true,
-							phaseThreeFlag: true,
+								// Settings
+								phaseOneFlag: true,
+								phaseTwoFlag: true,
+								phaseThreeFlag: true,
 
-							// Modals
-							showItemsScreen: false,
-							itemsScreenFlag: true,
-						},
-						() => {
-							this.shuffleItems(this.state.items)
-							this.shuffleCards(
-								this.state.deckComputer,
-								"deckComputer"
-							)
-							this.shuffleCards(
-								this.state.deckPlayer,
-								"deckPlayer"
-							)
-						}
-					)
-				}
-			)
+								// Modals
+								showItemsScreen: false,
+								itemsScreenFlag: true,
+							},
+							() => {
+								this.shuffleItems(this.state.items)
+								this.shuffleCards(
+									this.state.deckComputer,
+									"deckComputer"
+								)
+								this.shuffleCards(
+									this.state.deckPlayer,
+									"deckPlayer"
+								)
+							}
+						)
+					}
+				)
+			}, 2000)
 		}
 	}
 
@@ -255,7 +255,10 @@ class App extends React.Component {
 	switchWinLoseScreen = () => {
 		this.setState({
 			showWinLoseScreen: false,
+			showItemsScreen: false,
 			winLoseScreenFlag: true,
+			playerOverallScore: 0,
+			computerOverallScore: 0,
 		})
 	}
 
@@ -809,6 +812,7 @@ class App extends React.Component {
 						itemComputerMsg={this.state.itemComputerMsg}
 						playerItems={this.state.playerItems}
 						computerItems={this.state.computerItems}
+						showWinLoseScreen={this.state.showWinLoseScreen}
 					/>
 				)}
 
