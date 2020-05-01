@@ -183,60 +183,58 @@ class App extends React.Component {
 				this.state.handPlayer.length === 0 &&
 				this.state.winLoseScreenFlag)
 		) {
-			setTimeout(() => {
-				console.log("someone ran out of cards")
-				this.setState(
-					{
-						showWinLoseScreen: true,
-						winLoseScreenFlag: false,
-						currentPhase: 0,
-						turnCounter: 0,
-						playerFinalScore: this.state.playerOverallScore,
-						computerFinalScore: this.state.computerOverallScore,
-					},
-					() => {
-						this.setState(
-							{
-								deckPlayer: [...deckStats, ...deckStats],
-								deckComputer: [...deckStats, ...deckStats],
-								items: [...itemStats],
-								itemsLeft: null,
-								itemsCurrent: [],
-								playerItems: [],
-								computerItems: [],
-								lineCards: [],
-								cardsDeckLeftPlayer: 10,
-								cardsDeckLeftComputer: 10,
-								turnCounter: 0,
+			console.log("someone ran out of cards")
+			this.setState(
+				{
+					showWinLoseScreen: true,
+					winLoseScreenFlag: false,
+					currentPhase: 0,
+					turnCounter: 0,
+					playerFinalScore: this.state.playerOverallScore,
+					computerFinalScore: this.state.computerOverallScore,
+				},
+				() => {
+					this.setState(
+						{
+							deckPlayer: [...deckStats, ...deckStats],
+							deckComputer: [...deckStats, ...deckStats],
+							items: [...itemStats],
+							itemsLeft: null,
+							itemsCurrent: [],
+							playerItems: [],
+							computerItems: [],
+							lineCards: [],
+							cardsDeckLeftPlayer: 10,
+							cardsDeckLeftComputer: 10,
+							turnCounter: 0,
 
-								// Scores
-								playerScore: 0,
-								computerScore: 0,
+							// Scores
+							playerScore: 0,
+							computerScore: 0,
 
-								// Settings
-								phaseOneFlag: true,
-								phaseTwoFlag: true,
-								phaseThreeFlag: true,
+							// Settings
+							phaseOneFlag: true,
+							phaseTwoFlag: true,
+							phaseThreeFlag: true,
 
-								// Modals
-								showItemsScreen: false,
-								itemsScreenFlag: true,
-							},
-							() => {
-								this.shuffleItems(this.state.items)
-								this.shuffleCards(
-									this.state.deckComputer,
-									"deckComputer"
-								)
-								this.shuffleCards(
-									this.state.deckPlayer,
-									"deckPlayer"
-								)
-							}
-						)
-					}
-				)
-			}, 2000)
+							// Modals
+							showItemsScreen: false,
+							itemsScreenFlag: true,
+						},
+						() => {
+							this.shuffleItems(this.state.items)
+							this.shuffleCards(
+								this.state.deckComputer,
+								"deckComputer"
+							)
+							this.shuffleCards(
+								this.state.deckPlayer,
+								"deckPlayer"
+							)
+						}
+					)
+				}
+			)
 		}
 	}
 
