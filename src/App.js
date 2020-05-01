@@ -236,7 +236,7 @@ class App extends React.Component {
 						)
 					}
 				)
-			}, 1000)
+			}, 2000)
 		}
 	}
 
@@ -255,6 +255,7 @@ class App extends React.Component {
 	switchWinLoseScreen = () => {
 		this.setState({
 			showWinLoseScreen: false,
+			showItemsScreen: false,
 			winLoseScreenFlag: true,
 			playerOverallScore: 0,
 			computerOverallScore: 0,
@@ -811,6 +812,7 @@ class App extends React.Component {
 						itemComputerMsg={this.state.itemComputerMsg}
 						playerItems={this.state.playerItems}
 						computerItems={this.state.computerItems}
+						showWinLoseScreen={this.state.showWinLoseScreen}
 					/>
 				)}
 
