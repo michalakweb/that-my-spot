@@ -173,17 +173,6 @@ class App extends React.Component {
 				}
 			)
 		}
-
-		// finish game conditions
-		// if (
-		// 	this.state.deckComputer.length === 0 &&
-		// 	this.state.handComputer.length === 0 &&
-		// 	this.state.winLoseScreenFlag &&
-		// 	this.state.deckPlayer.length === 0 &&
-		// 	this.state.handPlayer.length === 0
-		// ) {
-		// 	this.finishGame()
-		// }
 	}
 
 	switchWelcomeScreen = () => {
@@ -205,6 +194,7 @@ class App extends React.Component {
 			winLoseScreenFlag: true,
 			playerOverallScore: 0,
 			computerOverallScore: 0,
+			playerItems: [],
 		})
 	}
 
@@ -618,6 +608,7 @@ class App extends React.Component {
 				console.log(
 					`Final scores: player - ${this.state.playerFinalScore}, AI - ${this.state.computerFinalScore}`
 				)
+				// reset state
 				this.setState(
 					{
 						deckPlayer: [...deckStats, ...deckStats],
@@ -625,7 +616,6 @@ class App extends React.Component {
 						items: [...itemStats],
 						itemsLeft: null,
 						itemsCurrent: [],
-						playerItems: [],
 						computerItems: [],
 						lineCards: [],
 						cardsDeckLeftPlayer: 10,
