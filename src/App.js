@@ -40,7 +40,7 @@ const itemStats = [
 	{ id: 7, name: "gumka", value: 1, trueName: "Pencil eraser" },
 	{ id: 8, name: "herba", value: 3, trueName: "Indian tea 'Darjeeling'" },
 	{ id: 9, name: "herbata", value: 2, trueName: "'Popular' tea" },
-	{ id: 10, name: "rzutnik", value: 5, trueName: "Diascope Jota (type B-6)" },
+	{ id: 10, name: "rzutnik", value: 4, trueName: "Diascope Jota B-6" },
 	{ id: 11, name: "papier", value: 2, trueName: "Toilet paper" },
 	{ id: 12, name: "fajki", value: 1, trueName: "'Sport' cigarettes pack" },
 	{
@@ -54,6 +54,18 @@ const itemStats = [
 		name: "sokowirowka",
 		value: 4,
 		trueName: "Juicer 'Katarzyna'",
+	},
+	{
+		id: 15,
+		name: "aparat",
+		value: 5,
+		trueName: "Camera ami 66",
+	},
+	{
+		id: 16,
+		name: "colorofon",
+		value: 4,
+		trueName: "Colorofon C23-B",
 	},
 ]
 
