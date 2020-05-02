@@ -26,7 +26,7 @@ const itemStats = [
 	{
 		id: 3,
 		name: "komputer",
-		value: 10,
+		value: 8,
 		trueName: "Microcomputer ELWRO 800 JUNIOR",
 	},
 	{
@@ -175,67 +175,15 @@ class App extends React.Component {
 		}
 
 		// finish game conditions
-		if (
-			(this.state.deckComputer.length === 0 &&
-				this.state.handComputer.length === 0 &&
-				this.state.winLoseScreenFlag) ||
-			(this.state.deckPlayer.length === 0 &&
-				this.state.handPlayer.length === 0 &&
-				this.state.winLoseScreenFlag)
-		) {
-			console.log("someone ran out of cards")
-			this.setState(
-				{
-					showWinLoseScreen: true,
-					winLoseScreenFlag: false,
-					currentPhase: 0,
-					turnCounter: 0,
-					playerFinalScore: this.state.playerOverallScore,
-					computerFinalScore: this.state.computerOverallScore,
-				},
-				() => {
-					this.setState(
-						{
-							deckPlayer: [...deckStats, ...deckStats],
-							deckComputer: [...deckStats, ...deckStats],
-							items: [...itemStats],
-							itemsLeft: null,
-							itemsCurrent: [],
-							playerItems: [],
-							computerItems: [],
-							lineCards: [],
-							cardsDeckLeftPlayer: 10,
-							cardsDeckLeftComputer: 10,
-							turnCounter: 0,
-
-							// Scores
-							playerScore: 0,
-							computerScore: 0,
-
-							// Settings
-							phaseOneFlag: true,
-							phaseTwoFlag: true,
-							phaseThreeFlag: true,
-
-							// Modals
-							showItemsScreen: false,
-							itemsScreenFlag: true,
-						},
-						() => {
-							this.shuffleItems(this.state.items)
-							this.shuffleCards(
-								this.state.deckComputer,
-								"deckComputer"
-							)
-							this.shuffleCards(
-								this.state.deckPlayer,
-								"deckPlayer"
-							)
-						}
-					)
-				}
-			)
-		}
+		// if (
+		// 	this.state.deckComputer.length === 0 &&
+		// 	this.state.handComputer.length === 0 &&
+		// 	this.state.winLoseScreenFlag &&
+		// 	this.state.deckPlayer.length === 0 &&
+		// 	this.state.handPlayer.length === 0
+		// ) {
+		// 	this.finishGame()
+		// }
 	}
 
 	switchWelcomeScreen = () => {
@@ -655,6 +603,61 @@ class App extends React.Component {
 		)
 	}
 
+	finishGame = () => {
+		console.log("Players ran out of cards.")
+		this.setState(
+			{
+				showWinLoseScreen: true,
+				winLoseScreenFlag: false,
+				currentPhase: 0,
+				turnCounter: 0,
+				playerFinalScore: this.state.playerOverallScore,
+				computerFinalScore: this.state.computerOverallScore,
+			},
+			() => {
+				console.log(
+					`Final scores: player - ${this.state.playerFinalScore}, AI - ${this.state.computerFinalScore}`
+				)
+				this.setState(
+					{
+						deckPlayer: [...deckStats, ...deckStats],
+						deckComputer: [...deckStats, ...deckStats],
+						items: [...itemStats],
+						itemsLeft: null,
+						itemsCurrent: [],
+						playerItems: [],
+						computerItems: [],
+						lineCards: [],
+						cardsDeckLeftPlayer: 10,
+						cardsDeckLeftComputer: 10,
+						turnCounter: 0,
+
+						// Scores
+						playerScore: 0,
+						computerScore: 0,
+
+						// Settings
+						phaseOneFlag: true,
+						phaseTwoFlag: true,
+						phaseThreeFlag: true,
+
+						// Modals
+						showItemsScreen: false,
+						itemsScreenFlag: true,
+					},
+					() => {
+						this.shuffleItems(this.state.items)
+						this.shuffleCards(
+							this.state.deckComputer,
+							"deckComputer"
+						)
+						this.shuffleCards(this.state.deckPlayer, "deckPlayer")
+					}
+				)
+			}
+		)
+	}
+
 	calculateBonus = () => {
 		this.state.lineCards.forEach((el, id) => {
 			let cardBefore = this.state.lineCards[id - 1]
@@ -743,7 +746,6 @@ class App extends React.Component {
 				if (cardAfter !== undefined && cardAfter.name === "palacz") {
 					let lineCardsCopy = [...this.state.lineCards]
 					lineCardsCopy[id + 1].effect = "scared"
-					console.log("pielegniarka", lineCardsCopy[id])
 					lineCardsCopy[id].effect = "angry"
 
 					if (
@@ -773,7 +775,6 @@ class App extends React.Component {
 				playerPenalty -= el.effect
 			}
 		})
-		console.log("playerPenalty", playerPenalty)
 
 		let computerCards = [
 			...this.state.lineCards.filter(
@@ -786,7 +787,6 @@ class App extends React.Component {
 				computerPenalty -= el.effect
 			}
 		})
-		console.log("computerPenalty", computerPenalty)
 
 		this.setState({
 			playerPenalty: playerPenalty,
@@ -811,6 +811,13 @@ class App extends React.Component {
 						playerItems={this.state.playerItems}
 						computerItems={this.state.computerItems}
 						showWinLoseScreen={this.state.showWinLoseScreen}
+						// States necessary for winning conditions:
+						deckComputer={this.state.deckComputer}
+						handComputer={this.state.handComputer}
+						winLoseScreenFlag={this.state.winLoseScreenFlag}
+						deckPlayer={this.state.deckPlayer}
+						handPlayer={this.state.handPlayer}
+						finishGame={this.finishGame}
 					/>
 				)}
 

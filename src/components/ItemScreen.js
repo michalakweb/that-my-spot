@@ -76,7 +76,18 @@ const ItemScreen = (props) => (
 				<div
 					id="win_item_screen_btn"
 					onClick={() => {
-						props.switchItemsScreen()
+						// finishing game conditions
+						if (
+							props.deckComputer.length === 0 &&
+							props.handComputer.length === 0 &&
+							props.winLoseScreenFlag &&
+							props.deckPlayer.length === 0 &&
+							props.handPlayer.length === 0
+						) {
+							props.finishGame()
+						} else {
+							props.switchItemsScreen()
+						}
 					}}
 				></div>
 				{props.itemPlayerMsg === "" && props.itemComputerMsg === "" && (
