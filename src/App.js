@@ -27,14 +27,14 @@ const itemStats = [
 	{
 		id: 1,
 		name: "magnetofon",
-		value: 7,
+		value: 5,
 		trueName: "Tape recorder AKAI 4000DS",
 	},
 	{ id: 2, name: "kotek", value: 1, trueName: "Cheap plastic toy" },
 	{
 		id: 3,
 		name: "komputer",
-		value: 8,
+		value: 5,
 		trueName: "Microcomputer ELWRO 800 JUNIOR",
 	},
 	{
@@ -43,7 +43,7 @@ const itemStats = [
 		value: 5,
 		trueName: "Electronic keyboard 'Elwirka'",
 	},
-	{ id: 5, name: "auto", value: 10, trueName: "Fiat 126P" },
+	{ id: 5, name: "auto", value: 5, trueName: "Fiat 126P" },
 	{ id: 6, name: "gra", value: 3, trueName: "Football family game" },
 	{ id: 7, name: "gumka", value: 1, trueName: "Pencil eraser" },
 	{ id: 8, name: "herba", value: 3, trueName: "Indian tea 'Darjeeling'" },
@@ -66,7 +66,7 @@ const itemStats = [
 	{
 		id: 15,
 		name: "aparat",
-		value: 5,
+		value: 4,
 		trueName: "Camera ami 66",
 	},
 	{
@@ -417,7 +417,13 @@ class App extends React.Component {
 
 	// Computer move logic
 	sendCardToLineComputer = () => {
-		if (this.state.handComputer.length === 0) {
+		let chance = Math.random() > 0.85
+		if (
+			this.state.handComputer.length === 0 ||
+			(chance &&
+				this.state.handComputer.length < 4 &&
+				this.state.deckComputer.length > 0)
+		) {
 			this.setState({
 				computerDrawsCard: true,
 			})
@@ -432,7 +438,12 @@ class App extends React.Component {
 				setTimeout(() => {
 					console.log("computer move")
 
-					if (this.state.handComputer.length === 0) {
+					if (
+						this.state.handComputer.length === 0 ||
+						(chance &&
+							this.state.handComputer.length < 4 &&
+							this.state.deckComputer.length > 0)
+					) {
 						// no cards left, so has to draw one
 						console.log("computer draws a card")
 
@@ -471,6 +482,7 @@ class App extends React.Component {
 							lastCardInLine !== undefined &&
 							lastCardInLine.name === "partyjniak" &&
 							lastCardInLine.source === "deckPlayer" &&
+							this.state.handComputer.length > 0 &&
 							this.state.handComputer.filter(
 								(el) => el.name === "palacz"
 							).length > 0
@@ -494,6 +506,7 @@ class App extends React.Component {
 							beforeLastCardInLine.source === "deckComputer" &&
 							lastCardInLine.name === "palacz" &&
 							lastCardInLine.source === "deckPlayer" &&
+							this.state.handComputer.length > 0 &&
 							this.state.handComputer.filter(
 								(el) => el.name === "pielegniarka"
 							).length > 0
