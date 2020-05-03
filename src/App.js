@@ -16,6 +16,13 @@ const deckStats = [
 	{ id: 4, name: "palacz", value: 1 },
 	{ id: 5, name: "partyjniak", value: 4 },
 ]
+const deckStats2 = [
+	{ id: 2, name: "baba", value: 2 },
+	{ id: 2, name: "baba", value: 2 },
+	{ id: 3, name: "dzieciak", value: 1 },
+	{ id: 4, name: "palacz", value: 1 },
+	{ id: 5, name: "partyjniak", value: 4 },
+]
 const itemStats = [
 	{
 		id: 1,
@@ -42,12 +49,12 @@ const itemStats = [
 	{ id: 8, name: "herba", value: 3, trueName: "Indian tea 'Darjeeling'" },
 	{ id: 9, name: "herbata", value: 2, trueName: "'Popular' tea" },
 	{ id: 10, name: "rzutnik", value: 4, trueName: "Diascope Jota B-6" },
-	{ id: 11, name: "papier", value: 2, trueName: "Toilet paper" },
+	{ id: 11, name: "papier", value: 3, trueName: "Stock of toilet paper" },
 	{ id: 12, name: "fajki", value: 1, trueName: "'Sport' cigarettes pack" },
 	{
 		id: 13,
 		name: "telewizorek",
-		value: 1,
+		value: 3,
 		trueName: "Mini-TV with slides",
 	},
 	{
@@ -73,8 +80,8 @@ const itemStats = [
 class App extends React.Component {
 	state = {
 		// Game info
-		deckPlayer: [...deckStats, ...deckStats],
-		deckComputer: [...deckStats, ...deckStats],
+		deckPlayer: [...deckStats, ...deckStats2],
+		deckComputer: [...deckStats, ...deckStats2],
 		handPlayer: [],
 		handComputer: [],
 		items: [...itemStats],
@@ -475,7 +482,7 @@ class App extends React.Component {
 								cardId,
 								1
 							)
-							console.log(computerChosenCard)
+							console.log("ai: attack mode")
 							// if the before last card belongs to the ai
 							// and is a 4-point card and the last one is the smoker belonging
 							// to the player - use the nurse
@@ -498,44 +505,7 @@ class App extends React.Component {
 								cardId,
 								1
 							)
-							console.log(computerChosenCard)
-							// if the last card belongs to the player
-							// and it's a smoker, then try to use your weakest card
-						} else if (
-							this.state.lineCards.length > 1 &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name === "palacz" &&
-							lastCardInLine.source === "deckPlayer" &&
-							(_.findIndex(this.state.handComputer, function (o) {
-								return o.value < 2
-							}) ||
-								_.findIndex(this.state.handComputer, {
-									name: "dzieciak",
-								}))
-						) {
-							let cardId = ""
-							if (
-								_.findIndex(this.state.handComputer, {
-									name: "dzieciak",
-								})
-							) {
-								cardId = _.findIndex(this.state.handComputer, {
-									name: "dzieciak",
-								})
-							} else {
-								cardId = _.findIndex(
-									this.state.handComputer,
-									function (o) {
-										return o.value < 2
-									}
-								)
-							}
-
-							computerChosenCard = this.state.handComputer.splice(
-								cardId,
-								1
-							)
-							console.log(computerChosenCard)
+							console.log("ai: protect mode")
 						} else {
 							// delete first card from computer hand
 							computerChosenCard = this.state.handComputer.splice(
@@ -718,8 +688,8 @@ class App extends React.Component {
 				// reset state
 				this.setState(
 					{
-						deckPlayer: [...deckStats, ...deckStats],
-						deckComputer: [...deckStats, ...deckStats],
+						deckPlayer: [...deckStats, ...deckStats2],
+						deckComputer: [...deckStats, ...deckStats2],
 						items: [...itemStats],
 						itemsLeft: null,
 						itemsCurrent: [],
