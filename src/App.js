@@ -1,5 +1,6 @@
 import React from "react"
 import "./App.scss"
+import _ from "lodash"
 import Header from "./components/header/Header"
 import Body from "./components/body/Body"
 import Footer from "./components/footer/Footer"
@@ -233,6 +234,9 @@ class App extends React.Component {
 		randomizeItems(lowValItems)
 		randomizeItems(highValItems)
 
+		console.log("low", lowValItems)
+		console.log("high", highValItems)
+
 		// combining items into low/high pairs
 		let combinedItems = []
 		lowValItems.forEach((el, id) => {
@@ -445,11 +449,102 @@ class App extends React.Component {
 							computerDrawsCard: false,
 						}))
 					} else {
-						// delete first card from computer hand
-						let computerChosenCard = this.state.handComputer.splice(
-							0,
-							1
-						)
+						let computerChosenCard = ""
+						let lastCardInLine = this.state.lineCards[
+							this.state.lineCards.length - 1
+						]
+						let beforeLastCardInLine = this.state.lineCards[
+							this.state.lineCards.length - 2
+						]
+
+						// if the last card belongs to the player
+						// and is a 4-point card then use the smoker
+						if (
+							this.state.lineCards.length > 0 &&
+							lastCardInLine !== undefined &&
+							lastCardInLine.name === "partyjniak" &&
+							lastCardInLine.source === "deckPlayer" &&
+							this.state.handComputer.filter(
+								(el) => el.name === "palacz"
+							).length > 0
+						) {
+							let cardId = _.findIndex(this.state.handComputer, {
+								name: "palacz",
+							})
+							computerChosenCard = this.state.handComputer.splice(
+								cardId,
+								1
+							)
+							console.log(computerChosenCard)
+							// if the before last card belongs to the ai
+							// and is a 4-point card and the last one is the smoker belonging
+							// to the player - use the nurse
+						} else if (
+							this.state.lineCards.length > 1 &&
+							lastCardInLine !== undefined &&
+							beforeLastCardInLine !== undefined &&
+							beforeLastCardInLine.name === "partyjniak" &&
+							beforeLastCardInLine.source === "deckComputer" &&
+							lastCardInLine.name === "palacz" &&
+							lastCardInLine.source === "deckPlayer" &&
+							this.state.handComputer.filter(
+								(el) => el.name === "pielegniarka"
+							).length > 0
+						) {
+							let cardId = _.findIndex(this.state.handComputer, {
+								name: "pielegniarka",
+							})
+							computerChosenCard = this.state.handComputer.splice(
+								cardId,
+								1
+							)
+							console.log(computerChosenCard)
+							// if the last card belongs to the player
+							// and it's a smoker, then try to use your weakest card
+						} else if (
+							this.state.lineCards.length > 1 &&
+							lastCardInLine !== undefined &&
+							lastCardInLine.name === "palacz" &&
+							lastCardInLine.source === "deckPlayer" &&
+							(_.findIndex(this.state.handComputer, function (o) {
+								return o.value < 2
+							}) ||
+								_.findIndex(this.state.handComputer, {
+									name: "dzieciak",
+								}))
+						) {
+							let cardId = ""
+							if (
+								_.findIndex(this.state.handComputer, {
+									name: "dzieciak",
+								})
+							) {
+								cardId = _.findIndex(this.state.handComputer, {
+									name: "dzieciak",
+								})
+							} else {
+								cardId = _.findIndex(
+									this.state.handComputer,
+									function (o) {
+										return o.value < 2
+									}
+								)
+							}
+
+							computerChosenCard = this.state.handComputer.splice(
+								cardId,
+								1
+							)
+							console.log(computerChosenCard)
+						} else {
+							// delete first card from computer hand
+							computerChosenCard = this.state.handComputer.splice(
+								0,
+								1
+							)
+
+							console.log("deleting firs card in hand")
+						}
 
 						this.setState(
 							(prevState) => ({
