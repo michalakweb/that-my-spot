@@ -166,13 +166,22 @@ class App extends React.Component {
 			this.state.chosenCard !== null &&
 			this.state.chosenCardConfirm !== null &&
 			this.state.chosenCard === this.state.chosenCardConfirm &&
-			this.state.currentPhase === 1
+			this.state.currentPhase === 1 &&
+			(this.state.turnCounter === 0 ||
+				this.state.turnCounter === 2 ||
+				this.state.turnCounter === 4)
 		) {
 			this.sendCardToLinePlayer()
 		}
 
 		// sending card to line --computer
-		if (this.state.phaseThreeFlag && this.state.currentPhase === 2) {
+		if (
+			this.state.phaseThreeFlag &&
+			this.state.currentPhase === 2 &&
+			(this.state.turnCounter === 1 ||
+				this.state.turnCounter === 3 ||
+				this.state.turnCounter === 5)
+		) {
 			this.sendCardToLineComputer()
 		}
 
@@ -417,13 +426,73 @@ class App extends React.Component {
 
 	// Computer move logic
 	sendCardToLineComputer = () => {
-		let chance = Math.random() > 0.85
-		if (
-			this.state.handComputer.length === 0 ||
-			(chance &&
-				this.state.handComputer.length < 4 &&
-				this.state.deckComputer.length > 0)
+		let hasNoCardsInHand = this.state.handComputer.length === 0
+		let hasLessThan5CardsInHand = this.state.handComputer.length < 5
+		let hasCardsInDeck = this.state.deckComputer.length > 0
+		let isLastTurn =
+			this.state.turnCounter === 6 || this.state.turnCounter === 5
+		let playerTurnScore = this.state.playerScore
+		let computerTurnScore = this.state.computerScore
+		let turnScoreDiff = playerTurnScore - computerTurnScore
+		let itemsScoreDiff = Math.abs(
+			this.state.playerOverallScore - this.state.computerOverallScore
+		)
+		let currentItemsValueDiff =
+			this.state.itemsCurrent[0] - this.state.itemsCurrent[1]
+		let hasFourPointCards = _.findIndex(this.state.handComputer, {
+			value: 4,
+		})
+		let hasStrongerCards = _.findIndex(this.state.handComputer, function (
+			o
 		) {
+			return o.value > 1
+		})
+		let hasNurse = _.findIndex(this.state.handComputer, {
+			name: "pielegniarka",
+		})
+		let hasSmoker = _.findIndex(this.state.handComputer, {
+			name: "palacz",
+		})
+		let lastCardInLine = () => {
+			if (this.state.lineCards.length > 0) {
+				return this.state.lineCards[this.state.lineCards.length - 1]
+			}
+		}
+
+		console.log("turnScorediff", turnScoreDiff >= 2)
+		console.log("isLastTurn", isLastTurn)
+		console.log("hasfourpointcards", hasFourPointCards > -1)
+
+		let drawConditions =
+			// most important case
+			(hasNoCardsInHand && hasCardsInDeck) ||
+			// player has x >= 2 point advantage in this turn and
+			// ai doesn't have 4 point cards
+			(hasLessThan5CardsInHand &&
+				hasCardsInDeck &&
+				isLastTurn &&
+				turnScoreDiff >= 2 &&
+				hasFourPointCards === -1) ||
+			// difference of current items value is less or equal 3 and
+			// the ai has a similar overall score
+			(hasLessThan5CardsInHand &&
+				hasCardsInDeck &&
+				currentItemsValueDiff <= 3 &&
+				itemsScoreDiff < 4) ||
+			// the ai leads, so there is no point in putting more cards
+			(hasLessThan5CardsInHand &&
+				hasCardsInDeck &&
+				computerTurnScore > playerTurnScore) ||
+			// the latest card in line is the smoker
+			// and the ai doesn't have a smoker, a nurse or a high value card
+			(hasLessThan5CardsInHand &&
+				hasCardsInDeck &&
+				lastCardInLine.name === "palacz" &&
+				hasStrongerCards === -1 &&
+				hasNurse === -1 &&
+				hasSmoker === -1)
+
+		if (drawConditions) {
 			this.setState({
 				computerDrawsCard: true,
 			})
@@ -438,12 +507,7 @@ class App extends React.Component {
 				setTimeout(() => {
 					console.log("computer move")
 
-					if (
-						this.state.handComputer.length === 0 ||
-						(chance &&
-							this.state.handComputer.length < 4 &&
-							this.state.deckComputer.length > 0)
-					) {
+					if (drawConditions) {
 						// no cards left, so has to draw one
 						console.log("computer draws a card")
 
@@ -475,9 +539,25 @@ class App extends React.Component {
 							this.state.lineCards.length - 2
 						]
 
-						// if the last card belongs to the player
-						// and is a 4-point card then use the smoker
+						// last turn and player has x >= 2 point advantage, but
+						// ai has 4 point cards
 						if (
+							turnScoreDiff >= 2 &&
+							isLastTurn &&
+							hasFourPointCards > -1
+						) {
+							computerChosenCard = this.state.handComputer.splice(
+								hasFourPointCards,
+								1
+							)
+							console.log(
+								"ai: player is leading, but I have a valuable card to turn the tide"
+							)
+						}
+
+						// last card belongs to the player
+						// and is a 4-point card then use the smoker
+						else if (
 							this.state.lineCards.length > 0 &&
 							lastCardInLine !== undefined &&
 							lastCardInLine.name === "partyjniak" &&
@@ -495,10 +575,11 @@ class App extends React.Component {
 								1
 							)
 							console.log("ai: attack mode")
-							// if the before last card belongs to the ai
-							// and is a 4-point card and the last one is the smoker belonging
-							// to the player - use the nurse
-						} else if (
+						}
+						// if the before last card belongs to the ai
+						// and is a 4-point card and the last one is the smoker belonging
+						// to the player - use the nurse
+						else if (
 							this.state.lineCards.length > 1 &&
 							lastCardInLine !== undefined &&
 							beforeLastCardInLine !== undefined &&
@@ -519,6 +600,39 @@ class App extends React.Component {
 								1
 							)
 							console.log("ai: protect mode")
+						}
+
+						// the latest card in line is the smoker
+						// and the ai has a smoker, a nurse or high value card
+						else if (
+							hasLessThan5CardsInHand &&
+							hasCardsInDeck &&
+							lastCardInLine !== undefined &&
+							lastCardInLine.name === "palacz" &&
+							(hasStrongerCards > -1 ||
+								hasNurse > -1 ||
+								hasSmoker > -1)
+						) {
+							if (hasSmoker > -1) {
+								computerChosenCard = this.state.handComputer.splice(
+									hasSmoker,
+									1
+								)
+							} else if (hasStrongerCards > -1) {
+								computerChosenCard = this.state.handComputer.splice(
+									hasStrongerCards,
+									1
+								)
+							} else {
+								computerChosenCard = this.state.handComputer.splice(
+									hasNurse,
+									1
+								)
+							}
+
+							console.log(
+								"ai: trying to block or score upon last card smoker"
+							)
 						} else {
 							// delete first card from computer hand
 							computerChosenCard = this.state.handComputer.splice(
