@@ -430,13 +430,16 @@ class App extends React.Component {
 
 	// Computer move logic
 	sendCardToLineComputer = () => {
+		console.log("the state is", this.state)
+
 		let hasNoCardsInHand = this.state.handComputer.length === 0
 		let hasCardsInHand = this.state.handComputer.length > 0
 		let hasLessThan5CardsInHand = this.state.handComputer.length < 5
 		let hasCardsInDeck = this.state.deckComputer.length > 0
 		let isLastTurn = this.state.turnCounter === 5
-		let playerTurnScore = this.state.playerScore
-		let computerTurnScore = this.state.computerScore
+		let playerTurnScore = this.state.playerScore - this.state.playerPenalty
+		let computerTurnScore =
+			this.state.computerScore - this.state.computerPenalty
 		let turnScoreDiff = playerTurnScore - computerTurnScore
 		let itemsScoreDiff = Math.abs(
 			this.state.playerOverallScore - this.state.computerOverallScore
@@ -472,12 +475,16 @@ class App extends React.Component {
 				value: 4,
 			})
 			hasWeakerCards = _.findIndex(this.state.handComputer, function (o) {
-				return o.value === 1
+				if (o !== undefined) {
+					return o.value === 1
+				}
 			})
 			hasStrongerCards = _.findIndex(this.state.handComputer, function (
 				o
 			) {
-				return o.value > 1
+				if (o !== undefined) {
+					return o.value > 1
+				}
 			})
 			hasNurse = _.findIndex(this.state.handComputer, {
 				name: "pielegniarka",
@@ -563,12 +570,13 @@ class App extends React.Component {
 			(hasCardsInHand &&
 				hasLessThan5CardsInHand &&
 				hasCardsInDeck &&
-				lastCardInLine() !== undefined &&
-				lastCardInLine().name === "palacz" &&
+				isLastTurn &&
 				((hasFourPointCards &&
-					this.computerTurnScore + 4 < this.playerTurnScore) ||
+					computerTurnScore + 4 < playerTurnScore) ||
 					(hasStrongerCards &&
-						this.computerTurnScore + 2 < this.playerTurnScore)))
+						computerTurnScore + 2 < playerTurnScore) ||
+					(hasWeakerCards &&
+						computerTurnScore + 1 < playerTurnScore)))
 
 		if (drawConditions) {
 			this.setState({
@@ -707,14 +715,14 @@ class App extends React.Component {
 									hasSmoker,
 									1
 								)
-							} else if (hasLady > -1) {
+							} else if (hasNurse > -1) {
 								computerChosenCard = this.state.handComputer.splice(
-									hasLady,
+									hasNurse,
 									1
 								)
 							} else {
 								computerChosenCard = this.state.handComputer.splice(
-									hasNurse,
+									hasLady,
 									1
 								)
 							}
