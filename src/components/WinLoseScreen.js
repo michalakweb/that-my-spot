@@ -1,25 +1,80 @@
 import React from "react"
+import computerImage from "../images/odra.jpg"
+import playerImage from "../images/player.jpg"
 
-const WinLoseScreen = (props) => (
+const WinLoseScreen = props => (
 	<div id="win_lose_screen">
 		<div id="win_lose_info_container">
-			{props.playerFinalScore > props.computerFinalScore ? (
-				<p>You won!</p>
-			) : props.playerFinalScore === props.computerFinalScore ? (
-				<p>It's a draw!</p>
-			) : (
-				<p>You lost!</p>
-			)}
+			<div id="wlic_winLose">
+				{props.playerFinalScore > props.computerFinalScore ? (
+					<h2>You won Comrade!</h2>
+				) : props.playerFinalScore === props.computerFinalScore ? (
+					<h2>It's a draw Comrade!</h2>
+				) : (
+					<h2>You lost Comrade!</h2>
+				)}
+			</div>
+			<div id="wlic_finalScores">
+				<div id="player_info_container">
+					<div id="card">
+						<div id="card_photo">
+							<img
+								src={playerImage}
+								alt="face of communist pioneer"
+							/>
+						</div>
+						<div id="card_info">
+							<p className="turnScorePlayer">
+								{props.playerFinalScore}
+							</p>
+						</div>
+					</div>
+				</div>
+				<div id="computer_info_container">
+					<div id="card">
+						<div id="card_photo">
+							<img src={computerImage} alt="old computer" />
+						</div>
+						<div id="card_info">
+							<p className="turnScoreComputer">
+								{props.computerFinalScore}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="wlic_wonItem">
+				<p>Your items:</p>
+				{props.playerItems.map((el, id) => (
+					<div key={id} id="wlic_wonItem_card">
+						<div id="wlic_wonItem_card_imgContainer">
+							<img
+								alt={el.name}
+								className="cardPhoto"
+								src={`items/${el.id}${el.name}.png`}
+							/>
+						</div>
+						<div id="wlic_wonItem_card_info">
+							<div id="wlic_wonItem_card_info_title">
+								<p>{el.trueName}</p>
+							</div>
+							<div id="wlic_wonItem_card_info_description">
+								<p>the description will go here</p>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
 		</div>
-		<div id="button_container">
-			<button
-				id="start_game_btn"
+		<div id="wlic_resetGame_btn_background" />
+		<div id="wlic_resetGame_btn">
+			<p
 				onClick={() => {
 					props.switchWinLoseScreen()
 				}}
 			>
 				Play again
-			</button>
+			</p>
 		</div>
 	</div>
 )

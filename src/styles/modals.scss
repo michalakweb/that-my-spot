@@ -301,7 +301,7 @@
 //
 
 #win_lose_screen {
-	height: 100vh;
+	min-height: 90vh;
 	background: linear-gradient(
 		15deg,
 		rgba(237, 121, 100, 1) 0%,
@@ -309,34 +309,98 @@
 	);
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	padding-top: 7vh;
+	padding-bottom: 5vh;
 	align-items: center;
 	position: relative;
 	z-index: 100;
 }
 
 #win_lose_info_container {
-	clip-path: polygon(
-		10% 30%,
-		20% 25%,
-		80% 15%,
-		90% 25%,
-		90% 75%,
-		30% 80%,
-		5% 90%,
-		15% 80%
-	);
+	height: 80vh;
+	overflow: auto;
+	position: absolute !important;
 	display: flex;
-	background-color: whitesmoke;
-	width: 50%;
-	padding: 7%;
-	max-width: 400px;
-	max-height: 200px;
+	flex-direction: column;
+	background-color: rgba(255, 255, 255, 0.6);
+	width: 90%;
+	padding: 2%;
+	border-radius: 15px;
 	z-index: 2;
 	position: relative;
 
 	p {
-		margin: 0 auto;
-		font-size: 8vh;
+		font-size: 6vw;
 	}
+
+	h2 {
+		font-size: 8vw;
+	}
+}
+
+#wlic_winLose {
+	display: flex;
+	justify-content: center;
+}
+
+#wlic_finalScores {
+	display: flex;
+	justify-content: space-evenly;
+	height: 17vw;
+}
+
+#wlic_resetGame_btn {
+	position: fixed;
+	width: 40px;
+	height: 40px;
+	left: 5px;
+	top: 35px;
+	z-index: 2;
+
+	p {
+		width: max-content;
+		transform: rotate(-45deg);
+		font-size: 25px;
+		margin: 0;
+	}
+}
+
+#wlic_resetGame_btn:hover {
+	cursor: pointer;
+}
+
+#wlic_resetGame_btn_background {
+	background-color: yellow;
+	position: fixed;
+	width: 150px;
+	height: 150px;
+	left: 0%;
+	top: 0%;
+	clip-path: polygon(0 0, 0% 100%, 100% 0);
+	z-index: 2;
+}
+
+#wlic_wonItem_card {
+	display: flex;
+	flex-direction: row;
+	border: 1px solid black;
+	border-radius: 3px;
+}
+
+#wlic_wonItem_card_imgContainer {
+	display: flex;
+	width: 30%;
+	align-items: flex-start;
+
+	img {
+		display: flex;
+		max-width: 100%;
+		object-fit: contain;
+	}
+}
+
+#wlic_wonItem_card_info {
+	display: flex;
+	width: 70%;
+	flex-direction: column;
 }

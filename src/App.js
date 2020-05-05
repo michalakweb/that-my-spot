@@ -14,41 +14,41 @@ const deckStats = [
 	{ id: 2, name: "baba", value: 2 },
 	{ id: 3, name: "dzieciak", value: 1 },
 	{ id: 4, name: "palacz", value: 1 },
-	{ id: 5, name: "partyjniak", value: 4 },
+	{ id: 5, name: "partyjniak", value: 4 }
 ]
 const deckStats2 = [
 	{ id: 2, name: "baba", value: 2 },
 	{ id: 2, name: "baba", value: 2 },
 	{ id: 3, name: "dzieciak", value: 1 },
 	{ id: 4, name: "palacz", value: 1 },
-	{ id: 5, name: "partyjniak", value: 4 },
+	{ id: 5, name: "partyjniak", value: 4 }
 ]
 const deckStats3 = [
 	{ id: 1, name: "pielegniarka", value: 1 },
 	{ id: 2, name: "baba", value: 2 },
 	{ id: 4, name: "palacz", value: 1 },
 	{ id: 5, name: "partyjniak", value: 4 },
-	{ id: 5, name: "partyjniak", value: 4 },
+	{ id: 5, name: "partyjniak", value: 4 }
 ]
 const itemStats = [
 	{
 		id: 1,
 		name: "magnetofon",
 		value: 5,
-		trueName: "Tape recorder AKAI 4000DS",
+		trueName: "Tape recorder AKAI 4000DS"
 	},
 	{ id: 2, name: "kotek", value: 1, trueName: "Cheap plastic toy" },
 	{
 		id: 3,
 		name: "komputer",
 		value: 5,
-		trueName: "Microcomputer ELWRO 800 JUNIOR",
+		trueName: "Microcomputer ELWRO 800 JUNIOR"
 	},
 	{
 		id: 4,
 		name: "klawisze",
 		value: 5,
-		trueName: "Electronic keyboard 'Elwirka'",
+		trueName: "Electronic keyboard 'Elwirka'"
 	},
 	{ id: 5, name: "auto", value: 5, trueName: "Fiat 126P" },
 	{ id: 6, name: "gra", value: 3, trueName: "Football family game" },
@@ -62,26 +62,26 @@ const itemStats = [
 		id: 13,
 		name: "telewizorek",
 		value: 3,
-		trueName: "Mini-TV with slides",
+		trueName: "Mini-TV with slides"
 	},
 	{
 		id: 14,
 		name: "sokowirowka",
 		value: 4,
-		trueName: "Juicer 'Katarzyna'",
+		trueName: "Juicer 'Katarzyna'"
 	},
 	{
 		id: 15,
 		name: "aparat",
 		value: 4,
-		trueName: "Camera ami 66",
+		trueName: "Camera ami 66"
 	},
 	{
 		id: 16,
 		name: "colorofon",
 		value: 4,
-		trueName: "Colorofon C23-B",
-	},
+		trueName: "Colorofon C23-B"
+	}
 ]
 
 class App extends React.Component {
@@ -139,7 +139,7 @@ class App extends React.Component {
 		itemsScreenFlag: true,
 		winLoseScreenFlag: true,
 
-		error: false,
+		error: false
 	}
 
 	componentDidMount() {
@@ -152,14 +152,14 @@ class App extends React.Component {
 		// error for undefined computer hand
 		if (
 			!this.state.error &&
-			(this.state.handComputer.filter((el) => el === undefined).length >
+			(this.state.handComputer.filter(el => el === undefined).length >
 				0 ||
-				this.state.deckComputer.filter((el) => el === undefined)
-					.length > 0)
+				this.state.deckComputer.filter(el => el === undefined).length >
+					0)
 		) {
 			this.setState(
 				{
-					error: true,
+					error: true
 				},
 				() => {
 					console.log("EMERGENCY", this.state)
@@ -179,7 +179,7 @@ class App extends React.Component {
 				{
 					phaseOneFlag: false,
 					currentPhase: 1,
-					turnCounter: 0,
+					turnCounter: 0
 				},
 				() => {
 					console.log("switched to phase 1")
@@ -218,7 +218,7 @@ class App extends React.Component {
 		) {
 			this.setState(
 				{
-					noClicking: true,
+					noClicking: true
 				},
 				() => {
 					setTimeout(() => {
@@ -231,13 +231,13 @@ class App extends React.Component {
 
 	switchWelcomeScreen = () => {
 		this.setState({
-			showWelcomeScreen: false,
+			showWelcomeScreen: false
 		})
 	}
 
 	switchItemsScreen = () => {
 		this.setState({
-			showItemsScreen: false,
+			showItemsScreen: false
 		})
 	}
 
@@ -248,11 +248,11 @@ class App extends React.Component {
 			winLoseScreenFlag: true,
 			playerOverallScore: 0,
 			computerOverallScore: 0,
-			playerItems: [],
+			playerItems: []
 		})
 	}
 
-	shuffleItems = (items) => {
+	shuffleItems = items => {
 		let itemsCopy = [...items]
 		console.log("shuffling items")
 
@@ -284,7 +284,7 @@ class App extends React.Component {
 
 		this.setState(
 			{
-				items: [...combinedItems],
+				items: [...combinedItems]
 			},
 			() => {
 				this.drawItemsFromDeck([...combinedItems])
@@ -294,7 +294,7 @@ class App extends React.Component {
 
 	shuffleCards = (array, stateName) => {
 		// add source for card sets
-		let arr = [...array].map((obj) => ({ ...obj, source: stateName }))
+		let arr = [...array].map(obj => ({ ...obj, source: stateName }))
 
 		console.log(`shuffling cards for ${stateName}`)
 		var j, x, i
@@ -307,7 +307,7 @@ class App extends React.Component {
 
 		this.setState(
 			{
-				[stateName]: [...arr],
+				[stateName]: [...arr]
 			},
 			() => {
 				this.drawCardsFromDeck([...arr], stateName)
@@ -315,18 +315,18 @@ class App extends React.Component {
 		)
 	}
 
-	drawItemsFromDeck = (array) => {
+	drawItemsFromDeck = array => {
 		console.log("drawing items")
 
 		var itemsCurrent = array.splice(-2, 2)
 		this.setState(
 			{
 				items: array,
-				itemsCurrent: itemsCurrent.sort((a, b) => b.value - a.value),
+				itemsCurrent: itemsCurrent.sort((a, b) => b.value - a.value)
 			},
 			() => {
 				this.setState({
-					itemsLeft: this.state.items.length,
+					itemsLeft: this.state.items.length
 				})
 			}
 		)
@@ -340,11 +340,11 @@ class App extends React.Component {
 			this.setState(
 				{
 					[stateName]: array,
-					handComputer: currentHand,
+					handComputer: currentHand
 				},
 				() => {
 					this.setState({
-						cardsDeckLeftComputer: this.state.deckPlayer.length,
+						cardsDeckLeftComputer: this.state.deckPlayer.length
 					})
 				}
 			)
@@ -352,11 +352,11 @@ class App extends React.Component {
 			this.setState(
 				{
 					[stateName]: array,
-					handPlayer: currentHand,
+					handPlayer: currentHand
 				},
 				() => {
 					this.setState({
-						cardsDeckLeftPlayer: this.state.deckPlayer.length,
+						cardsDeckLeftPlayer: this.state.deckPlayer.length
 					})
 				}
 			)
@@ -371,13 +371,13 @@ class App extends React.Component {
 			1
 		)[0]
 
-		this.setState((prevState) => ({
+		this.setState(prevState => ({
 			handPlayer: [...this.state.handPlayer, drawnCard],
 			cardsDeckLeftPlayer: prevState.cardsDeckLeftPlayer - 1,
 			phaseTwoFlag: false,
 			currentPhase: 2,
 			turnCounter: prevState.turnCounter + 1,
-			aiCanMove: true,
+			aiCanMove: true
 		}))
 	}
 
@@ -387,7 +387,7 @@ class App extends React.Component {
 
 			this.setState({
 				chosenCard: JSON.stringify(cardInfo),
-				chosenCardPosition: position,
+				chosenCardPosition: position
 			})
 
 			if (
@@ -397,7 +397,7 @@ class App extends React.Component {
 				console.log("clicked twice on the same card")
 
 				this.setState({
-					chosenCardConfirm: JSON.stringify(cardInfo),
+					chosenCardConfirm: JSON.stringify(cardInfo)
 				})
 			}
 		}
@@ -411,7 +411,7 @@ class App extends React.Component {
 		)[0]
 
 		this.setState(
-			(prevState) => ({
+			prevState => ({
 				phaseTwoFlag: false,
 				currentPhase: 2,
 				chosenCard: null,
@@ -419,23 +419,23 @@ class App extends React.Component {
 				chosenCardPosition: null,
 				lineCards: [
 					...this.state.lineCards,
-					JSON.parse(this.state.chosenCard),
-				],
+					JSON.parse(this.state.chosenCard)
+				]
 			}),
 			() => {
 				console.log("card sent to line by player")
 
 				// updating the scores for player
 				this.setState(
-					(prevState) => ({
+					prevState => ({
 						playerScore:
-							prevState.playerScore + playerChosenCard.value,
+							prevState.playerScore + playerChosenCard.value
 					}),
 					() => {
 						this.setState(
-							(prevState) => ({
+							prevState => ({
 								turnCounter: prevState.turnCounter + 1,
-								aiCanMove: true,
+								aiCanMove: true
 							}),
 							() => {
 								this.calculateBonus()
@@ -453,7 +453,7 @@ class App extends React.Component {
 		console.log("ai move")
 		this.setState(
 			{
-				aiCanMove: false,
+				aiCanMove: false
 			},
 			() => {
 				let hasNoCardsInHand = this.state.handComputer.length === 0
@@ -491,7 +491,7 @@ class App extends React.Component {
 
 				if (hasCardsInHand) {
 					hasFourPointCards = _.findIndex(this.state.handComputer, {
-						value: 4,
+						value: 4
 					})
 					hasWeakerCards = _.findIndex(
 						this.state.handComputer,
@@ -506,16 +506,16 @@ class App extends React.Component {
 						}
 					)
 					hasNurse = _.findIndex(this.state.handComputer, {
-						name: "pielegniarka",
+						name: "pielegniarka"
 					})
 					hasSmoker = _.findIndex(this.state.handComputer, {
-						name: "palacz",
+						name: "palacz"
 					})
 					hasKid = _.findIndex(this.state.handComputer, {
-						name: "dzieciak",
+						name: "dzieciak"
 					})
 					hasLady = _.findIndex(this.state.handComputer, {
-						name: "baba",
+						name: "baba"
 					})
 				}
 
@@ -612,19 +612,19 @@ class App extends React.Component {
 				if (drawConditions()) {
 					this.setState(
 						{
-							computerDrawsCard: true,
+							computerDrawsCard: true
 						},
 						() => {
 							this.setState(
 								{
 									phaseThreeFlag: false,
-									computerThinking: true,
+									computerThinking: true
 								},
 								() => {
 									setTimeout(() => {
 										if (this.state.computerDrawsCard) {
 											let deckComputerCopy = [
-												...this.state.deckComputer,
+												...this.state.deckComputer
 											]
 											let drawnCard = deckComputerCopy.splice(
 												this.state.deckPlayer.length -
@@ -634,10 +634,10 @@ class App extends React.Component {
 
 											let handComputerCopy = [
 												...this.state.handComputer,
-												drawnCard,
+												drawnCard
 											]
 
-											this.setState((prevState) => ({
+											this.setState(prevState => ({
 												deckComputer: deckComputerCopy,
 												handComputer: handComputerCopy,
 												cardsDeckLeftComputer:
@@ -649,7 +649,7 @@ class App extends React.Component {
 												turnCounter:
 													prevState.turnCounter + 1,
 												computerThinking: false,
-												computerDrawsCard: false,
+												computerDrawsCard: false
 											}))
 										}
 									}, 1000)
@@ -682,7 +682,7 @@ class App extends React.Component {
 						)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 
 						console.log(
@@ -705,7 +705,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else if (hasSmoker > -1) {
 							let handComputerCopy = [...this.state.handComputer]
@@ -715,7 +715,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else {
 							let handComputerCopy = [...this.state.handComputer]
@@ -725,7 +725,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						}
 
@@ -755,7 +755,7 @@ class App extends React.Component {
 						)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 
 						console.log("ai: protect mode")
@@ -779,7 +779,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else if (hasNurse > -1) {
 							let handComputerCopy = [...this.state.handComputer]
@@ -789,7 +789,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else {
 							let handComputerCopy = [...this.state.handComputer]
@@ -799,7 +799,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						}
 
@@ -827,7 +827,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else if (hasKid > -1) {
 							let handComputerCopy = [...this.state.handComputer]
@@ -837,7 +837,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else {
 							let handComputerCopy = [...this.state.handComputer]
@@ -847,7 +847,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						}
 
@@ -873,7 +873,7 @@ class App extends React.Component {
 						)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 						console.log("ai: attack mode")
 					}
@@ -897,7 +897,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else if (hasSmoker > -1) {
 							let handComputerCopy = [...this.state.handComputer]
@@ -907,7 +907,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else if (hasFourPointCards > -1) {
 							let handComputerCopy = [...this.state.handComputer]
@@ -917,7 +917,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else {
 							let handComputerCopy = [...this.state.handComputer]
@@ -927,7 +927,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						}
 
@@ -952,7 +952,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else if (hasStrongerCards > -1) {
 							let handComputerCopy = [...this.state.handComputer]
@@ -962,7 +962,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else {
 							let handComputerCopy = [...this.state.handComputer]
@@ -972,7 +972,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						}
 
@@ -997,7 +997,7 @@ class App extends React.Component {
 						)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 					}
 
@@ -1017,7 +1017,7 @@ class App extends React.Component {
 						)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 					}
 
@@ -1038,7 +1038,7 @@ class App extends React.Component {
 						)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 					}
 
@@ -1061,7 +1061,7 @@ class App extends React.Component {
 						)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 					}
 
@@ -1076,7 +1076,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else if (hasStrongerCards > -1) {
 							let handComputerCopy = [...this.state.handComputer]
@@ -1086,7 +1086,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						} else {
 							let handComputerCopy = [...this.state.handComputer]
@@ -1096,7 +1096,7 @@ class App extends React.Component {
 							)
 
 							this.setState({
-								handComputer: handComputerCopy,
+								handComputer: handComputerCopy
 							})
 						}
 
@@ -1109,7 +1109,7 @@ class App extends React.Component {
 						computerChosenCard = handComputerCopy.splice(0, 1)
 
 						this.setState({
-							handComputer: handComputerCopy,
+							handComputer: handComputerCopy
 						})
 
 						console.log("ai: deleting first card in hand")
@@ -1117,34 +1117,34 @@ class App extends React.Component {
 
 					let lineCardsCopy = [
 						...this.state.lineCards,
-						...computerChosenCard,
+						...computerChosenCard
 					]
 
 					setTimeout(() => {
 						this.setState(
 							{
 								currentPhase: 3,
-								lineCards: lineCardsCopy,
+								lineCards: lineCardsCopy
 							},
 							() => {
 								console.log("card sent to line by computer")
 
 								// updating the scores for computer
 								this.setState(
-									(prevState) => ({
+									prevState => ({
 										computerScore:
 											prevState.computerScore +
-											computerChosenCard[0].value,
+											computerChosenCard[0].value
 									}),
 									() => {
 										this.setState(
-											(prevState) => ({
+											prevState => ({
 												phaseTwoFlag: true,
 												phaseThreeFlag: true,
 												currentPhase: 1,
 												turnCounter:
 													prevState.turnCounter + 1,
-												computerThinking: false,
+												computerThinking: false
 											}),
 											() => {
 												this.calculateBonus()
@@ -1164,7 +1164,7 @@ class App extends React.Component {
 	distributeItems = () => {
 		console.log("giving items to the winner")
 		this.setState(
-			(prevState) => ({
+			prevState => ({
 				noClicking: false,
 				itemsScreenFlag: false,
 				turnCounter: 0,
@@ -1174,7 +1174,7 @@ class App extends React.Component {
 				computerScore:
 					prevState.computerScore - this.state.computerPenalty,
 				playerPenalty: 0,
-				computerPenalty: 0,
+				computerPenalty: 0
 			}),
 			() => {
 				if (this.state.playerScore > this.state.computerScore) {
@@ -1185,14 +1185,14 @@ class App extends React.Component {
 							showItemsScreen: true,
 							itemsScreenFlag: true,
 							playerScore: 0,
-							computerScore: 0,
+							computerScore: 0
 						},
 						() => {
 							this.setState(
-								(prevState) => ({
+								prevState => ({
 									playerItems: [
 										...prevState.playerItems,
-										this.state.itemsCurrent[0],
+										this.state.itemsCurrent[0]
 									],
 									playerOverallScore:
 										prevState.playerOverallScore +
@@ -1200,13 +1200,13 @@ class App extends React.Component {
 									itemPlayerMsg: `You got a ${this.state.itemsCurrent[0].name}`,
 									computerItems: [
 										...prevState.computerItems,
-										this.state.itemsCurrent[1],
+										this.state.itemsCurrent[1]
 									],
 									computerOverallScore:
 										prevState.computerOverallScore +
 										this.state.itemsCurrent[1].value,
 									itemComputerMsg: `The AI got a ${this.state.itemsCurrent[1].name}`,
-									lineCards: [],
+									lineCards: []
 								}),
 								() => {
 									this.drawItemsFromDeck(this.state.items)
@@ -1221,14 +1221,14 @@ class App extends React.Component {
 							showItemsScreen: true,
 							itemsScreenFlag: true,
 							playerScore: 0,
-							computerScore: 0,
+							computerScore: 0
 						},
 						() => {
 							this.setState(
-								(prevState) => ({
+								prevState => ({
 									playerItems: [
 										...prevState.playerItems,
-										this.state.itemsCurrent[1],
+										this.state.itemsCurrent[1]
 									],
 									playerOverallScore:
 										prevState.playerOverallScore +
@@ -1236,13 +1236,13 @@ class App extends React.Component {
 									itemPlayerMsg: `You got a ${this.state.itemsCurrent[1].name}`,
 									computerItems: [
 										...prevState.computerItems,
-										this.state.itemsCurrent[0],
+										this.state.itemsCurrent[0]
 									],
 									computerOverallScore:
 										prevState.computerOverallScore +
 										this.state.itemsCurrent[0].value,
 									itemComputerMsg: `The AI got a ${this.state.itemsCurrent[0].name}`,
-									lineCards: [],
+									lineCards: []
 								}),
 								() => {
 									this.drawItemsFromDeck(this.state.items)
@@ -1259,11 +1259,11 @@ class App extends React.Component {
 							playerScore: 0,
 							computerScore: 0,
 							itemPlayerMsg: "",
-							itemComputerMsg: "",
+							itemComputerMsg: ""
 						},
 						() => {
 							this.setState({
-								lineCards: [],
+								lineCards: []
 							})
 						}
 					)
@@ -1281,7 +1281,7 @@ class App extends React.Component {
 				currentPhase: 0,
 				turnCounter: 0,
 				playerFinalScore: this.state.playerOverallScore,
-				computerFinalScore: this.state.computerOverallScore,
+				computerFinalScore: this.state.computerOverallScore
 			},
 			() => {
 				console.log(
@@ -1312,7 +1312,7 @@ class App extends React.Component {
 
 						// Modals
 						showItemsScreen: false,
-						itemsScreenFlag: true,
+						itemsScreenFlag: true
 					},
 					() => {
 						this.shuffleItems(this.state.items)
@@ -1346,7 +1346,7 @@ class App extends React.Component {
 						}
 
 						this.setState({
-							lineCards: [...lineCardsCopy],
+							lineCards: [...lineCardsCopy]
 						})
 					}
 
@@ -1362,7 +1362,7 @@ class App extends React.Component {
 						}
 
 						this.setState({
-							lineCards: [...lineCardsCopy],
+							lineCards: [...lineCardsCopy]
 						})
 					}
 				} else if (el.effect === "scared") {
@@ -1387,7 +1387,7 @@ class App extends React.Component {
 					}
 
 					this.setState({
-						lineCards: [...lineCardsCopy],
+						lineCards: [...lineCardsCopy]
 					})
 				}
 			}
@@ -1408,7 +1408,7 @@ class App extends React.Component {
 					}
 
 					this.setState({
-						lineCards: [...lineCardsCopy],
+						lineCards: [...lineCardsCopy]
 					})
 				}
 
@@ -1427,7 +1427,7 @@ class App extends React.Component {
 					}
 
 					this.setState({
-						lineCards: [...lineCardsCopy],
+						lineCards: [...lineCardsCopy]
 					})
 				}
 			}
@@ -1436,22 +1436,20 @@ class App extends React.Component {
 
 	applyPenalty = () => {
 		let playerCards = [
-			...this.state.lineCards.filter((el) => el.source === "deckPlayer"),
+			...this.state.lineCards.filter(el => el.source === "deckPlayer")
 		]
 		let playerPenalty = 0
-		playerCards.forEach((el) => {
+		playerCards.forEach(el => {
 			if (!!el.effect && (el.effect === -1 || el.effect === -2)) {
 				playerPenalty -= el.effect
 			}
 		})
 
 		let computerCards = [
-			...this.state.lineCards.filter(
-				(el) => el.source === "deckComputer"
-			),
+			...this.state.lineCards.filter(el => el.source === "deckComputer")
 		]
 		let computerPenalty = 0
-		computerCards.forEach((el) => {
+		computerCards.forEach(el => {
 			if (!!el.effect && (el.effect === -1 || el.effect === -2)) {
 				computerPenalty -= el.effect
 			}
@@ -1459,7 +1457,7 @@ class App extends React.Component {
 
 		this.setState({
 			playerPenalty: playerPenalty,
-			computerPenalty: computerPenalty,
+			computerPenalty: computerPenalty
 		})
 	}
 
@@ -1495,6 +1493,7 @@ class App extends React.Component {
 						switchWinLoseScreen={this.switchWinLoseScreen}
 						playerFinalScore={this.state.playerFinalScore}
 						computerFinalScore={this.state.computerFinalScore}
+						playerItems={this.state.playerItems}
 					/>
 				)}
 
