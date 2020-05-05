@@ -275,9 +275,6 @@ class App extends React.Component {
 		randomizeItems(lowValItems)
 		randomizeItems(highValItems)
 
-		console.log("low", lowValItems)
-		console.log("high", highValItems)
-
 		// combining items into low/high pairs
 		let combinedItems = []
 		lowValItems.forEach((el, id) => {
@@ -386,7 +383,7 @@ class App extends React.Component {
 
 	selectCard = (cardInfo, position) => {
 		if (this.state.currentPhase === 1) {
-			console.log("the selected card is:", cardInfo)
+			console.log("player selected card is:", cardInfo)
 
 			this.setState({
 				chosenCard: JSON.stringify(cardInfo),
@@ -453,6 +450,7 @@ class App extends React.Component {
 
 	// Computer move logic
 	sendCardToLineComputer = () => {
+		console.log("ai move")
 		this.setState(
 			{
 				aiCanMove: false,
@@ -523,7 +521,7 @@ class App extends React.Component {
 
 				let drawConditions = () => {
 					if (hasNoCardsInHand && hasCardsInDeck) {
-						console.log("drawing, no cards")
+						console.log("ai pulls a card: no cards")
 
 						return true
 					} else if (
@@ -563,33 +561,7 @@ class App extends React.Component {
 						)
 
 						return true
-					}
-					// else if (
-					// 	hasLessThan5CardsInHand &&
-					// 	hasCardsInDeck &&
-					// 	!isLastTurn &&
-					// 	currentItemsValueDiff < 3 &&
-					// 	computerWinningDiff > 2
-					// ) {
-					// 	console.log(
-					// 		"difference of current items value is less than 3 and the ai is winning and it's not the last turn"
-					// 	)
-
-					// 	return true
-					// }
-					// else if (
-					// 	hasLessThan5CardsInHand &&
-					// 	hasCardsInDeck &&
-					// 	!isLastTurn &&
-					// 	currentItemsValueDiff === 1
-					// ) {
-					// 	console.log(
-					// 		"difference of current items value is 1 and it's not the last turn"
-					// 	)
-
-					// 	return true
-					// }
-					else if (
+					} else if (
 						hasLessThan5CardsInHand &&
 						hasCardsInDeck &&
 						computerTurnScore - playerTurnScore > 3 &&
@@ -649,40 +621,38 @@ class App extends React.Component {
 									computerThinking: true,
 								},
 								() => {
-									console.log("computer move")
+									setTimeout(() => {
+										if (this.state.computerDrawsCard) {
+											let deckComputerCopy = [
+												...this.state.deckComputer,
+											]
+											let drawnCard = deckComputerCopy.splice(
+												this.state.deckPlayer.length -
+													1,
+												1
+											)[0]
 
-									if (this.state.computerDrawsCard) {
-										// no cards left, so has to draw one
-										console.log("computer draws a card")
+											let handComputerCopy = [
+												...this.state.handComputer,
+												drawnCard,
+											]
 
-										let deckComputerCopy = [
-											...this.state.deckComputer,
-										]
-										let drawnCard = deckComputerCopy.splice(
-											this.state.deckPlayer.length - 1,
-											1
-										)[0]
-
-										let handComputerCopy = [
-											...this.state.handComputer,
-											drawnCard,
-										]
-
-										this.setState((prevState) => ({
-											deckComputer: deckComputerCopy,
-											handComputer: handComputerCopy,
-											cardsDeckLeftComputer:
-												prevState.cardsDeckLeftComputer -
-												1,
-											phaseTwoFlag: true,
-											phaseThreeFlag: true,
-											currentPhase: 1,
-											turnCounter:
-												prevState.turnCounter + 1,
-											computerThinking: false,
-											computerDrawsCard: false,
-										}))
-									}
+											this.setState((prevState) => ({
+												deckComputer: deckComputerCopy,
+												handComputer: handComputerCopy,
+												cardsDeckLeftComputer:
+													prevState.cardsDeckLeftComputer -
+													1,
+												phaseTwoFlag: true,
+												phaseThreeFlag: true,
+												currentPhase: 1,
+												turnCounter:
+													prevState.turnCounter + 1,
+												computerThinking: false,
+												computerDrawsCard: false,
+											}))
+										}
+									}, 1000)
 								}
 							)
 						}
@@ -1142,46 +1112,50 @@ class App extends React.Component {
 							handComputer: handComputerCopy,
 						})
 
-						console.log("deleting first card in hand")
+						console.log("ai: deleting first card in hand")
 					}
 
-					this.setState(
-						(prevState) => ({
-							currentPhase: 3,
-							lineCards: [
-								...this.state.lineCards,
-								...computerChosenCard,
-							],
-						}),
-						() => {
-							console.log("card sent to line by computer")
+					let lineCardsCopy = [
+						...this.state.lineCards,
+						...computerChosenCard,
+					]
 
-							// updating the scores for computer
-							this.setState(
-								(prevState) => ({
-									computerScore:
-										prevState.computerScore +
-										computerChosenCard[0].value,
-								}),
-								() => {
-									this.setState(
-										(prevState) => ({
-											phaseTwoFlag: true,
-											phaseThreeFlag: true,
-											currentPhase: 1,
-											turnCounter:
-												prevState.turnCounter + 1,
-											computerThinking: false,
-										}),
-										() => {
-											this.calculateBonus()
-											this.applyPenalty()
-										}
-									)
-								}
-							)
-						}
-					)
+					setTimeout(() => {
+						this.setState(
+							{
+								currentPhase: 3,
+								lineCards: lineCardsCopy,
+							},
+							() => {
+								console.log("card sent to line by computer")
+
+								// updating the scores for computer
+								this.setState(
+									(prevState) => ({
+										computerScore:
+											prevState.computerScore +
+											computerChosenCard[0].value,
+									}),
+									() => {
+										this.setState(
+											(prevState) => ({
+												phaseTwoFlag: true,
+												phaseThreeFlag: true,
+												currentPhase: 1,
+												turnCounter:
+													prevState.turnCounter + 1,
+												computerThinking: false,
+											}),
+											() => {
+												this.calculateBonus()
+												this.applyPenalty()
+											}
+										)
+									}
+								)
+							}
+						)
+					}, 1000)
 				}
 			}
 		)
