@@ -335,6 +335,7 @@
 
 	h2 {
 		font-size: 8vw;
+		margin: 2% 0;
 	}
 }
 
@@ -382,25 +383,48 @@
 
 #wlic_wonItem_card {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	border: 1px solid black;
 	border-radius: 3px;
+	margin-bottom: 15px;
+}
+
+#wlic_wonItem_card_header {
+	display: flex;
+	flex-direction: row;
 }
 
 #wlic_wonItem_card_imgContainer {
 	display: flex;
-	width: 30%;
+	width: 20%;
 	align-items: flex-start;
+	justify-content: center;
 
 	img {
 		display: flex;
-		max-width: 100%;
+		max-width: 80%;
+		padding: 0 5%;
 		object-fit: contain;
 	}
 }
 
+#wlic_wonItem_card_info_title {
+	display: flex;
+	margin: 0;
+	justify-content: center;
+}
+
 #wlic_wonItem_card_info {
 	display: flex;
-	width: 70%;
+	width: 100%;
 	flex-direction: column;
+}
+
+#wlic_wonItem_card_info_description {
+	width: 100%;
+
+	p {
+		font-size: clamp(16px, 4vw, 24px);
+		padding: 0 4%;
+	}
 }

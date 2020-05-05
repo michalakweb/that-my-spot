@@ -47,17 +47,19 @@ const WinLoseScreen = props => (
 				<p>Your items:</p>
 				{props.playerItems.map((el, id) => (
 					<div key={id} id="wlic_wonItem_card">
-						<div id="wlic_wonItem_card_imgContainer">
-							<img
-								alt={el.name}
-								className="cardPhoto"
-								src={`items/${el.id}${el.name}.png`}
-							/>
-						</div>
-						<div id="wlic_wonItem_card_info">
+						<div id="wlic_wonItem_card_header">
+							<div id="wlic_wonItem_card_imgContainer">
+								<img
+									alt={el.name}
+									className="cardPhoto"
+									src={`items/${el.id}${el.name}.png`}
+								/>
+							</div>
 							<div id="wlic_wonItem_card_info_title">
 								<p>{el.trueName}</p>
 							</div>
+						</div>
+						<div id="wlic_wonItem_card_info">
 							<div id="wlic_wonItem_card_info_description">
 								<p>the description will go here</p>
 							</div>
