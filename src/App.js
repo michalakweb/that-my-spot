@@ -201,6 +201,7 @@ class App extends React.Component {
 		// sending card to line --computer
 		if (
 			this.state.phaseThreeFlag &&
+			this.state.aiCanMove &&
 			this.state.currentPhase === 2 &&
 			(this.state.turnCounter === 1 ||
 				this.state.turnCounter === 3 ||
@@ -379,6 +380,7 @@ class App extends React.Component {
 			phaseTwoFlag: false,
 			currentPhase: 2,
 			turnCounter: prevState.turnCounter + 1,
+			aiCanMove: true,
 		}))
 	}
 
@@ -436,6 +438,7 @@ class App extends React.Component {
 						this.setState(
 							(prevState) => ({
 								turnCounter: prevState.turnCounter + 1,
+								aiCanMove: true,
 							}),
 							() => {
 								this.calculateBonus()
@@ -450,421 +453,291 @@ class App extends React.Component {
 
 	// Computer move logic
 	sendCardToLineComputer = () => {
-		console.log("the state is", this.state)
-
-		let hasNoCardsInHand = this.state.handComputer.length === 0
-		let hasCardsInHand = this.state.handComputer.length > 0
-		let hasLessThan5CardsInHand = this.state.handComputer.length < 5
-		let hasCardsInDeck = this.state.deckComputer.length > 0
-		let isLastTurn = this.state.turnCounter === 5
-		let playerTurnScore = this.state.playerScore - this.state.playerPenalty
-		let computerTurnScore =
-			this.state.computerScore - this.state.computerPenalty
-		let turnScoreDiff = playerTurnScore - computerTurnScore
-		let itemsScoreDiff = Math.abs(
-			this.state.playerOverallScore - this.state.computerOverallScore
-		)
-		let computerWinningDiff =
-			this.state.computerOverallScore - this.state.playerOverallScore
-		let currentItemsValueDiff =
-			this.state.itemsCurrent[0].value - this.state.itemsCurrent[1].value
-		let lastCardInLine = () => {
-			if (this.state.lineCards.length > 0) {
-				return this.state.lineCards[this.state.lineCards.length - 1]
-			}
-		}
-
-		console.log(
-			"playerScore:",
-			this.state.playerScore,
-			" | ",
-			"computerScore",
-			this.state.computerScore
-		)
-
-		let hasFourPointCards,
-			hasWeakerCards,
-			hasStrongerCards,
-			hasNurse,
-			hasSmoker,
-			hasKid,
-			hasLady
-
-		if (hasCardsInHand) {
-			hasFourPointCards = _.findIndex(this.state.handComputer, {
-				value: 4,
-			})
-			hasWeakerCards = _.findIndex(this.state.handComputer, function (o) {
-				return o.value === 1
-			})
-			hasStrongerCards = _.findIndex(this.state.handComputer, function (
-				o
-			) {
-				return o.value > 1
-			})
-			hasNurse = _.findIndex(this.state.handComputer, {
-				name: "pielegniarka",
-			})
-			hasSmoker = _.findIndex(this.state.handComputer, {
-				name: "palacz",
-			})
-			hasKid = _.findIndex(this.state.handComputer, {
-				name: "dzieciak",
-			})
-			hasLady = _.findIndex(this.state.handComputer, {
-				name: "baba",
-			})
-		}
-
-		console.log("hasStrongerCards", hasStrongerCards)
-
-		let drawConditions =
-			// most important case
-			(hasNoCardsInHand && hasCardsInDeck) ||
-			// it's the last turn and the ai is already winning
-			(hasCardsInHand &&
-				hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				isLastTurn &&
-				computerTurnScore > playerTurnScore) ||
-			// player has x >= 2 point advantage in this turn and
-			// ai doesn't have 4 point cards
-			(hasCardsInHand &&
-				hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				isLastTurn &&
-				turnScoreDiff >= 2 &&
-				hasFourPointCards === -1) ||
-			// player has x > 1 point advantage in this turn and
-			// ai doesn't have stronger point cards
-			(hasCardsInHand &&
-				hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				isLastTurn &&
-				turnScoreDiff > 1 &&
-				hasStrongerCards === -1) ||
-			/// difference of current items value is less than 3 and
-			// the ai has a similar overall score, but the line in final turn is empty
-			// so ai draws only if doesn't have weak cards
-			(hasCardsInHand &&
-				hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				isLastTurn &&
-				this.state.lineCards.length === 0 &&
-				hasWeakerCards === -1) ||
-			// difference of current items value is less than 3 and
-			// the ai is winning and it's not the last turn
-			(hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				!isLastTurn &&
-				currentItemsValueDiff < 3 &&
-				computerWinningDiff > 2) ||
-			// difference of current items value is 1
-			// and it's not the last turn
-			(hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				!isLastTurn &&
-				currentItemsValueDiff === 1) ||
-			// the ai leads, so there is no point in putting more cards
-			// and the items are similar in value
-			(hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				computerTurnScore - playerTurnScore > 3 &&
-				currentItemsValueDiff < 3) ||
-			// the latest card in line is the smoker
-			// and the ai doesn't have a smoker, a nurse or a high value card
-			(hasCardsInHand &&
-				hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				lastCardInLine() !== undefined &&
-				lastCardInLine().name === "palacz" &&
-				hasStrongerCards === -1 &&
-				hasNurse === -1 &&
-				hasSmoker === -1) ||
-			// the latest card in line is the smoker
-			// it's the last turn and adding a card won't make a difference
-			(hasCardsInHand &&
-				hasLessThan5CardsInHand &&
-				hasCardsInDeck &&
-				isLastTurn &&
-				((hasFourPointCards &&
-					computerTurnScore + 4 < playerTurnScore) ||
-					(hasStrongerCards &&
-						computerTurnScore + 2 < playerTurnScore) ||
-					(hasWeakerCards &&
-						computerTurnScore + 1 < playerTurnScore)))
-
-		if (drawConditions) {
-			this.setState({
-				computerDrawsCard: true,
-			})
-		}
-
-		console.log(lastCardInLine())
-
 		this.setState(
 			{
-				phaseThreeFlag: false,
-				computerThinking: true,
+				aiCanMove: false,
 			},
 			() => {
-				setTimeout(() => {
-					console.log("computer move")
-
-					if (drawConditions) {
-						// no cards left, so has to draw one
-						console.log("computer draws a card")
-
-						let deckComputerCopy = [...this.state.deckComputer]
-						let drawnCard = deckComputerCopy.splice(
-							this.state.deckPlayer.length - 1,
-							1
-						)[0]
-
-						let handComputerCopy = [
-							...this.state.handComputer,
-							drawnCard,
-						]
-
-						this.setState((prevState) => ({
-							deckComputer: deckComputerCopy,
-							handComputer: handComputerCopy,
-							cardsDeckLeftComputer:
-								prevState.cardsDeckLeftComputer - 1,
-							phaseTwoFlag: true,
-							phaseThreeFlag: true,
-							currentPhase: 1,
-							turnCounter: prevState.turnCounter + 1,
-							computerThinking: false,
-							computerDrawsCard: false,
-						}))
-					} else {
-						let computerChosenCard = ""
-						let lastCardInLine = this.state.lineCards[
+				let hasNoCardsInHand = this.state.handComputer.length === 0
+				let hasCardsInHand = this.state.handComputer.length > 0
+				let hasLessThan5CardsInHand = this.state.handComputer.length < 5
+				let hasCardsInDeck = this.state.deckComputer.length > 0
+				let isLastTurn = this.state.turnCounter === 5
+				let playerTurnScore =
+					this.state.playerScore - this.state.playerPenalty
+				let computerTurnScore =
+					this.state.computerScore - this.state.computerPenalty
+				let turnScoreDiff = playerTurnScore - computerTurnScore
+				let itemsScoreDiff = Math.abs(
+					this.state.playerOverallScore -
+						this.state.computerOverallScore
+				)
+				let currentItemsValueDiff =
+					this.state.itemsCurrent[0].value -
+					this.state.itemsCurrent[1].value
+				let lastCardInLine = () => {
+					if (this.state.lineCards.length > 0) {
+						return this.state.lineCards[
 							this.state.lineCards.length - 1
 						]
-						let beforeLastCardInLine = this.state.lineCards[
-							this.state.lineCards.length - 2
-						]
+					}
+				}
 
-						// last turn and player has 4 > x >= 2 point advantage, but
-						// ai has 4 point cards
-						if (
-							hasCardsInHand &&
-							turnScoreDiff >= 2 &&
-							turnScoreDiff < 4 &&
-							isLastTurn &&
-							hasFourPointCards > -1
-						) {
+				let hasFourPointCards,
+					hasWeakerCards,
+					hasStrongerCards,
+					hasNurse,
+					hasSmoker,
+					hasKid,
+					hasLady
+
+				if (hasCardsInHand) {
+					hasFourPointCards = _.findIndex(this.state.handComputer, {
+						value: 4,
+					})
+					hasWeakerCards = _.findIndex(
+						this.state.handComputer,
+						function (o) {
+							return o.value === 1
+						}
+					)
+					hasStrongerCards = _.findIndex(
+						this.state.handComputer,
+						function (o) {
+							return o.value > 1
+						}
+					)
+					hasNurse = _.findIndex(this.state.handComputer, {
+						name: "pielegniarka",
+					})
+					hasSmoker = _.findIndex(this.state.handComputer, {
+						name: "palacz",
+					})
+					hasKid = _.findIndex(this.state.handComputer, {
+						name: "dzieciak",
+					})
+					hasLady = _.findIndex(this.state.handComputer, {
+						name: "baba",
+					})
+				}
+
+				let drawConditions = () => {
+					if (hasNoCardsInHand && hasCardsInDeck) {
+						console.log("drawing, no cards")
+
+						return true
+					} else if (
+						hasCardsInHand &&
+						hasLessThan5CardsInHand &&
+						hasCardsInDeck &&
+						isLastTurn &&
+						computerTurnScore > playerTurnScore
+					) {
+						console.log(
+							"ai pulls a card: it's the last turn and the ai is already winning"
+						)
+						return true
+					} else if (
+						hasCardsInHand &&
+						hasLessThan5CardsInHand &&
+						hasCardsInDeck &&
+						isLastTurn &&
+						turnScoreDiff >= 2 &&
+						hasFourPointCards === -1
+					) {
+						console.log(
+							"ai pulls a card: player has x >= 2 point advantage in this turn and ai does nott have 4 point cards"
+						)
+
+						return true
+					} else if (
+						hasCardsInHand &&
+						hasLessThan5CardsInHand &&
+						hasCardsInDeck &&
+						isLastTurn &&
+						turnScoreDiff > 1 &&
+						hasStrongerCards === -1
+					) {
+						console.log(
+							"ai pulls a card: player has x > 1 point advantage in this turn and ai doesn't have stronger point cards"
+						)
+
+						return true
+					}
+					// else if (
+					// 	hasLessThan5CardsInHand &&
+					// 	hasCardsInDeck &&
+					// 	!isLastTurn &&
+					// 	currentItemsValueDiff < 3 &&
+					// 	computerWinningDiff > 2
+					// ) {
+					// 	console.log(
+					// 		"difference of current items value is less than 3 and the ai is winning and it's not the last turn"
+					// 	)
+
+					// 	return true
+					// }
+					// else if (
+					// 	hasLessThan5CardsInHand &&
+					// 	hasCardsInDeck &&
+					// 	!isLastTurn &&
+					// 	currentItemsValueDiff === 1
+					// ) {
+					// 	console.log(
+					// 		"difference of current items value is 1 and it's not the last turn"
+					// 	)
+
+					// 	return true
+					// }
+					else if (
+						hasLessThan5CardsInHand &&
+						hasCardsInDeck &&
+						computerTurnScore - playerTurnScore > 3 &&
+						currentItemsValueDiff < 3
+					) {
+						console.log(
+							"ai pulls a card: the ai leads, so there is no point in putting more cards and the items are similar in value"
+						)
+
+						return true
+					} else if (
+						hasCardsInHand &&
+						hasLessThan5CardsInHand &&
+						hasCardsInDeck &&
+						lastCardInLine() !== undefined &&
+						lastCardInLine().name === "palacz" &&
+						hasStrongerCards === -1 &&
+						hasNurse === -1 &&
+						hasSmoker === -1
+					) {
+						console.log(
+							"ai pulls a card: the latest card in line is the smoker and the ai doesn't have a smoker, a nurse or a high value card"
+						)
+
+						return true
+					} else if (
+						hasCardsInHand &&
+						hasLessThan5CardsInHand &&
+						hasCardsInDeck &&
+						isLastTurn &&
+						((hasFourPointCards &&
+							computerTurnScore + 4 < playerTurnScore) ||
+							(hasStrongerCards &&
+								computerTurnScore + 2 < playerTurnScore) ||
+							(hasWeakerCards &&
+								computerTurnScore + 1 < playerTurnScore))
+					) {
+						console.log(
+							"ai pulls a card: the latest card in line is the smoker it's the last turn and adding a card won't make a difference"
+						)
+
+						return true
+					} else {
+						return false
+					}
+				}
+
+				if (drawConditions()) {
+					this.setState(
+						{
+							computerDrawsCard: true,
+						},
+						() => {
+							this.setState(
+								{
+									phaseThreeFlag: false,
+									computerThinking: true,
+								},
+								() => {
+									console.log("computer move")
+
+									if (this.state.computerDrawsCard) {
+										// no cards left, so has to draw one
+										console.log("computer draws a card")
+
+										let deckComputerCopy = [
+											...this.state.deckComputer,
+										]
+										let drawnCard = deckComputerCopy.splice(
+											this.state.deckPlayer.length - 1,
+											1
+										)[0]
+
+										let handComputerCopy = [
+											...this.state.handComputer,
+											drawnCard,
+										]
+
+										this.setState((prevState) => ({
+											deckComputer: deckComputerCopy,
+											handComputer: handComputerCopy,
+											cardsDeckLeftComputer:
+												prevState.cardsDeckLeftComputer -
+												1,
+											phaseTwoFlag: true,
+											phaseThreeFlag: true,
+											currentPhase: 1,
+											turnCounter:
+												prevState.turnCounter + 1,
+											computerThinking: false,
+											computerDrawsCard: false,
+										}))
+									}
+								}
+							)
+						}
+					)
+				} else if (!this.state.computerDrawsCard) {
+					let computerChosenCard = ""
+					let lastCardInLine = this.state.lineCards[
+						this.state.lineCards.length - 1
+					]
+					let beforeLastCardInLine = this.state.lineCards[
+						this.state.lineCards.length - 2
+					]
+
+					// last turn and player has 4 > x >= 2 point advantage, but
+					// ai has 4 point cards
+					if (
+						hasCardsInHand &&
+						turnScoreDiff >= 2 &&
+						turnScoreDiff < 4 &&
+						isLastTurn &&
+						hasFourPointCards > -1
+					) {
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(
+							hasFourPointCards,
+							1
+						)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+
+						console.log(
+							"ai: player is leading, but I have a valuable card to turn the tide"
+						)
+					}
+
+					// no cards in line, it's the last turn, so use weakest
+					else if (
+						hasCardsInHand &&
+						this.state.lineCards.length === 0 &&
+						!hasNoCardsInHand &&
+						(hasKid > -1 || hasSmoker > -1 || hasNurse > -1)
+					) {
+						if (hasKid > -1) {
 							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
-								hasFourPointCards,
+								hasKid,
 								1
 							)
 
 							this.setState({
 								handComputer: handComputerCopy,
 							})
-
-							console.log(
-								"ai: player is leading, but I have a valuable card to turn the tide"
-							)
-						}
-
-						// no cards in line, it's the last turn, so use weakest
-						else if (
-							hasCardsInHand &&
-							this.state.lineCards.length === 0 &&
-							!hasNoCardsInHand &&
-							(hasKid > -1 || hasSmoker > -1 || hasNurse > -1)
-						) {
-							if (hasKid > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasKid,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else if (hasSmoker > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasSmoker,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasNurse,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							}
-
-							console.log(
-								"no cards in line, so just using weakest, to win"
-							)
-						}
-
-						// if the before last card belongs to the ai
-						// and is a 4-point card and the last one is the smoker belonging
-						// to the player - use the nurse
-						else if (
-							this.state.lineCards.length > 1 &&
-							lastCardInLine !== undefined &&
-							beforeLastCardInLine !== undefined &&
-							beforeLastCardInLine.name === "partyjniak" &&
-							beforeLastCardInLine.source === "deckComputer" &&
-							lastCardInLine.name === "palacz" &&
-							lastCardInLine.source === "deckPlayer" &&
-							hasCardsInHand &&
-							hasNurse > -1
-						) {
-							let handComputerCopy = [...this.state.handComputer]
-							computerChosenCard = handComputerCopy.splice(
-								hasNurse,
-								1
-							)
-
-							this.setState({
-								handComputer: handComputerCopy,
-							})
-
-							console.log("ai: protect mode")
-						}
-
-						// difference of current items value is less than 3 and
-						// the ai has a similar overall score, so use low value cards
-						else if (
-							hasCardsInHand &&
-							currentItemsValueDiff < 3 &&
-							itemsScoreDiff < 4 &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name === "palacz" &&
-							(hasSmoker > -1 || hasLady > -1 || hasNurse > -1)
-						) {
-							if (hasSmoker > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasSmoker,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else if (hasNurse > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasNurse,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasLady,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							}
-
-							console.log(
-								"ai: diff of item value is small but I have to use a card, so it will be weak"
-							)
-						}
-
-						// similar to above, but there is no smoker in the end
-						// difference of current items value is less than 3 and
-						// the ai has a similar overall score, so use low value cards
-						else if (
-							hasCardsInHand &&
-							currentItemsValueDiff < 3 &&
-							itemsScoreDiff < 4 &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name === "palacz" &&
-							(hasSmoker > -1 || hasKid > -1 || hasNurse > -1)
-						) {
-							if (hasSmoker > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasSmoker,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else if (hasKid > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasKid,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasNurse,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							}
-
-							console.log(
-								"ai: diff of item value is small but I have to use a card, so it will be weak"
-							)
-						}
-
-						// last card belongs to the player
-						// and is a 4-point card then use the smoker
-						else if (
-							this.state.lineCards.length > 0 &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name === "partyjniak" &&
-							lastCardInLine.source === "deckPlayer" &&
-							hasCardsInHand &&
-							hasSmoker > -1
-						) {
+						} else if (hasSmoker > -1) {
 							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasSmoker,
@@ -874,138 +747,10 @@ class App extends React.Component {
 							this.setState({
 								handComputer: handComputerCopy,
 							})
-							console.log("ai: attack mode")
-						}
-
-						// the latest card in line is the smoker
-						// and the ai has a smoker, a nurse or high value card
-						else if (
-							hasCardsInHand &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name === "palacz" &&
-							(hasFourPointCards > -1 ||
-								hasStrongerCards > -1 ||
-								hasNurse > -1 ||
-								hasSmoker > -1)
-						) {
-							if (hasNurse > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasNurse,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else if (hasSmoker > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasSmoker,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else if (hasFourPointCards > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasFourPointCards,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasStrongerCards,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							}
-
-							console.log(
-								"ai: trying to block or score upon last card smoker"
-							)
-						}
-						// the item is valuable, use strong cards
-						else if (
-							hasCardsInHand &&
-							(this.state.itemsCurrent[0].value > 4 ||
-								this.state.itemsCurrent[1].value > 4) &&
-							(hasFourPointCards > -1 ||
-								hasStrongerCards > -1 ||
-								hasSmoker > -1)
-						) {
-							if (hasFourPointCards > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasFourPointCards,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else if (hasStrongerCards > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasStrongerCards,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasSmoker,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							}
-
-							console.log(
-								"ai: trying to use strong cards, because one item has value"
-							)
-						}
-
-						// it's the last turn and it's a draw and there is no smoker in the end
-						// the ai needs to use a weak card to win
-						else if (
-							isLastTurn &&
-							playerTurnScore === computerTurnScore &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name !== "palacz" &&
-							hasWeakerCards
-						) {
+						} else {
 							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
-								hasWeakerCards,
+								hasNurse,
 								1
 							)
 
@@ -1014,18 +759,72 @@ class App extends React.Component {
 							})
 						}
 
-						// it's the last turn and it's a draw and there is a smoker in the end
-						// the ai needs to use a stronger card to win
-						else if (
-							isLastTurn &&
-							playerTurnScore === computerTurnScore &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name === "palacz" &&
-							hasStrongerCards
-						) {
+						console.log(
+							"no cards in line, so just using weakest, to win"
+						)
+					}
+
+					// if the before last card belongs to the ai
+					// and is a 4-point card and the last one is the smoker belonging
+					// to the player - use the nurse
+					else if (
+						this.state.lineCards.length > 1 &&
+						lastCardInLine !== undefined &&
+						beforeLastCardInLine !== undefined &&
+						beforeLastCardInLine.name === "partyjniak" &&
+						beforeLastCardInLine.source === "deckComputer" &&
+						lastCardInLine.name === "palacz" &&
+						lastCardInLine.source === "deckPlayer" &&
+						hasCardsInHand &&
+						hasNurse > -1
+					) {
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(
+							hasNurse,
+							1
+						)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+
+						console.log("ai: protect mode")
+					}
+
+					// difference of current items value is less than 3 and
+					// the ai has a similar overall score, so use low value cards
+					else if (
+						hasCardsInHand &&
+						currentItemsValueDiff < 3 &&
+						itemsScoreDiff < 4 &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name === "palacz" &&
+						(hasSmoker > -1 || hasLady > -1 || hasNurse > -1)
+					) {
+						if (hasSmoker > -1) {
 							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
-								hasStrongerCards,
+								hasSmoker,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else if (hasNurse > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasNurse,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasLady,
 								1
 							)
 
@@ -1034,19 +833,46 @@ class App extends React.Component {
 							})
 						}
 
-						// it's the last turn and it's almost a win for the ai
-						// and there is no smoker in the end
-						// the ai needs to use a stronger card to win
-						else if (
-							isLastTurn &&
-							playerTurnScore - computerTurnScore === 1 &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name !== "palacz" &&
-							hasStrongerCards
-						) {
+						console.log(
+							"ai: diff of item value is small but I have to use a card, so it will be weak"
+						)
+					}
+
+					// similar to above, but there is no smoker in the end
+					// difference of current items value is less than 3 and
+					// the ai has a similar overall score, so use low value cards
+					else if (
+						hasCardsInHand &&
+						currentItemsValueDiff < 3 &&
+						itemsScoreDiff < 4 &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name === "palacz" &&
+						(hasSmoker > -1 || hasKid > -1 || hasNurse > -1)
+					) {
+						if (hasSmoker > -1) {
 							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
-								hasStrongerCards,
+								hasSmoker,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else if (hasKid > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasKid,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasNurse,
 								1
 							)
 
@@ -1055,18 +881,65 @@ class App extends React.Component {
 							})
 						}
 
-						// it's the last turn and it's almost a win for the ai
-						// and it's worth fighting for the items
-						// and there is a smoker in the end
-						// the ai needs to use the strongest card to win
-						else if (
-							isLastTurn &&
-							playerTurnScore - computerTurnScore === 1 &&
-							currentItemsValueDiff > 2 &&
-							lastCardInLine !== undefined &&
-							lastCardInLine.name === "palacz" &&
-							hasFourPointCards
-						) {
+						console.log(
+							"ai: diff of item value is small but I have to use a card, so it will be weak"
+						)
+					}
+
+					// last card belongs to the player
+					// and is a 4-point card then use the smoker
+					else if (
+						this.state.lineCards.length > 0 &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name === "partyjniak" &&
+						lastCardInLine.source === "deckPlayer" &&
+						hasCardsInHand &&
+						hasSmoker > -1
+					) {
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(
+							hasSmoker,
+							1
+						)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+						console.log("ai: attack mode")
+					}
+
+					// the latest card in line is the smoker
+					// and the ai has a smoker, a nurse or high value card
+					else if (
+						hasCardsInHand &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name === "palacz" &&
+						(hasFourPointCards > -1 ||
+							hasStrongerCards > -1 ||
+							hasNurse > -1 ||
+							hasSmoker > -1)
+					) {
+						if (hasNurse > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasNurse,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else if (hasSmoker > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasSmoker,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else if (hasFourPointCards > -1) {
 							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasFourPointCards,
@@ -1076,103 +949,240 @@ class App extends React.Component {
 							this.setState({
 								handComputer: handComputerCopy,
 							})
-						}
-
-						// there is a significant difference between items values,
-						// so use strongest cards
-						else if (currentItemsValueDiff > 2) {
-							if (hasFourPointCards > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasFourPointCards,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else if (hasStrongerCards > -1) {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasStrongerCards,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							} else {
-								let handComputerCopy = [
-									...this.state.handComputer,
-								]
-								computerChosenCard = handComputerCopy.splice(
-									hasSmoker,
-									1
-								)
-
-								this.setState({
-									handComputer: handComputerCopy,
-								})
-							}
-
-							console.log(
-								"ai: trying to use strong cards, because one item has value and the other is weak"
-							)
 						} else {
-							// delete first card from computer hand
 							let handComputerCopy = [...this.state.handComputer]
-							computerChosenCard = handComputerCopy.splice(0, 1)
+							computerChosenCard = handComputerCopy.splice(
+								hasStrongerCards,
+								1
+							)
 
 							this.setState({
 								handComputer: handComputerCopy,
 							})
-
-							console.log("deleting first card in hand")
 						}
 
-						this.setState(
-							(prevState) => ({
-								currentPhase: 3,
-								lineCards: [
-									...this.state.lineCards,
-									...computerChosenCard,
-								],
-							}),
-							() => {
-								console.log("card sent to line by computer")
-
-								// updating the scores for computer
-								this.setState(
-									(prevState) => ({
-										computerScore:
-											prevState.computerScore +
-											computerChosenCard[0].value,
-									}),
-									() => {
-										this.setState(
-											(prevState) => ({
-												phaseTwoFlag: true,
-												phaseThreeFlag: true,
-												currentPhase: 1,
-												turnCounter:
-													prevState.turnCounter + 1,
-												computerThinking: false,
-											}),
-											() => {
-												this.calculateBonus()
-												this.applyPenalty()
-											}
-										)
-									}
-								)
-							}
+						console.log(
+							"ai: trying to block or score upon last card smoker"
 						)
 					}
-				}, 1000)
+					// the item is valuable, use strong cards
+					else if (
+						hasCardsInHand &&
+						(this.state.itemsCurrent[0].value > 4 ||
+							this.state.itemsCurrent[1].value > 4) &&
+						(hasFourPointCards > -1 ||
+							hasStrongerCards > -1 ||
+							hasSmoker > -1)
+					) {
+						if (hasFourPointCards > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasFourPointCards,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else if (hasStrongerCards > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasStrongerCards,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasSmoker,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						}
+
+						console.log(
+							"ai: trying to use strong cards, because one item has value"
+						)
+					}
+
+					// it's the last turn and it's a draw and there is no smoker in the end
+					// the ai needs to use a weak card to win
+					else if (
+						isLastTurn &&
+						playerTurnScore === computerTurnScore &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name !== "palacz" &&
+						hasWeakerCards
+					) {
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(
+							hasWeakerCards,
+							1
+						)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+					}
+
+					// it's the last turn and it's a draw and there is a smoker in the end
+					// the ai needs to use a stronger card to win
+					else if (
+						isLastTurn &&
+						playerTurnScore === computerTurnScore &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name === "palacz" &&
+						hasStrongerCards
+					) {
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(
+							hasStrongerCards,
+							1
+						)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+					}
+
+					// it's the last turn and it's almost a win for the ai
+					// and there is no smoker in the end
+					// the ai needs to use a stronger card to win
+					else if (
+						isLastTurn &&
+						playerTurnScore - computerTurnScore === 1 &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name !== "palacz" &&
+						hasStrongerCards
+					) {
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(
+							hasStrongerCards,
+							1
+						)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+					}
+
+					// it's the last turn and it's almost a win for the ai
+					// and it's worth fighting for the items
+					// and there is a smoker in the end
+					// the ai needs to use the strongest card to win
+					else if (
+						isLastTurn &&
+						playerTurnScore - computerTurnScore === 1 &&
+						currentItemsValueDiff > 2 &&
+						lastCardInLine !== undefined &&
+						lastCardInLine.name === "palacz" &&
+						hasFourPointCards
+					) {
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(
+							hasFourPointCards,
+							1
+						)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+					}
+
+					// there is a significant difference between items values,
+					// so use strongest cards
+					else if (currentItemsValueDiff > 2) {
+						if (hasFourPointCards > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasFourPointCards,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else if (hasStrongerCards > -1) {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasStrongerCards,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						} else {
+							let handComputerCopy = [...this.state.handComputer]
+							computerChosenCard = handComputerCopy.splice(
+								hasSmoker,
+								1
+							)
+
+							this.setState({
+								handComputer: handComputerCopy,
+							})
+						}
+
+						console.log(
+							"ai: trying to use strong cards, because one item has value and the other is weak"
+						)
+					} else {
+						// delete first card from computer hand
+						let handComputerCopy = [...this.state.handComputer]
+						computerChosenCard = handComputerCopy.splice(0, 1)
+
+						this.setState({
+							handComputer: handComputerCopy,
+						})
+
+						console.log("deleting first card in hand")
+					}
+
+					this.setState(
+						(prevState) => ({
+							currentPhase: 3,
+							lineCards: [
+								...this.state.lineCards,
+								...computerChosenCard,
+							],
+						}),
+						() => {
+							console.log("card sent to line by computer")
+
+							// updating the scores for computer
+							this.setState(
+								(prevState) => ({
+									computerScore:
+										prevState.computerScore +
+										computerChosenCard[0].value,
+								}),
+								() => {
+									this.setState(
+										(prevState) => ({
+											phaseTwoFlag: true,
+											phaseThreeFlag: true,
+											currentPhase: 1,
+											turnCounter:
+												prevState.turnCounter + 1,
+											computerThinking: false,
+										}),
+										() => {
+											this.calculateBonus()
+											this.applyPenalty()
+										}
+									)
+								}
+							)
+						}
+					)
+				}
 			}
 		)
 	}
