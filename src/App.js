@@ -6,7 +6,7 @@ import Body from "./components/body/Body"
 import Footer from "./components/footer/Footer"
 import WelcomeScreen from "./components/WelcomeScreen"
 import ItemScreen from "./components/ItemScreen"
-import WinLoseScreen from "./components/WinLoseScreen"
+import WinLoseScreen fromgit branch -m <newname> "./components/WinLoseScreen"
 import SmallWidthScreen from "./components/SmallWidthScreen"
 
 // Deck & Items db
@@ -62,7 +62,7 @@ const itemStats = [
 		value: 5,
 		trueName: "Electronic keyboard 'Elwirka'",
 		description:
-			"This electronic keyboard was produced in the eighties and it was meant for kids and teenagers. The quality of the keyboard was pretty good - 2.5octaves, polifonic system and one timbre that could be modified with functions, like vibrato.\n \n Modifications could be mixed, which gave even more sound editing options. A built-in amplifier gave a clear loud sound, but if that wasn't enough, the user could connect the keyboard with external speakers."
+			"'Elwirka' was produced in the eighties and it was meant for kids and teenagers. The quality of the keyboard was pretty good - 2.5octaves, polifonic system and one timbre that could be modified with functions, like vibrato.\n \n Modifications could be mixed, which gave even more sound editing options. A built-in amplifier gave a clear loud sound, but if that wasn't enough, the user could connect the keyboard with external speakers."
 	},
 	{
 		id: 5,
@@ -78,7 +78,7 @@ const itemStats = [
 		value: 3,
 		trueName: "Football family game",
 		description:
-			"An arcade game for at least two players simulating soccer.\n \n The rules of the game are simple. On the pitch there are figurines of players from both teams and two goals. Figures are mounted on springs, with which players can bounce the ball in any direction. In this way, you can pass the ball to other players or aim at the opponent's goal.\n \n Around the figures there are depressions thanks to which the ball can slide under the player's legs.\n \n The game provided great entertainment and was a real hit in the socialist Poland."
+			"An arcade game for at least two players simulating soccer.\n \n The rules of the game are simple. On the pitch there are figurines of players from both teams and two goals. Figures are mounted on springs, with which players can bounce the ball in any direction. In this way, you can pass the ball to other players or aim at the opponent's goal.\n \n Around the figures there are depressions thanks to which the ball can slide under the player's legs.\n \n The game provided great entertainment and was a real hit in socialist Poland."
 	},
 	{
 		id: 7,
@@ -86,7 +86,7 @@ const itemStats = [
 		value: 1,
 		trueName: "'Mouse' pencil eraser",
 		description:
-			"'Mouse' eraser - the iconic eraser, was produced in several versions. Next to the pen, pencil and sharpener, it was in every school pencil case. In later years, the Mice were displaced for some time by fragrant Chinese erasers."
+			"'Mouse' eraser - the iconic eraser was produced in several versions. Next to the pen, pencil and sharpener, it was in every school pencil case. In later years, the Mice were displaced for some time by fragrant Chinese erasers."
 	},
 	{
 		id: 8,
