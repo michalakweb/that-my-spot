@@ -278,9 +278,10 @@
 	padding-right: 20px;
 }
 
-// draw screen
+// draw screen & small width screen
 
-#drawScreen {
+#drawScreen,
+#smallWidthScreen {
 	position: absolute;
 	display: flex;
 	width: 100%;
@@ -293,6 +294,14 @@
 		display: flex;
 		height: 100vh;
 		position: absolute;
+	}
+}
+
+#smallWidthScreen {
+	z-index: 10;
+
+	img {
+		left: -70%;
 	}
 }
 

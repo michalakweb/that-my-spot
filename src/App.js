@@ -7,6 +7,7 @@ import Footer from "./components/footer/Footer"
 import WelcomeScreen from "./components/WelcomeScreen"
 import ItemScreen from "./components/ItemScreen"
 import WinLoseScreen from "./components/WinLoseScreen"
+import SmallWidthScreen from "./components/SmallWidthScreen"
 
 // Deck & Items db
 const deckStats = [
@@ -210,12 +211,16 @@ class App extends React.Component {
 		noClicking: false,
 
 		// Modals
+		showSmallWidthScreen: false,
 		showWelcomeScreen: true,
 		showWinLoseScreen: false,
 		showItemsScreen: false,
 		itemsScreenFlag: true,
 		winLoseScreenFlag: true,
+		showSmallWidthScreenFlag: false,
 
+		// Other
+		windowWidth: window.innerWidth,
 		error: false
 	}
 
@@ -223,9 +228,32 @@ class App extends React.Component {
 		this.shuffleItems(this.state.items)
 		this.shuffleCards(this.state.deckComputer, "deckComputer")
 		this.shuffleCards(this.state.deckPlayer, "deckPlayer")
+		this.showViewportWidth()
 	}
 
 	componentDidUpdate() {
+		// show the "small width screen"
+		if (
+			this.state.windowWidth < 400 &&
+			!this.showSmallWidthScreen &&
+			!this.state.showSmallWidthScreenFlag
+		) {
+			this.setState({
+				showSmallWidthScreen: true,
+				showSmallWidthScreenFlag: true
+			})
+		}
+
+		if (
+			this.state.windowWidth >= 400 &&
+			this.state.showSmallWidthScreenFlag
+		) {
+			this.setState({
+				showSmallWidthScreen: false,
+				showSmallWidthScreenFlag: false
+			})
+		}
+
 		// error for undefined computer hand
 		if (
 			!this.state.error &&
@@ -304,6 +332,24 @@ class App extends React.Component {
 				}
 			)
 		}
+	}
+
+	showViewportWidth = () => {
+		window.addEventListener("resize", () => {
+			let windowWidth = window.innerWidth
+
+			this.setState({
+				windowWidth: windowWidth
+			})
+		})
+
+		window.addEventListener("orientationchange", () => {
+			let windowWidth = window.innerWidth
+
+			this.setState({
+				windowWidth: windowWidth
+			})
+		})
 	}
 
 	switchWelcomeScreen = () => {
@@ -1544,6 +1590,12 @@ class App extends React.Component {
 				{this.state.showWelcomeScreen && (
 					<WelcomeScreen
 						switchWelcomeScreen={this.switchWelcomeScreen}
+					/>
+				)}
+
+				{this.state.showSmallWidthScreen && (
+					<SmallWidthScreen
+						showWelcomeScreen={this.state.showWelcomeScreen}
 					/>
 				)}
 
