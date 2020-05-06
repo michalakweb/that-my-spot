@@ -61,7 +61,7 @@ const WinLoseScreen = props => (
 						</div>
 						<div id="wlic_wonItem_card_info">
 							<div id="wlic_wonItem_card_info_description">
-								<p>the description will go here</p>
+								<p>{el.description}</p>
 							</div>
 						</div>
 					</div>
