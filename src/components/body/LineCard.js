@@ -2,7 +2,15 @@ import React from "react"
 import angryImg from "../../images/angry.png"
 import sadImg from "../../images/sad.png"
 
-const LineCard = (props) => (
+function importAll(r) {
+	return r.keys().map(r)
+}
+
+const cardImages = importAll(
+	require.context("../../images/cards", false, /\.(png|jpe?g|svg)$/)
+)
+
+const LineCard = props => (
 	<div className="line_card">
 		{props.lineCard.name === "palacz" &&
 			!props.lineCard.effect &&
@@ -38,7 +46,7 @@ const LineCard = (props) => (
 		<img
 			alt={props.lineCard.name}
 			className="cardPhoto"
-			src={`/cards/${props.lineCard.id}${props.lineCard.name}.png`}
+			src={cardImages[props.lineCard.id]}
 		/>
 	</div>
 )
