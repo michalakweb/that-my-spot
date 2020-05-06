@@ -6,7 +6,7 @@ import Body from "./components/body/Body"
 import Footer from "./components/footer/Footer"
 import WelcomeScreen from "./components/WelcomeScreen"
 import ItemScreen from "./components/ItemScreen"
-import WinLoseScreen fromgit branch -m <newname> "./components/WinLoseScreen"
+import WinLoseScreen from "./components/WinLoseScreen"
 import SmallWidthScreen from "./components/SmallWidthScreen"
 
 // Deck & Items db
