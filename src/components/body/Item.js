@@ -1,15 +1,28 @@
 import React from "react"
 
-const Item = (props) => (
+function importAll(r) {
+	return r.keys().map(r)
+}
+
+let itemImages = importAll(
+	require.context("../../images/items", false, /\.(png|jpe?g|svg)$/)
+)
+
+const collator = new Intl.Collator(undefined, {
+	numeric: true,
+	sensitivity: "base"
+})
+itemImages = itemImages.sort(collator.compare)
+
+const Item = props => (
 	<div className="item">
 		<div className="item_header">
 			<p>{props.item.value}</p>
 		</div>
 		<div className="item_body">
-			{/* <p>{props.item.name}</p> */}
 			<img
 				className="itemPhoto"
-				src={`/items/${props.item.id}${props.item.name}.png`}
+				src={itemImages[props.item.id - 1]}
 				alt={props.item.name}
 			/>
 		</div>

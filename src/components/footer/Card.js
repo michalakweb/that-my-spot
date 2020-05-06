@@ -1,6 +1,13 @@
 import React from "react"
+import pielegniarka from "../../images/cards/1pielegniarka.png"
+import baba from "../../images/cards/2baba.png"
+import dzieciak from "../../images/cards/3dzieciak.png"
+import palacz from "../../images/cards/4palacz.png"
+import partyjniak from "../../images/cards/5partyjniak.png"
 
-const Card = (props) => (
+const cardImages = [pielegniarka, baba, dzieciak, palacz, partyjniak]
+
+const Card = props => (
 	<div
 		className={`card card${props.stylePosition}`}
 		onClick={() => {
@@ -20,7 +27,7 @@ const Card = (props) => (
 						? "deckCardPhotoKid"
 						: "deckCardPhoto"
 				}
-				src={`/cards/${props.cardInfo.id}${props.cardInfo.name}.png`}
+				src={cardImages[props.cardInfo.id - 1]}
 			/>
 		</div>
 	</div>

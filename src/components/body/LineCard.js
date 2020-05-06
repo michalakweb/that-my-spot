@@ -1,14 +1,13 @@
 import React from "react"
 import angryImg from "../../images/angry.png"
 import sadImg from "../../images/sad.png"
+import pielegniarka from "../../images/cards/1pielegniarka.png"
+import baba from "../../images/cards/2baba.png"
+import dzieciak from "../../images/cards/3dzieciak.png"
+import palacz from "../../images/cards/4palacz.png"
+import partyjniak from "../../images/cards/5partyjniak.png"
 
-function importAll(r) {
-	return r.keys().map(r)
-}
-
-const cardImages = importAll(
-	require.context("../../images/cards", false, /\.(png|jpe?g|svg)$/)
-)
+const cardImages = [pielegniarka, baba, dzieciak, palacz, partyjniak]
 
 const LineCard = props => (
 	<div className="line_card">
@@ -46,7 +45,7 @@ const LineCard = props => (
 		<img
 			alt={props.lineCard.name}
 			className="cardPhoto"
-			src={cardImages[props.lineCard.id]}
+			src={cardImages[props.lineCard.id - 1]}
 		/>
 	</div>
 )

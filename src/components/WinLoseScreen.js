@@ -2,6 +2,20 @@ import React from "react"
 import computerImage from "../images/odra.jpg"
 import playerImage from "../images/player.jpg"
 
+function importAll(r) {
+	return r.keys().map(r)
+}
+
+let itemImages = importAll(
+	require.context("../images/items", false, /\.(png|jpe?g|svg)$/)
+)
+
+const collator = new Intl.Collator(undefined, {
+	numeric: true,
+	sensitivity: "base"
+})
+itemImages = itemImages.sort(collator.compare)
+
 const WinLoseScreen = props => (
 	<div id="win_lose_screen">
 		<div id="win_lose_info_container">
@@ -52,7 +66,7 @@ const WinLoseScreen = props => (
 								<img
 									alt={el.name}
 									className="cardPhoto"
-									src={`items/${el.id}${el.name}.png`}
+									src={itemImages[el.id - 1]}
 								/>
 							</div>
 							<div id="wlic_wonItem_card_info_title">

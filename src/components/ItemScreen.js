@@ -1,7 +1,21 @@
 import React from "react"
 import leninImg from "../images/lenin.jpg"
 
-const ItemScreen = (props) => (
+function importAll(r) {
+	return r.keys().map(r)
+}
+
+let itemImages = importAll(
+	require.context("../images/items", false, /\.(png|jpe?g|svg)$/)
+)
+
+const collator = new Intl.Collator(undefined, {
+	numeric: true,
+	sensitivity: "base"
+})
+itemImages = itemImages.sort(collator.compare)
+
+const ItemScreen = props => (
 	<div>
 		{!props.showWinLoseScreen && (
 			<div id="win_item_screen">
@@ -12,15 +26,11 @@ const ItemScreen = (props) => (
 								alt="hey"
 								src={
 									props.playerItems.length > 0
-										? `/items/${
+										? itemImages[
 												props.playerItems[
 													props.playerItems.length - 1
-												].id
-										  }${
-												props.playerItems[
-													props.playerItems.length - 1
-												].name
-										  }.png`
+												].id - 1
+										  ]
 										: ""
 								}
 							/>
@@ -45,17 +55,12 @@ const ItemScreen = (props) => (
 								alt="hey"
 								src={
 									props.playerItems.length > 0
-										? `/items/${
+										? itemImages[
 												props.computerItems[
 													props.computerItems.length -
 														1
-												].id
-										  }${
-												props.computerItems[
-													props.computerItems.length -
-														1
-												].name
-										  }.png`
+												].id - 1
+										  ]
 										: ""
 								}
 							/>
