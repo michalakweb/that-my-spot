@@ -8,6 +8,7 @@ import WelcomeScreen from "./components/WelcomeScreen"
 import ItemScreen from "./components/ItemScreen"
 import WinLoseScreen from "./components/WinLoseScreen"
 import SmallWidthScreen from "./components/SmallWidthScreen"
+import TutorialScreen from "./components/TutorialScreen"
 
 // Deck & Items db
 const deckStats = [
@@ -218,6 +219,7 @@ class App extends React.Component {
 		itemsScreenFlag: true,
 		winLoseScreenFlag: true,
 		showSmallWidthScreenFlag: false,
+		showTutorialScreen: false,
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -350,6 +352,12 @@ class App extends React.Component {
 				windowWidth: windowWidth
 			})
 		})
+	}
+
+	switchTutorialScreen = () => {
+		this.setState(prevState => ({
+			showTutorialScreen: !prevState.showTutorialScreen
+		}))
 	}
 
 	switchWelcomeScreen = () => {
@@ -1599,6 +1607,12 @@ class App extends React.Component {
 					/>
 				)}
 
+				{this.state.showTutorialScreen && (
+					<TutorialScreen
+						switchTutorialScreen={this.switchTutorialScreen}
+					/>
+				)}
+
 				{this.state.showItemsScreen && (
 					<ItemScreen
 						switchItemsScreen={this.switchItemsScreen}
@@ -1640,6 +1654,7 @@ class App extends React.Component {
 							turnCounter={this.state.turnCounter}
 							computerDrawsCard={this.state.computerDrawsCard}
 							showWelcomeScreen={this.state.showWelcomeScreen}
+							switchTutorialScreen={this.switchTutorialScreen}
 						/>
 
 						<Body

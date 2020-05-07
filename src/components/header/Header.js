@@ -3,7 +3,7 @@ import Logo from "./Logo"
 import GameInfo from "./GameInfo"
 import LangSettings from "./LangSettings"
 
-const Header = (props) => (
+const Header = props => (
 	<div id="header">
 		<Logo showWelcomeScreen={props.showWelcomeScreen} />
 		<GameInfo
@@ -15,7 +15,7 @@ const Header = (props) => (
 			turnCounter={props.turnCounter}
 			computerDrawsCard={props.computerDrawsCard}
 		/>
-		<LangSettings />
+		<LangSettings switchTutorialScreen={props.switchTutorialScreen} />
 	</div>
 )
 
