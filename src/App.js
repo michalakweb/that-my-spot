@@ -353,12 +353,12 @@ class App extends React.Component {
 	drawCard = () => {
 		console.log("player one draws a card")
 
-		let drawnCard = this.state.deckPlayer.splice(
-			this.state.deckPlayer.length - 1,
-			1
-		)[0]
+		let deckPlayerCopy = [...this.state.deckPlayer]
+
+		let drawnCard = deckPlayerCopy.splice(deckPlayerCopy.length - 1, 1)[0]
 
 		this.setState(prevState => ({
+			deckPlayer: deckPlayerCopy,
 			handPlayer: [...this.state.handPlayer, drawnCard],
 			cardsDeckLeftPlayer: prevState.cardsDeckLeftPlayer - 1,
 			phaseTwoFlag: false,
@@ -392,13 +392,16 @@ class App extends React.Component {
 
 	sendCardToLinePlayer = () => {
 		// delete chosen card from player deck
-		let playerChosenCard = this.state.handPlayer.splice(
+		let handPlayerCopy = [...this.state.handPlayer]
+
+		let playerChosenCard = handPlayerCopy.splice(
 			this.state.chosenCardPosition,
 			1
 		)[0]
 
 		this.setState(
 			prevState => ({
+				handPlayer: handPlayerCopy,
 				phaseTwoFlag: false,
 				currentPhase: 2,
 				chosenCard: null,
