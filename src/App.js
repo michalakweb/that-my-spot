@@ -29,7 +29,7 @@ const deckStats3 = [
 	{ id: 1, name: "pielegniarka", value: 1 },
 	{ id: 2, name: "baba", value: 2 },
 	{ id: 4, name: "palacz", value: 1 },
-	{ id: 5, name: "partyjniak", value: 4 },
+	{ id: 2, name: "baba", value: 2 },
 	{ id: 5, name: "partyjniak", value: 4 }
 ]
 const itemStats = [
