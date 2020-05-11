@@ -617,8 +617,7 @@ class App extends React.Component {
 												...this.state.deckComputer
 											]
 											let drawnCard = deckComputerCopy.splice(
-												this.state.deckPlayer.length -
-													1,
+												deckComputerCopy.length - 1,
 												1
 											)[0]
 
