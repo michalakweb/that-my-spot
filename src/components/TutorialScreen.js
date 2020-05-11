@@ -47,8 +47,8 @@ const TutorialScreen = props => (
 					<br />
 				</p>
 				<p>
-					When it&#39;s you&#39;r turn, you will see a pulse around
-					your avatar:
+					When it&#39;s your turn, you will see an animated pulse
+					around your avatar:
 				</p>
 				<img src={tutorialPulse} alt="tutorial Pulse" />
 				<p>
@@ -155,7 +155,7 @@ const TutorialScreen = props => (
 					<div className="tutorialCardInfo">
 						<p>
 							The smoker is a very special card. It will affect a
-							card that stands in the que behind or in front of
+							card that stands in the queue behind or in front of
 							him, by taking:&nbsp;
 						</p>
 						<p>- 1 point from 1-2 point value cards</p>
