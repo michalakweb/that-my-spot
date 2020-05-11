@@ -278,7 +278,7 @@ class App extends React.Component {
 		let arr = [...array].map(obj => ({ ...obj, source: stateName }))
 
 		console.log(`shuffling cards for ${stateName}`)
-		var j, x, i
+		let j, x, i
 		for (i = arr.length - 1; i > 0; i--) {
 			j = Math.floor(Math.random() * (i + 1))
 			x = arr[i]
@@ -318,7 +318,8 @@ class App extends React.Component {
 	drawCardsFromDeck = (array, stateName) => {
 		console.log(`drawing cards for ${stateName}`)
 
-		var currentHand = array.splice(-5, 5)
+		let currentHand = array.splice(-5, 5)
+
 		if (stateName === "deckComputer") {
 			this.setState(
 				{
