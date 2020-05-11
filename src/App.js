@@ -652,6 +652,7 @@ class App extends React.Component {
 					let beforeLastCardInLine = this.state.lineCards[
 						this.state.lineCards.length - 2
 					]
+					let handComputerCopy = [...this.state.handComputer]
 
 					// last turn and player has 4 > x >= 2 point advantage, but
 					// ai has 4 point cards
@@ -662,15 +663,10 @@ class App extends React.Component {
 						isLastTurn &&
 						hasFourPointCards > -1
 					) {
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(
 							hasFourPointCards,
 							1
 						)
-
-						this.setState({
-							handComputer: handComputerCopy
-						})
 
 						console.log(
 							"ai: player is leading, but I have a valuable card to turn the tide"
@@ -685,35 +681,20 @@ class App extends React.Component {
 						(hasKid > -1 || hasSmoker > -1 || hasNurse > -1)
 					) {
 						if (hasKid > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasKid,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else if (hasSmoker > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasSmoker,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasNurse,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						}
 
 						console.log(
@@ -735,15 +716,10 @@ class App extends React.Component {
 						hasCardsInHand &&
 						hasNurse > -1
 					) {
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(
 							hasNurse,
 							1
 						)
-
-						this.setState({
-							handComputer: handComputerCopy
-						})
 
 						console.log("ai: protect mode")
 					}
@@ -759,35 +735,20 @@ class App extends React.Component {
 						(hasSmoker > -1 || hasLady > -1 || hasNurse > -1)
 					) {
 						if (hasSmoker > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasSmoker,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else if (hasNurse > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasNurse,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasLady,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						}
 
 						console.log(
@@ -807,35 +768,20 @@ class App extends React.Component {
 						(hasSmoker > -1 || hasKid > -1 || hasNurse > -1)
 					) {
 						if (hasSmoker > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasSmoker,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else if (hasKid > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasKid,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasNurse,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						}
 
 						console.log(
@@ -853,15 +799,11 @@ class App extends React.Component {
 						hasCardsInHand &&
 						hasSmoker > -1
 					) {
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(
 							hasSmoker,
 							1
 						)
 
-						this.setState({
-							handComputer: handComputerCopy
-						})
 						console.log("ai: attack mode")
 					}
 
@@ -877,45 +819,25 @@ class App extends React.Component {
 							hasSmoker > -1)
 					) {
 						if (hasNurse > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasNurse,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else if (hasSmoker > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasSmoker,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else if (hasFourPointCards > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasFourPointCards,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasStrongerCards,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						}
 
 						console.log(
@@ -932,35 +854,20 @@ class App extends React.Component {
 							hasSmoker > -1)
 					) {
 						if (hasFourPointCards > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasFourPointCards,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else if (hasStrongerCards > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasStrongerCards,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasSmoker,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						}
 
 						console.log(
@@ -977,15 +884,10 @@ class App extends React.Component {
 						lastCardInLine.name !== "palacz" &&
 						hasWeakerCards
 					) {
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(
 							hasWeakerCards,
 							1
 						)
-
-						this.setState({
-							handComputer: handComputerCopy
-						})
 					}
 
 					// it's the last turn and it's a draw and there is a smoker in the end
@@ -997,15 +899,10 @@ class App extends React.Component {
 						lastCardInLine.name === "palacz" &&
 						hasStrongerCards
 					) {
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(
 							hasStrongerCards,
 							1
 						)
-
-						this.setState({
-							handComputer: handComputerCopy
-						})
 					}
 
 					// it's the last turn and it's almost a win for the ai
@@ -1018,15 +915,10 @@ class App extends React.Component {
 						lastCardInLine.name !== "palacz" &&
 						hasStrongerCards
 					) {
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(
 							hasStrongerCards,
 							1
 						)
-
-						this.setState({
-							handComputer: handComputerCopy
-						})
 					}
 
 					// it's the last turn and it's almost a win for the ai
@@ -1041,50 +933,30 @@ class App extends React.Component {
 						lastCardInLine.name === "palacz" &&
 						hasFourPointCards
 					) {
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(
 							hasFourPointCards,
 							1
 						)
-
-						this.setState({
-							handComputer: handComputerCopy
-						})
 					}
 
 					// there is a significant difference between items values,
 					// so use strongest cards
 					else if (currentItemsValueDiff > 2) {
 						if (hasFourPointCards > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasFourPointCards,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else if (hasStrongerCards > -1) {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasStrongerCards,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						} else {
-							let handComputerCopy = [...this.state.handComputer]
 							computerChosenCard = handComputerCopy.splice(
 								hasSmoker,
 								1
 							)
-
-							this.setState({
-								handComputer: handComputerCopy
-							})
 						}
 
 						console.log(
@@ -1092,12 +964,7 @@ class App extends React.Component {
 						)
 					} else {
 						// delete first card from computer hand
-						let handComputerCopy = [...this.state.handComputer]
 						computerChosenCard = handComputerCopy.splice(0, 1)
-
-						this.setState({
-							handComputer: handComputerCopy
-						})
 
 						console.log("ai: deleting first card in hand")
 					}
@@ -1111,7 +978,8 @@ class App extends React.Component {
 						this.setState(
 							{
 								currentPhase: 3,
-								lineCards: lineCardsCopy
+								lineCards: lineCardsCopy,
+								handComputer: handComputerCopy
 							},
 							() => {
 								console.log("card sent to line by computer")
