@@ -273,25 +273,28 @@ class App extends React.Component {
 		)
 	}
 
-	shuffleCards = (array, stateName) => {
+	shuffleCards = (cards, stateName) => {
 		// add source for card sets
-		let arr = [...array].map(obj => ({ ...obj, source: stateName }))
+		let cardsShuffled = [...cards].map(obj => ({
+			...obj,
+			source: stateName
+		}))
 
 		console.log(`shuffling cards for ${stateName}`)
 		let j, x, i
-		for (i = arr.length - 1; i > 0; i--) {
+		for (i = cardsShuffled.length - 1; i > 0; i--) {
 			j = Math.floor(Math.random() * (i + 1))
-			x = arr[i]
-			arr[i] = arr[j]
-			arr[j] = x
+			x = cardsShuffled[i]
+			cardsShuffled[i] = cardsShuffled[j]
+			cardsShuffled[j] = x
 		}
 
 		this.setState(
 			{
-				[stateName]: [...arr]
+				[stateName]: [...cardsShuffled]
 			},
 			() => {
-				this.drawCardsFromDeck([...arr], stateName)
+				this.drawCardsFromDeck([...cardsShuffled], stateName)
 			}
 		)
 	}
