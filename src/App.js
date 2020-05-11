@@ -39,7 +39,7 @@ const itemStats = [
 		value: 5,
 		trueName: "Tape recorder AKAI 4000DS",
 		description:
-			"This reel-to-reel tape recorder was made by Akai, a Japanese company based in Tokio, now defunct. Produced in 1972-1973, was considered a luxury product (almost everything produced outside of the Soviet Union was considered that).\n \n Tape recorders were extremely popular in the Eastern Block. Poland at the time didn't have extensive copyright laws and many radio stations played western albums in their enitrety, so people could record it with their tape recorders. Availability of western music was scarce and the prices were extremely high for an average citizen."
+			"This reel-to-reel tape recorder was made by Akai, a Japanese company based in Tokio, now defunct. Produced in 1972-1973, it was considered a luxury product (almost everything produced outside of the Soviet Union was considered that).\n \n Tape recorders were extremely popular in the Eastern Block. Poland at the time didn't have extensive copyright laws and many radio stations played western albums in their entirety, so people could record them with tape recorders. Availability of western music was scarce and the prices too high for an average citizen."
 	},
 	{
 		id: 2,
@@ -63,7 +63,7 @@ const itemStats = [
 		value: 5,
 		trueName: "Electronic keyboard 'Elwirka'",
 		description:
-			"'Elwirka' was produced in the eighties and it was meant for kids and teenagers. The quality of the keyboard was pretty good - 2.5octaves, polifonic system and one timbre that could be modified with functions, like vibrato.\n \n Modifications could be mixed, which gave even more sound editing options. A built-in amplifier gave a clear loud sound, but if that wasn't enough, the user could connect the keyboard with external speakers."
+			"'Elwirka' was produced in the eighties and it was meant for kids and teenagers. The quality of the keyboard was pretty good - 2.5octaves, polifonic system and one timbre that could be modified with functions, like vibrato.\n \n Modifications could be mixed, which gave even more sound editing options. A built-in amplifier produced a clear, loud sound, but if that wasn't enough, the user could connect the keyboard with external speakers."
 	},
 	{
 		id: 5,
@@ -71,7 +71,7 @@ const itemStats = [
 		value: 5,
 		trueName: "Fiat 126P",
 		description:
-			"Constructed by Fiat and produced in Italy from 1973 and in Poland between 1973-2000. In Italy the car was marketed as the second, cheaper family car. In the much harsher economical reality of Poland it was the only car families could aspire to.\n \n The car's diminutive dimensions inspired the nickname 'Maluch', which means 'toddler' or 'little one' in Polish."
+			"Constructed by Fiat and produced in Italy from 1973 and in Poland between 1973-2000. In Italy the car was marketed as the second, cheaper family car. In the much harsher economical reality of Poland, it was the only car families could aspire to.\n \n The car's diminutive dimensions inspired the nickname 'Maluch', which means 'toddler' or 'little one' in Polish."
 	},
 	{
 		id: 6,
@@ -103,7 +103,7 @@ const itemStats = [
 		value: 2,
 		trueName: "'Popular' tea",
 		description:
-			"In the eighties it was actually one of the most popular teas.\n \n There wasn't much choice in the stores, so buying such tea was the only way. People just had to accept the reality of those times."
+			"In the eighties it was actually one of the most popular teas.\n \n There wasn't much choice in the stores, so buying such tea was the only way. People just had to accept the reality (and product quality) of those times."
 	},
 	{
 		id: 10,
