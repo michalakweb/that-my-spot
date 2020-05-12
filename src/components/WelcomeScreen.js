@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import logo from "../images/logo.png"
 
-const WelcomeScreen = (props) => {
+const WelcomeScreen = props => {
 	const [count, setCount] = useState(0)
 
 	return (
@@ -30,7 +30,7 @@ const WelcomeScreen = (props) => {
 				</span>{" "}
 				by{" "}
 				<a
-					href="https://www.xing.com/profile/Mateusz_Michalak3/cv"
+					href="https://www.xing.com/profile/Mateusz_Michalak4"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
