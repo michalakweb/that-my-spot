@@ -9,7 +9,10 @@ import ItemScreen from "./components/ItemScreen"
 import WinLoseScreen from "./components/WinLoseScreen"
 import SmallWidthScreen from "./components/SmallWidthScreen"
 import TutorialScreen from "./components/TutorialScreen"
+
+// Multiplayer
 import MultiScreen from "./components/MultiScreen"
+import { db } from "./Firebase"
 
 // cards and items
 import { deckStats, deckStats2, deckStats3, itemStats } from "./cardsAndItems"
@@ -201,6 +204,12 @@ class App extends React.Component {
 
 	setMultiAvatar = num => {
 		this.setState({ multiAvatarId: num })
+	}
+
+	sendTestData = () => {
+		db.collection("users").add({
+			multiPlayerNick: this.state.multiPlayerNick
+		})
 	}
 
 	//
@@ -1361,6 +1370,7 @@ class App extends React.Component {
 						switchWelcomeScreen={this.switchWelcomeScreen}
 						changeMultiNick={this.changeMultiNick}
 						setMultiAvatar={this.setMultiAvatar}
+						sendTestData={this.sendTestData}
 					/>
 				)}
 

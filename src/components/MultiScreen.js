@@ -20,6 +20,7 @@ const MultiScreen = props => (
 			}}
 		/>
 		<input onChange={props.changeMultiNick} value={props.multiPlayerNick} />
+		<button onClick={props.sendTestData}>send test data</button>
 	</div>
 )
 
