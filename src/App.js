@@ -78,6 +78,9 @@ class App extends React.Component {
 		// Multiplayer
 		showMultiScreen: false,
 		multiPlayerNick: "",
+		multiAvatarId: null,
+		multiSpaceId: null,
+		multiUsers: [],
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -198,6 +201,12 @@ class App extends React.Component {
 	// Multiplayer stuff
 	//
 
+	switchMultiScreen = () => {
+		this.setState(prevState => ({
+			showMultiScreen: !prevState.showMultiScreen
+		}))
+	}
+
 	changeMultiNick = e => {
 		this.setState({ multiPlayerNick: e.target.value })
 	}
@@ -206,10 +215,65 @@ class App extends React.Component {
 		this.setState({ multiAvatarId: num })
 	}
 
-	sendTestData = () => {
-		db.collection("users").add({
-			multiPlayerNick: this.state.multiPlayerNick
-		})
+	setMultiSpace = () => {
+		let multiSpace = db.collection("users").doc()
+
+		multiSpace
+			.set({
+				multiPlayerNick: this.state.multiPlayerNick,
+				multiAvatarId: this.state.multiAvatarId,
+				invited: null,
+				action: null,
+				timestamp: Date.now()
+			})
+			.then(() => {
+				let multiSpaceId = multiSpace.id
+
+				this.setState(
+					{
+						multiSpaceId: multiSpaceId
+					},
+					() => {
+						this.multiPlayer1SpaceListener()
+						this.multiAllPlayersListener()
+					}
+				)
+			})
+	}
+
+	multiPlayer1SpaceListener = () => {
+		db.collection("users")
+			.doc(this.state.multiSpaceId)
+			.onSnapshot(doc => {
+				console.log("Current data: ", doc.data())
+			})
+	}
+
+	multiAllPlayersListener = () => {
+		let multiUsers = []
+
+		console.log("your users are:", multiUsers)
+
+		db.collection("users")
+			.where("action", "==", null)
+			.onSnapshot(querySnapshot => {
+				multiUsers = []
+
+				console.log("current logged in players")
+
+				querySnapshot.forEach(function (user) {
+					multiUsers = [
+						...multiUsers,
+						{ multiSpaceId: user.id, ...user.data() }
+					]
+				})
+
+				console.log("your users are:", multiUsers)
+
+				this.setState({
+					multiUsers: multiUsers
+				})
+			})
 	}
 
 	//
@@ -243,12 +307,6 @@ class App extends React.Component {
 	switchWelcomeScreen = () => {
 		this.setState(prevState => ({
 			showWelcomeScreen: !prevState.showWelcomeScreen
-		}))
-	}
-
-	switchMultiScreen = () => {
-		this.setState(prevState => ({
-			showMultiScreen: !prevState.showMultiScreen
 		}))
 	}
 
@@ -1366,11 +1424,17 @@ class App extends React.Component {
 
 				{this.state.showMultiScreen && (
 					<MultiScreen
+						// Methods
 						switchMultiScreen={this.switchMultiScreen}
 						switchWelcomeScreen={this.switchWelcomeScreen}
 						changeMultiNick={this.changeMultiNick}
 						setMultiAvatar={this.setMultiAvatar}
-						sendTestData={this.sendTestData}
+						setMultiSpace={this.setMultiSpace}
+						// State
+						multiAvatarId={this.state.multiAvatarId}
+						multiPlayerNick={this.state.multiPlayerNick}
+						multiSpaceId={this.state.multiSpaceId}
+						multiUsers={this.state.multiUsers}
 					/>
 				)}
 
