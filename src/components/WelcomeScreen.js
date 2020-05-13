@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import logo from "../images/logo.png"
+import { Online } from "react-detect-offline"
 
 const WelcomeScreen = props => {
 	const [count, setCount] = useState(0)
@@ -22,6 +23,18 @@ const WelcomeScreen = props => {
 				>
 					Start
 				</button>
+
+				<Online>
+					<button
+						id="start_multigame_btn"
+						onClick={() => {
+							props.switchMultiScreen()
+							props.switchWelcomeScreen()
+						}}
+					>
+						Multiplayer
+					</button>
+				</Online>
 			</div>
 			<div id="madeBy">
 				Made with{" "}

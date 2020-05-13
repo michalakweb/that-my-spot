@@ -9,6 +9,7 @@ import ItemScreen from "./components/ItemScreen"
 import WinLoseScreen from "./components/WinLoseScreen"
 import SmallWidthScreen from "./components/SmallWidthScreen"
 import TutorialScreen from "./components/TutorialScreen"
+import MultiScreen from "./components/MultiScreen"
 
 // cards and items
 import { deckStats, deckStats2, deckStats3, itemStats } from "./cardsAndItems"
@@ -70,6 +71,9 @@ class App extends React.Component {
 		winLoseScreenFlag: true,
 		showSmallWidthScreenFlag: false,
 		showTutorialScreen: false,
+
+		// Multiplayer
+		showMultiScreen: false,
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -211,9 +215,15 @@ class App extends React.Component {
 	}
 
 	switchWelcomeScreen = () => {
-		this.setState({
-			showWelcomeScreen: false
-		})
+		this.setState(prevState => ({
+			showWelcomeScreen: !prevState.showWelcomeScreen
+		}))
+	}
+
+	switchMultiScreen = () => {
+		this.setState(prevState => ({
+			showMultiScreen: !prevState.showMultiScreen
+		}))
 	}
 
 	switchItemsScreen = () => {
@@ -1323,6 +1333,14 @@ class App extends React.Component {
 			<div>
 				{this.state.showWelcomeScreen && (
 					<WelcomeScreen
+						switchWelcomeScreen={this.switchWelcomeScreen}
+						switchMultiScreen={this.switchMultiScreen}
+					/>
+				)}
+
+				{this.state.showMultiScreen && (
+					<MultiScreen
+						switchMultiScreen={this.switchMultiScreen}
 						switchWelcomeScreen={this.switchWelcomeScreen}
 					/>
 				)}
