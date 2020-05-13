@@ -74,6 +74,7 @@ class App extends React.Component {
 
 		// Multiplayer
 		showMultiScreen: false,
+		multiPlayerNick: "",
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -189,6 +190,22 @@ class App extends React.Component {
 			)
 		}
 	}
+
+	//
+	// Multiplayer stuff
+	//
+
+	changeMultiNick = e => {
+		this.setState({ multiPlayerNick: e.target.value })
+	}
+
+	setMultiAvatar = num => {
+		this.setState({ multiAvatarId: num })
+	}
+
+	//
+	// Multiplayer stuff ends here
+	//
 
 	showViewportWidth = () => {
 		window.addEventListener("resize", () => {
@@ -1342,6 +1359,8 @@ class App extends React.Component {
 					<MultiScreen
 						switchMultiScreen={this.switchMultiScreen}
 						switchWelcomeScreen={this.switchWelcomeScreen}
+						changeMultiNick={this.changeMultiNick}
+						setMultiAvatar={this.setMultiAvatar}
 					/>
 				)}
 
