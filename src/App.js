@@ -162,45 +162,48 @@ class App extends React.Component {
 			)
 		}
 
-		// sending card to line --player
-		if (
-			this.state.phaseTwoFlag &&
-			this.state.chosenCard !== null &&
-			this.state.chosenCardConfirm !== null &&
-			this.state.chosenCard === this.state.chosenCardConfirm &&
-			this.state.currentPhase === 1
-		) {
-			this.sendCardToLinePlayer()
-		}
+		// Single player listeners
+		if (!this.state.multiplayerModeOn) {
+			// sending card to line --player
+			if (
+				this.state.phaseTwoFlag &&
+				this.state.chosenCard !== null &&
+				this.state.chosenCardConfirm !== null &&
+				this.state.chosenCard === this.state.chosenCardConfirm &&
+				this.state.currentPhase === 1
+			) {
+				this.sendCardToLinePlayer()
+			}
 
-		// sending card to line --computer
-		if (
-			this.state.phaseThreeFlag &&
-			this.state.aiCanMove &&
-			this.state.currentPhase === 2 &&
-			(this.state.turnCounter === 1 ||
-				this.state.turnCounter === 3 ||
-				this.state.turnCounter === 5)
-		) {
-			this.sendCardToLineComputer()
-		}
+			// sending card to line --computer
+			if (
+				this.state.phaseThreeFlag &&
+				this.state.aiCanMove &&
+				this.state.currentPhase === 2 &&
+				(this.state.turnCounter === 1 ||
+					this.state.turnCounter === 3 ||
+					this.state.turnCounter === 5)
+			) {
+				this.sendCardToLineComputer()
+			}
 
-		// six turns - time for items
-		if (
-			this.state.turnCounter === 6 &&
-			this.state.itemsScreenFlag &&
-			this.state.noClicking === false
-		) {
-			this.setState(
-				{
-					noClicking: true
-				},
-				() => {
-					setTimeout(() => {
-						this.distributeItems()
-					}, 2100)
-				}
-			)
+			// six turns - time for items
+			if (
+				this.state.turnCounter === 6 &&
+				this.state.itemsScreenFlag &&
+				this.state.noClicking === false
+			) {
+				this.setState(
+					{
+						noClicking: true
+					},
+					() => {
+						setTimeout(() => {
+							this.distributeItems()
+						}, 2100)
+					}
+				)
+			}
 		}
 	}
 
@@ -255,6 +258,10 @@ class App extends React.Component {
 			.onSnapshot(doc => {
 				let playerData = doc.data()
 
+				let multiPlayerSpace = db
+					.collection("users")
+					.doc(this.state.multiSpaceId)
+
 				if (
 					playerData.invited !== null &&
 					playerData.action === "received an invite"
@@ -267,15 +274,26 @@ class App extends React.Component {
 				}
 
 				if (playerData.action === "invitation accepted") {
-					let multiPlayerSpace = db
-						.collection("users")
-						.doc(this.state.multiSpaceId)
+					if (playerData.accepted === 1) {
+						this.multiNormalizeItems()
+					}
 
 					multiPlayerSpace.update({
 						action: null,
 						timestamp: Date.now()
 					})
 					this.multiOpponentListener()
+				}
+
+				if (
+					Array.isArray(playerData.action) &&
+					playerData.action[0] === "normalizing items"
+				) {
+					this.setState({
+						items: playerData.action[1].items,
+						itemsCurrent: playerData.action[1].itemsCurrent,
+						multiplayerModeOn: true
+					})
 				}
 			})
 	}
@@ -471,9 +489,31 @@ class App extends React.Component {
 			multiAcceptedFlag: false,
 			multiOpponentAvatarId: opponentAvatarId,
 			multiOpponentNick: opponentNick,
-			multiTurn: opponentPriority === 1 ? 2 : 1,
-			multiplayerModeOn: true
+			multiTurn: opponentPriority === 1 ? 2 : 1
 		})
+	}
+
+	multiNormalizeItems = () => {
+		let multiOpponentSpace = db
+			.collection("users")
+			.doc(this.state.multiOpponentId)
+
+		multiOpponentSpace
+			.update({
+				action: [
+					"normalizing items",
+					{
+						items: this.state.items,
+						itemsCurrent: this.state.itemsCurrent
+					}
+				],
+				timestamp: Date.now()
+			})
+			.then(() => {
+				this.setState({
+					multiplayerModeOn: true
+				})
+			})
 	}
 
 	//
