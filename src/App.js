@@ -85,6 +85,8 @@ class App extends React.Component {
 		multiOpponentNick: null,
 		multiUsers: [],
 		multiInviteReceived: false,
+		multiAcceptedFlag: true,
+		multiTurn: null,
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -262,6 +264,38 @@ class App extends React.Component {
 				if (playerData.action === "invitation declined") {
 					this.multiDeclineInviteUpdateState()
 				}
+
+				if (playerData.action === "invitation accepted") {
+					let multiPlayerSpace = db
+						.collection("users")
+						.doc(this.state.multiSpaceId)
+
+					multiPlayerSpace.update({
+						action: null,
+						timestamp: Date.now()
+					})
+					this.multiOpponentListener()
+				}
+			})
+	}
+
+	multiOpponentListener = () => {
+		db.collection("users")
+			.doc(this.state.multiOpponentId)
+			.onSnapshot(doc => {
+				let opponentData = doc.data()
+
+				if (
+					opponentData &&
+					opponentData.accepted !== null &&
+					this.state.multiAcceptedFlag
+				) {
+					this.multiAddOpponentData(
+						opponentData.multiAvatarId,
+						opponentData.multiPlayerNick,
+						opponentData.accepted
+					)
+				}
 			})
 	}
 
@@ -277,8 +311,6 @@ class App extends React.Component {
 			.onSnapshot(querySnapshot => {
 				multiUsers = []
 
-				console.log("current logged in players")
-
 				querySnapshot.forEach(function (user) {
 					multiUsers = [
 						...multiUsers,
@@ -290,7 +322,7 @@ class App extends React.Component {
 					el => el.multiSpaceId !== this.state.multiSpaceId
 				)
 
-				console.log("your users are:", multiUsers)
+				console.log("current logged in players:", multiUsers)
 
 				this.setState({
 					multiUsers: multiUsers
@@ -361,9 +393,11 @@ class App extends React.Component {
 		multiOpponentSpace.update({
 			accepted: 1,
 			invited: this.state.multiSpaceId,
-			action: "",
+			action: "invitation accepted",
 			timestamp: Date.now()
 		})
+
+		// getting opponent data to state
 
 		let multiPlayerSpace = db
 			.collection("users")
@@ -371,7 +405,7 @@ class App extends React.Component {
 
 		multiPlayerSpace.update({
 			accepted: 2,
-			action: "",
+			action: "invitation accepted",
 			timestamp: Date.now()
 		})
 	}
@@ -425,6 +459,19 @@ class App extends React.Component {
 					multiInviteReceived: false
 				})
 			})
+	}
+
+	multiAddOpponentData = (
+		opponentAvatarId,
+		opponentNick,
+		opponentPriority
+	) => {
+		this.setState({
+			multiAcceptedFlag: false,
+			multiOpponentAvatarId: opponentAvatarId,
+			multiOpponentNick: opponentNick,
+			multiTurn: opponentPriority === 1 ? 2 : 1
+		})
 	}
 
 	//
@@ -1593,6 +1640,7 @@ class App extends React.Component {
 						multiOpponentNick={this.state.multiOpponentNick}
 						multiUsers={this.state.multiUsers}
 						multiInviteReceived={this.state.multiInviteReceived}
+						multiTurn={this.state.multiTurn}
 					/>
 				)}
 

@@ -67,7 +67,8 @@ const MultiScreen = props => {
 			)}
 
 			{/* Showing the invitation prompt */}
-			{props.multiInviteReceived &&
+			{props.multiTurn === null &&
+				props.multiInviteReceived &&
 				props.multiOpponentAvatarId !== null &&
 				props.multiOpponentNick !== null && (
 					<div>
