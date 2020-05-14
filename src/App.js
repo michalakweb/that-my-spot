@@ -80,7 +80,11 @@ class App extends React.Component {
 		multiPlayerNick: "",
 		multiAvatarId: null,
 		multiSpaceId: null,
+		multiOpponentId: null,
+		multiOpponentAvatarId: null,
+		multiOpponentNick: null,
 		multiUsers: [],
+		multiInviteReceived: false,
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -224,6 +228,7 @@ class App extends React.Component {
 				multiAvatarId: this.state.multiAvatarId,
 				invited: null,
 				action: null,
+				accepted: null,
 				timestamp: Date.now()
 			})
 			.then(() => {
@@ -234,18 +239,29 @@ class App extends React.Component {
 						multiSpaceId: multiSpaceId
 					},
 					() => {
-						this.multiPlayer1SpaceListener()
+						this.multiPlayerSpaceListener()
 						this.multiAllPlayersListener()
 					}
 				)
 			})
 	}
 
-	multiPlayer1SpaceListener = () => {
+	multiPlayerSpaceListener = () => {
 		db.collection("users")
 			.doc(this.state.multiSpaceId)
 			.onSnapshot(doc => {
-				console.log("Current data: ", doc.data())
+				let playerData = doc.data()
+
+				if (
+					playerData.invited !== null &&
+					playerData.action === "received an invite"
+				) {
+					this.multiReceiveInvite(playerData)
+				}
+
+				if (playerData.action === "invitation declined") {
+					this.multiDeclineInviteUpdateState()
+				}
 			})
 	}
 
@@ -257,6 +273,7 @@ class App extends React.Component {
 		db.collection("users")
 			.where("action", "==", null)
 			.where("invited", "==", null)
+			.where("accepted", "==", null)
 			.onSnapshot(querySnapshot => {
 				multiUsers = []
 
@@ -293,10 +310,121 @@ class App extends React.Component {
 
 				multiOpponentSpace.update({
 					invited: this.state.multiSpaceId,
+					action: "received an invite",
+					timestamp: Date.now()
+				})
+
+				let multiSpace = db
+					.collection("users")
+					.doc(this.state.multiSpaceId)
+
+				multiSpace.update({
+					action: "sent an invite",
 					timestamp: Date.now()
 				})
 			}
 		)
+	}
+
+	multiReceiveInvite = playerData => {
+		this.setState(
+			{
+				multiOpponentId: playerData.invited
+			},
+			() => {
+				let opponentData = {}
+				let multiOpponentSpace = db
+					.collection("users")
+					.doc(this.state.multiOpponentId)
+
+				multiOpponentSpace
+					.get()
+					.then(function (doc) {
+						opponentData = doc.data()
+					})
+					.then(() => {
+						this.setState({
+							multiOpponentAvatarId: opponentData.multiAvatarId,
+							multiOpponentNick: opponentData.multiPlayerNick,
+							multiInviteReceived: true
+						})
+					})
+			}
+		)
+	}
+
+	multiAcceptInvite = () => {
+		let multiOpponentSpace = db
+			.collection("users")
+			.doc(this.state.multiOpponentId)
+
+		multiOpponentSpace.update({
+			accepted: 1,
+			invited: this.state.multiSpaceId,
+			action: "",
+			timestamp: Date.now()
+		})
+
+		let multiPlayerSpace = db
+			.collection("users")
+			.doc(this.state.multiSpaceId)
+
+		multiPlayerSpace.update({
+			accepted: 2,
+			action: "",
+			timestamp: Date.now()
+		})
+	}
+
+	multiDeclineInvite = () => {
+		let multiOpponentSpace = db
+			.collection("users")
+			.doc(this.state.multiOpponentId)
+
+		multiOpponentSpace.update({
+			invited: null,
+			action: "invitation declined",
+			timestamp: Date.now()
+		})
+
+		let multiPlayerSpace = db
+			.collection("users")
+			.doc(this.state.multiSpaceId)
+
+		multiPlayerSpace.update({
+			invited: null,
+			action: "invitation declined",
+			timestamp: Date.now()
+		})
+	}
+
+	multiDeclineInviteUpdateState = () => {
+		let multiOpponentSpace = db
+			.collection("users")
+			.doc(this.state.multiOpponentId)
+
+		multiOpponentSpace.update({
+			action: null,
+			timestamp: Date.now()
+		})
+
+		let multiPlayerSpace = db
+			.collection("users")
+			.doc(this.state.multiSpaceId)
+
+		multiPlayerSpace
+			.update({
+				action: null,
+				timestamp: Date.now()
+			})
+			.then(() => {
+				this.setState({
+					multiOpponentId: null,
+					multiOpponentAvatarId: null,
+					multiOpponentNick: null,
+					multiInviteReceived: false
+				})
+			})
 	}
 
 	//
@@ -1454,11 +1582,17 @@ class App extends React.Component {
 						setMultiAvatar={this.setMultiAvatar}
 						setMultiSpace={this.setMultiSpace}
 						multiSendInvite={this.multiSendInvite}
+						multiAcceptInvite={this.multiAcceptInvite}
+						multiDeclineInvite={this.multiDeclineInvite}
 						// State
 						multiAvatarId={this.state.multiAvatarId}
 						multiPlayerNick={this.state.multiPlayerNick}
 						multiSpaceId={this.state.multiSpaceId}
+						multiOpponentId={this.state.multiOpponentId}
+						multiOpponentAvatarId={this.state.multiOpponentAvatarId}
+						multiOpponentNick={this.state.multiOpponentNick}
 						multiUsers={this.state.multiUsers}
+						multiInviteReceived={this.state.multiInviteReceived}
 					/>
 				)}
 

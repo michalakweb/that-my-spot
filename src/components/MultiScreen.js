@@ -7,8 +7,9 @@ const MultiScreen = props => {
 
 	return (
 		<div id="multi_screen">
+			{/* Selecting avatar and nickname */}
 			{props.multiSpaceId === null && (
-				<div id="multi_screen">
+				<div>
 					multi screen
 					<img
 						src={multiAvatar1}
@@ -42,27 +43,51 @@ const MultiScreen = props => {
 				</div>
 			)}
 
-			<div>
-				<ul>
-					{multiUsers.map((user, id) => (
-						<li
-							key={id}
-							multispaceid={user.multiSpaceId}
-							onClick={el => {
-								let multiOpponentId = el.target.getAttribute(
-									"multispaceid"
-								)
+			{/* Showing a list of available players */}
+			{props.multiSpaceId !== null && props.multiOpponentId === null && (
+				<div>
+					<ul>
+						{multiUsers.map((user, id) => (
+							<li
+								key={id}
+								multispaceid={user.multiSpaceId}
+								onClick={el => {
+									let multiOpponentId = el.target.getAttribute(
+										"multispaceid"
+									)
 
-								props.multiSendInvite(multiOpponentId)
-							}}
-						>
-							{user.multiPlayerNick}
-						</li>
-					))}
-				</ul>
-			</div>
+									props.multiSendInvite(multiOpponentId)
+								}}
+							>
+								{user.multiPlayerNick}
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
 
-			{props.multiSpaceId !== null && <div></div>}
+			{/* Showing the invitation prompt */}
+			{props.multiInviteReceived &&
+				props.multiOpponentAvatarId !== null &&
+				props.multiOpponentNick !== null && (
+					<div>
+						<img
+							src={
+								props.multiOpponentAvatarId === 1
+									? multiAvatar1
+									: multiAvatar2
+							}
+							alt="opponent avatar"
+						/>
+						<p>{props.multiOpponentNick} wants to play with you!</p>
+						<button onClick={props.multiAcceptInvite}>
+							Accept
+						</button>
+						<button onClick={props.multiDeclineInvite}>
+							Decline
+						</button>
+					</div>
+				)}
 		</div>
 	)
 }
