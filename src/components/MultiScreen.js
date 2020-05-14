@@ -49,9 +49,11 @@ const MultiScreen = props => {
 							key={id}
 							multispaceid={user.multiSpaceId}
 							onClick={el => {
-								console.log(
-									el.target.getAttribute("multispaceid")
+								let multiOpponentId = el.target.getAttribute(
+									"multispaceid"
 								)
+
+								props.multiSendInvite(multiOpponentId)
 							}}
 						>
 							{user.multiPlayerNick}

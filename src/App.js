@@ -256,6 +256,7 @@ class App extends React.Component {
 
 		db.collection("users")
 			.where("action", "==", null)
+			.where("invited", "==", null)
 			.onSnapshot(querySnapshot => {
 				multiUsers = []
 
@@ -268,12 +269,34 @@ class App extends React.Component {
 					]
 				})
 
+				multiUsers = multiUsers.filter(
+					el => el.multiSpaceId !== this.state.multiSpaceId
+				)
+
 				console.log("your users are:", multiUsers)
 
 				this.setState({
 					multiUsers: multiUsers
 				})
 			})
+	}
+
+	multiSendInvite = multiOpponentId => {
+		this.setState(
+			{
+				multiOpponentId: multiOpponentId
+			},
+			() => {
+				let multiOpponentSpace = db
+					.collection("users")
+					.doc(this.state.multiOpponentId)
+
+				multiOpponentSpace.update({
+					invited: this.state.multiSpaceId,
+					timestamp: Date.now()
+				})
+			}
+		)
 	}
 
 	//
@@ -1430,6 +1453,7 @@ class App extends React.Component {
 						changeMultiNick={this.changeMultiNick}
 						setMultiAvatar={this.setMultiAvatar}
 						setMultiSpace={this.setMultiSpace}
+						multiSendInvite={this.multiSendInvite}
 						// State
 						multiAvatarId={this.state.multiAvatarId}
 						multiPlayerNick={this.state.multiPlayerNick}
