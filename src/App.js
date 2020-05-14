@@ -1700,6 +1700,13 @@ class App extends React.Component {
 							computerDrawsCard={this.state.computerDrawsCard}
 							showWelcomeScreen={this.state.showWelcomeScreen}
 							switchTutorialScreen={this.switchTutorialScreen}
+							// Multiplayer
+							multiplayerModeOn={this.state.multiplayerModeOn}
+							multiAvatarId={this.state.multiAvatarId}
+							multiOpponentAvatarId={
+								this.state.multiOpponentAvatarId
+							}
+							multiTurn={this.state.multiTurn}
 						/>
 
 						<Body
