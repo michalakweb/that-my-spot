@@ -76,6 +76,7 @@ class App extends React.Component {
 		showTutorialScreen: false,
 
 		// Multiplayer
+		multiplayerModeOn: false,
 		showMultiScreen: false,
 		multiPlayerNick: "",
 		multiAvatarId: null,
@@ -470,7 +471,8 @@ class App extends React.Component {
 			multiAcceptedFlag: false,
 			multiOpponentAvatarId: opponentAvatarId,
 			multiOpponentNick: opponentNick,
-			multiTurn: opponentPriority === 1 ? 2 : 1
+			multiTurn: opponentPriority === 1 ? 2 : 1,
+			multiplayerModeOn: true
 		})
 	}
 
@@ -1620,7 +1622,7 @@ class App extends React.Component {
 					/>
 				)}
 
-				{this.state.showMultiScreen && (
+				{this.state.showMultiScreen && !this.state.multiplayerModeOn && (
 					<MultiScreen
 						// Methods
 						switchMultiScreen={this.switchMultiScreen}
