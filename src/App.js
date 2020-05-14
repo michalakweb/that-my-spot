@@ -263,6 +263,7 @@ class App extends React.Component {
 					.doc(this.state.multiSpaceId)
 
 				if (
+					playerData &&
 					playerData.invited !== null &&
 					playerData.action === "received an invite"
 				) {
@@ -292,7 +293,8 @@ class App extends React.Component {
 					this.setState({
 						items: playerData.action[1].items,
 						itemsCurrent: playerData.action[1].itemsCurrent,
-						multiplayerModeOn: true
+						multiplayerModeOn: true,
+						noClicking: true
 					})
 				}
 			})
