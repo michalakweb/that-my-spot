@@ -1924,6 +1924,10 @@ class App extends React.Component {
 						deckPlayer={this.state.deckPlayer}
 						handPlayer={this.state.handPlayer}
 						finishGame={this.finishGame}
+						// Multiplayer
+						multiplayerModeOn={this.state.multiplayerModeOn}
+						multiPlayerNick={this.state.multiPlayerNick}
+						multiOpponentNick={this.state.multiOpponentNick}
 					/>
 				)}
 

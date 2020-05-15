@@ -19,7 +19,13 @@ const ItemScreen = props => (
 	<div>
 		{!props.showWinLoseScreen && (
 			<div id="win_item_screen">
-				<div id="win_item_screen_player">
+				<div
+					id={
+						props.multiplayerModeOn
+							? "multi_win_item_screen_player"
+							: "win_item_screen_player"
+					}
+				>
 					<div id="wisp_container">
 						<div id="wisp_container_photo">
 							<img
@@ -42,15 +48,34 @@ const ItemScreen = props => (
 											props.playerItems.length - 1
 									  ].trueName
 									: ""}
-								<span> is yours!</span>
+								{props.multiplayerModeOn ? (
+									<span>
+										{" "}
+										goes to {props.multiPlayerNick}
+									</span>
+								) : (
+									<span> goes to the opponent.</span>
+								)}
 							</p>
 						</div>
 					</div>
 				</div>
 				<div id="win_item_screen_divider"></div>
-				<div id="win_item_screen_computer">
+				<div
+					id={
+						props.multiplayerModeOn
+							? "multi_win_item_screen_computer"
+							: "win_item_screen_computer"
+					}
+				>
 					<div id="wisc_container">
-						<div id="wisc_container_photo">
+						<div
+							id={
+								props.multiplayerModeOn
+									? "multi_wisc_container_photo"
+									: "wisc_container_photo"
+							}
+						>
 							<img
 								alt="hey"
 								src={
@@ -65,14 +90,27 @@ const ItemScreen = props => (
 								}
 							/>
 						</div>
-						<div id="wisc_container_text">
+						<div
+							id={
+								props.multiplayerModeOn
+									? "multi_wisc_container_text"
+									: "wisc_container_text"
+							}
+						>
 							<p>
 								{props.computerItems.length > 0
 									? props.computerItems[
 											props.computerItems.length - 1
 									  ].trueName
 									: ""}
-								<span> goes to the opponent.</span>
+								{props.multiplayerModeOn ? (
+									<span>
+										{" "}
+										goes to {props.multiOpponentNick}
+									</span>
+								) : (
+									<span> goes to the opponent.</span>
+								)}
 							</p>
 						</div>
 					</div>
