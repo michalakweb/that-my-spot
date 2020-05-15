@@ -13,23 +13,37 @@ const GameInfo = props => (
 		<div id="player_info_container">
 			<div id="card">
 				<div id="card_photo">
-					<img
-						src={
-							props.multiplayerModeOn
-								? props.multiTurn === 1
+					{!props.multiplayerModeOn && (
+						<img
+							src={playerImage}
+							alt="player avatar"
+							className={
+								!props.computerThinking
+									? "pulsePlayer"
+									: "undefined"
+							}
+						/>
+					)}
+					{props.multiplayerModeOn && (
+						<img
+							src={
+								props.multiTurn === 1
 									? multiAvatars[props.multiAvatarId - 1]
 									: multiAvatars[
 											props.multiOpponentAvatarId - 1
 									  ]
-								: playerImage
-						}
-						alt="player avatar"
-						className={
-							!props.computerThinking
-								? "pulsePlayer"
-								: "undefined"
-						}
-					/>
+							}
+							alt="player avatar"
+							className={
+								props.multiPlayerTurn && props.multiTurn === 1
+									? "pulse"
+									: !props.multiPlayerTurn &&
+									  props.multiTurn === 2
+									? "pulse"
+									: ""
+							}
+						/>
+					)}
 				</div>
 				<div id="card_info">
 					<p className="turnScorePlayer">
@@ -41,21 +55,35 @@ const GameInfo = props => (
 		<div id="computer_info_container">
 			<div id="card">
 				<div id="card_photo">
-					<img
-						src={
-							props.multiplayerModeOn
-								? props.multiTurn === 2
+					{!props.multiplayerModeOn && (
+						<img
+							src={computerImage}
+							alt="opponent avatar"
+							className={
+								props.computerThinking ? "pulse" : "undefined"
+							}
+						/>
+					)}
+					{props.multiplayerModeOn && (
+						<img
+							src={
+								props.multiTurn === 2
 									? multiAvatars[props.multiAvatarId - 1]
 									: multiAvatars[
 											props.multiOpponentAvatarId - 1
 									  ]
-								: computerImage
-						}
-						alt="opponent avatar"
-						className={
-							props.computerThinking ? "pulse" : "undefined"
-						}
-					/>
+							}
+							alt="opponent avatar"
+							className={
+								props.multiPlayerTurn && props.multiTurn === 2
+									? "pulse"
+									: !props.multiPlayerTurn &&
+									  props.multiTurn === 1
+									? "pulse"
+									: ""
+							}
+						/>
+					)}
 				</div>
 				<div id="card_info">
 					<p className="turnScoreComputer">

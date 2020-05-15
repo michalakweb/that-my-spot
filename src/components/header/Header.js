@@ -15,11 +15,11 @@ const Header = props => (
 			turnCounter={props.turnCounter}
 			computerDrawsCard={props.computerDrawsCard}
 			// Multiplayer
-			// Multiplayer
 			multiplayerModeOn={props.multiplayerModeOn}
 			multiAvatarId={props.multiAvatarId}
 			multiOpponentAvatarId={props.multiOpponentAvatarId}
 			multiTurn={props.multiTurn}
+			multiPlayerTurn={props.multiPlayerTurn}
 		/>
 		<LangSettings switchTutorialScreen={props.switchTutorialScreen} />
 	</div>

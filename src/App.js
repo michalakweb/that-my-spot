@@ -88,6 +88,15 @@ class App extends React.Component {
 		multiInviteReceived: false,
 		multiAcceptedFlag: true,
 		multiTurn: null,
+		multiPlayerTurn: null,
+
+		// Multiplayer scores
+		multiPlayerScore: 0,
+		multiOpponentScore: 0,
+		multiPlayerOverallScore: 0,
+		multiComputerOverallScore: 0,
+		multiPlayerPenalty: 0,
+		multiOpponentPenalty: 0,
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -205,6 +214,20 @@ class App extends React.Component {
 				)
 			}
 		}
+
+		// Multiplayer game listeners
+
+		if (this.state.multiplayerModeOn) {
+			// sending card to line --player
+			if (
+				this.state.multiPlayerTurn &&
+				this.state.chosenCard !== null &&
+				this.state.chosenCardConfirm !== null &&
+				this.state.chosenCard === this.state.chosenCardConfirm
+			) {
+				this.multiSendCardToLinePlayer()
+			}
+		}
 	}
 
 	//
@@ -277,6 +300,9 @@ class App extends React.Component {
 				if (playerData.action === "invitation accepted") {
 					if (playerData.accepted === 1) {
 						this.multiNormalizeItems()
+						this.setState({
+							multiPlayerTurn: true
+						})
 					}
 
 					multiPlayerSpace.update({
@@ -516,6 +542,55 @@ class App extends React.Component {
 					multiplayerModeOn: true
 				})
 			})
+	}
+
+	// Multiplayer game moves
+
+	multiSendCardToLinePlayer = () => {
+		// delete chosen card from player deck
+		let handPlayerCopy = [...this.state.handPlayer]
+
+		let playerChosenCard = handPlayerCopy.splice(
+			this.state.chosenCardPosition,
+			1
+		)[0]
+
+		this.setState(
+			prevState => ({
+				noClicking: true,
+				multiPlayerTurn: false,
+				handPlayer: handPlayerCopy,
+				chosenCard: null,
+				chosenCardConfirm: null,
+				chosenCardPosition: null,
+				lineCards: [
+					...this.state.lineCards,
+					JSON.parse(this.state.chosenCard)
+				]
+			}),
+			() => {
+				console.log("card sent to line by player")
+
+				// updating the scores for player
+				this.setState(
+					prevState => ({
+						playerScore:
+							prevState.playerScore + playerChosenCard.value
+					}),
+					() => {
+						this.setState(
+							prevState => ({
+								turnCounter: prevState.turnCounter + 1
+							}),
+							() => {
+								this.calculateBonus()
+								this.applyPenalty()
+							}
+						)
+					}
+				)
+			}
+		)
 	}
 
 	//
@@ -1749,6 +1824,7 @@ class App extends React.Component {
 								this.state.multiOpponentAvatarId
 							}
 							multiTurn={this.state.multiTurn}
+							multiPlayerTurn={this.state.multiPlayerTurn}
 						/>
 
 						<Body
