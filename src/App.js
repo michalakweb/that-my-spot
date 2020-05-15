@@ -227,6 +227,21 @@ class App extends React.Component {
 			) {
 				this.multiSendCardToLinePlayer()
 			}
+
+			// six turns - time for items
+			if (this.state.turnCounter === 6 && this.state.itemsScreenFlag) {
+				this.setState(
+					{
+						itemsScreenFlag: false,
+						noClicking: true
+					},
+					() => {
+						setTimeout(() => {
+							this.distributeItems()
+						}, 2100)
+					}
+				)
+			}
 		}
 	}
 
