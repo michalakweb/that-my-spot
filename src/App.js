@@ -316,12 +316,36 @@ class App extends React.Component {
 					Array.isArray(playerData.action) &&
 					playerData.action[0] === "normalizing items"
 				) {
+					// changing source of cards
+					let handPlayerCopy = [...this.state.handPlayer]
+					handPlayerCopy = handPlayerCopy.map(obj => ({
+						...obj,
+						source: "deckComputer"
+					}))
+
+					let deckPlayerCopy = [...this.state.deckPlayer]
+					deckPlayerCopy = deckPlayerCopy.map(obj => ({
+						...obj,
+						source: "deckComputer"
+					}))
+
 					this.setState({
+						handPlayer: handPlayerCopy,
+						deckPlayer: deckPlayerCopy,
 						items: playerData.action[1].items,
 						itemsCurrent: playerData.action[1].itemsCurrent,
 						multiplayerModeOn: true,
 						noClicking: true
 					})
+				}
+
+				if (
+					Array.isArray(playerData.action) &&
+					playerData.action[0] === "card sent to line"
+				) {
+					this.multiReceiveCardInfoFromOpponent(
+						playerData.action[1].card
+					)
 				}
 			})
 	}
@@ -547,6 +571,9 @@ class App extends React.Component {
 	// Multiplayer game moves
 
 	multiSendCardToLinePlayer = () => {
+		// send info to opponent
+		this.multiSendCardInfoToOpponent()
+
 		// delete chosen card from player deck
 		let handPlayerCopy = [...this.state.handPlayer]
 
@@ -571,24 +598,116 @@ class App extends React.Component {
 			() => {
 				console.log("card sent to line by player")
 
-				// updating the scores for player
-				this.setState(
-					prevState => ({
-						playerScore:
-							prevState.playerScore + playerChosenCard.value
-					}),
-					() => {
-						this.setState(
-							prevState => ({
-								turnCounter: prevState.turnCounter + 1
-							}),
-							() => {
-								this.calculateBonus()
-								this.applyPenalty()
-							}
-						)
-					}
-				)
+				if (this.state.multiTurn === 1) {
+					// updating the scores for player1
+					this.setState(
+						prevState => ({
+							playerScore:
+								prevState.playerScore + playerChosenCard.value
+						}),
+						() => {
+							this.setState(
+								prevState => ({
+									turnCounter: prevState.turnCounter + 1
+								}),
+								() => {
+									this.calculateBonus()
+									this.applyPenalty()
+								}
+							)
+						}
+					)
+				} else if (this.state.multiTurn === 2) {
+					// updating the scores for player2
+					this.setState(
+						prevState => ({
+							computerScore:
+								prevState.computerScore + playerChosenCard.value
+						}),
+						() => {
+							this.setState(
+								prevState => ({
+									turnCounter: prevState.turnCounter + 1
+								}),
+								() => {
+									this.calculateBonus()
+									this.applyPenalty()
+								}
+							)
+						}
+					)
+				}
+			}
+		)
+	}
+
+	multiSendCardInfoToOpponent = () => {
+		let multiOpponentSpace = db
+			.collection("users")
+			.doc(this.state.multiOpponentId)
+
+		multiOpponentSpace.update({
+			action: [
+				`card sent to line`,
+				{
+					card: this.state.chosenCard
+				}
+			],
+			timestamp: Date.now()
+		})
+	}
+
+	multiReceiveCardInfoFromOpponent = opponentCard => {
+		this.setState(
+			{
+				lineCards: [...this.state.lineCards, JSON.parse(opponentCard)],
+				noClicking: false,
+				multiPlayerTurn: true
+			},
+			() => {
+				console.log("multi: received card from opponent")
+
+				if (JSON.parse(opponentCard).source === "deckPlayer") {
+					// updating the scores for player
+					this.setState(
+						prevState => ({
+							playerScore:
+								prevState.playerScore +
+								JSON.parse(opponentCard).value
+						}),
+						() => {
+							this.setState(
+								prevState => ({
+									turnCounter: prevState.turnCounter + 1
+								}),
+								() => {
+									this.calculateBonus()
+									this.applyPenalty()
+								}
+							)
+						}
+					)
+				} else if (JSON.parse(opponentCard).source === "deckComputer") {
+					// updating the scores for player
+					this.setState(
+						prevState => ({
+							computerScore:
+								prevState.computerScore +
+								JSON.parse(opponentCard).value
+						}),
+						() => {
+							this.setState(
+								prevState => ({
+									turnCounter: prevState.turnCounter + 1
+								}),
+								() => {
+									this.calculateBonus()
+									this.applyPenalty()
+								}
+							)
+						}
+					)
+				}
 			}
 		)
 	}
