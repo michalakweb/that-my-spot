@@ -362,6 +362,10 @@ class App extends React.Component {
 						playerData.action[1].card
 					)
 				}
+
+				if (playerData.action === "card drawn") {
+					this.multiReceiveDrawInfoFromOpponent()
+				}
 			})
 	}
 
@@ -725,6 +729,45 @@ class App extends React.Component {
 				}
 			}
 		)
+	}
+
+	multiDrawCard = () => {
+		console.log("player one draws a card")
+
+		// send info to opponent
+		this.multiSendDrawInfoToOpponent()
+
+		let deckPlayerCopy = [...this.state.deckPlayer]
+
+		let drawnCard = deckPlayerCopy.splice(deckPlayerCopy.length - 1, 1)[0]
+
+		this.setState(prevState => ({
+			noClicking: true,
+			multiPlayerTurn: false,
+			deckPlayer: deckPlayerCopy,
+			handPlayer: [...this.state.handPlayer, drawnCard],
+			cardsDeckLeftPlayer: prevState.cardsDeckLeftPlayer - 1,
+			turnCounter: prevState.turnCounter + 1
+		}))
+	}
+
+	multiSendDrawInfoToOpponent = () => {
+		let multiOpponentSpace = db
+			.collection("users")
+			.doc(this.state.multiOpponentId)
+
+		multiOpponentSpace.update({
+			action: "card drawn",
+			timestamp: Date.now()
+		})
+	}
+
+	multiReceiveDrawInfoFromOpponent = () => {
+		this.setState(prevState => ({
+			turnCounter: prevState.turnCounter + 1,
+			noClicking: false,
+			multiPlayerTurn: true
+		}))
 	}
 
 	//
@@ -1565,9 +1608,19 @@ class App extends React.Component {
 
 	distributeItems = () => {
 		console.log("giving items to the winner")
+
+		if (this.state.multiplayerModeOn && this.state.multiTurn === 2) {
+			this.setState({
+				noClicking: true
+			})
+		} else if (this.state.multiplayerModeOn && this.state.multiTurn === 1) {
+			this.setState({
+				noClicking: false
+			})
+		}
+
 		this.setState(
 			prevState => ({
-				noClicking: false,
 				itemsScreenFlag: false,
 				turnCounter: 0,
 				phaseOneFlag: false,
@@ -1981,6 +2034,9 @@ class App extends React.Component {
 							}
 							drawCard={this.drawCard}
 							currentPhase={this.state.currentPhase}
+							// Multiplayer
+							multiDrawCard={this.multiDrawCard}
+							multiplayerModeOn={this.state.multiplayerModeOn}
 						/>
 					</div>
 				</div>

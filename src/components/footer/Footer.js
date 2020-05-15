@@ -3,7 +3,7 @@ import OverallScore from "./OverallScore"
 import CardContainer from "./CardContainer"
 import ExtraInfo from "./ExtraInfo"
 
-const Footer = (props) => (
+const Footer = props => (
 	<div id="footer">
 		<OverallScore
 			playerOverallScore={props.playerOverallScore}
@@ -19,6 +19,9 @@ const Footer = (props) => (
 			currentPhase={props.currentPhase}
 			handPlayer={props.handPlayer}
 			cardsDeckLeftPlayer={props.cardsDeckLeftPlayer}
+			// Multiplayer
+			multiDrawCard={props.multiDrawCard}
+			multiplayerModeOn={props.multiplayerModeOn}
 		/>
 	</div>
 )
