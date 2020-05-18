@@ -89,6 +89,8 @@ class App extends React.Component {
 		multiAcceptedFlag: true,
 		multiTurn: null,
 		multiPlayerTurn: null,
+		multiNoCardsFlag: true,
+		multiOpponentHasNoCards: false,
 
 		// Multiplayer scores
 		multiPlayerScore: 0,
@@ -242,6 +244,15 @@ class App extends React.Component {
 					}
 				)
 			}
+
+			// player doesn't have cards (deck and hand)
+			if (
+				this.state.handPlayer.length === 0 &&
+				this.state.deckPlayer.length === 0 &&
+				this.state.multiNoCardsFlag
+			) {
+				this.multiSendNoCardsInfoToOpponent()
+			}
 		}
 	}
 
@@ -308,11 +319,11 @@ class App extends React.Component {
 					this.multiReceiveInvite(playerData)
 				}
 
-				if (playerData.action === "invitation declined") {
+				if (playerData && playerData.action === "invitation declined") {
 					this.multiDeclineInviteUpdateState()
 				}
 
-				if (playerData.action === "invitation accepted") {
+				if (playerData && playerData.action === "invitation accepted") {
 					if (playerData.accepted === 1) {
 						this.multiNormalizeItems()
 						this.setState({
@@ -328,6 +339,7 @@ class App extends React.Component {
 				}
 
 				if (
+					playerData &&
 					Array.isArray(playerData.action) &&
 					playerData.action[0] === "normalizing items"
 				) {
@@ -355,6 +367,7 @@ class App extends React.Component {
 				}
 
 				if (
+					playerData &&
 					Array.isArray(playerData.action) &&
 					playerData.action[0] === "card sent to line"
 				) {
@@ -363,8 +376,17 @@ class App extends React.Component {
 					)
 				}
 
-				if (playerData.action === "card drawn") {
+				if (playerData && playerData.action === "card drawn") {
 					this.multiReceiveDrawInfoFromOpponent()
+				}
+
+				if (
+					playerData &&
+					playerData.action === "opponent has no cards"
+				) {
+					this.setState({
+						multiOpponentHasNoCards: true
+					})
 				}
 			})
 	}
@@ -585,6 +607,24 @@ class App extends React.Component {
 					multiplayerModeOn: true
 				})
 			})
+	}
+
+	multiSendNoCardsInfoToOpponent = () => {
+		this.setState(
+			{
+				multiNoCardsFlag: false
+			},
+			() => {
+				let multiOpponentSpace = db
+					.collection("users")
+					.doc(this.state.multiOpponentId)
+
+				multiOpponentSpace.update({
+					action: "opponent has no cards",
+					timestamp: Date.now()
+				})
+			}
+		)
 	}
 
 	// Multiplayer game moves
@@ -817,7 +857,8 @@ class App extends React.Component {
 			winLoseScreenFlag: true,
 			playerOverallScore: 0,
 			computerOverallScore: 0,
-			playerItems: []
+			playerItems: [],
+			computerItems: []
 		})
 	}
 
@@ -1750,7 +1791,6 @@ class App extends React.Component {
 						items: [...itemStats],
 						itemsLeft: null,
 						itemsCurrent: [],
-						computerItems: [],
 						lineCards: [],
 						cardsDeckLeftPlayer: 10,
 						cardsDeckLeftComputer: 10,
@@ -1981,6 +2021,9 @@ class App extends React.Component {
 						multiplayerModeOn={this.state.multiplayerModeOn}
 						multiPlayerNick={this.state.multiPlayerNick}
 						multiOpponentNick={this.state.multiOpponentNick}
+						multiOpponentHasNoCards={
+							this.state.multiOpponentHasNoCards
+						}
 					/>
 				)}
 
@@ -1990,6 +2033,12 @@ class App extends React.Component {
 						playerFinalScore={this.state.playerFinalScore}
 						computerFinalScore={this.state.computerFinalScore}
 						playerItems={this.state.playerItems}
+						computerItems={this.state.computerItems}
+						// Multiplayer
+						multiplayerModeOn={this.state.multiplayerModeOn}
+						multiTurn={this.state.multiTurn}
+						multiAvatarId={this.state.multiAvatarId}
+						multiOpponentAvatarId={this.state.multiOpponentAvatarId}
 					/>
 				)}
 

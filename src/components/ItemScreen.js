@@ -120,16 +120,29 @@ const ItemScreen = props => (
 					id="win_item_screen_btn"
 					onClick={() => {
 						// finishing game conditions
-						if (
-							props.deckComputer.length === 0 &&
-							props.handComputer.length === 0 &&
-							props.winLoseScreenFlag &&
-							props.deckPlayer.length === 0 &&
-							props.handPlayer.length === 0
-						) {
-							props.finishGame()
-						} else {
-							props.switchItemsScreen()
+						if (!props.multiplayerModeOn) {
+							if (
+								props.deckComputer.length === 0 &&
+								props.handComputer.length === 0 &&
+								props.winLoseScreenFlag &&
+								props.deckPlayer.length === 0 &&
+								props.handPlayer.length === 0
+							) {
+								props.finishGame()
+							} else {
+								props.switchItemsScreen()
+							}
+						} else if (props.multiplayerModeOn) {
+							if (
+								props.winLoseScreenFlag &&
+								props.deckPlayer.length === 0 &&
+								props.handPlayer.length === 0 &&
+								props.multiOpponentHasNoCards
+							) {
+								props.finishGame()
+							} else {
+								props.switchItemsScreen()
+							}
 						}
 					}}
 				></div>
