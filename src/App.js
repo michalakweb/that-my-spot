@@ -624,6 +624,37 @@ class App extends React.Component {
 		)
 	}
 
+	multiClearState = () => {
+		this.setState(
+			{
+				multiAcceptedFlag: true,
+				multiAvatarId: null,
+				multiComputerOverallScore: 0,
+				multiInviteReceived: false,
+				multiNoCardsFlag: true,
+				multiOpponentAvatarId: null,
+				multiOpponentHasNoCards: false,
+				multiOpponentId: null,
+				multiOpponentNick: null,
+				multiOpponentPenalty: 0,
+				multiOpponentScore: 0,
+				multiPlayerNick: "",
+				multiPlayerOverallScore: 0,
+				multiPlayerPenalty: 0,
+				multiPlayerScore: 0,
+				multiPlayerTurn: null,
+				multiSpaceId: null,
+				multiTurn: null,
+				multiUsers: [],
+				multiplayerModeOn: false,
+				showMultiScreen: false
+			},
+			() => {
+				// todo: send info to player to wipe his data to null
+			}
+		)
+	}
+
 	// Multiplayer game moves
 
 	multiSendCardToLinePlayer = () => {
@@ -2046,6 +2077,7 @@ class App extends React.Component {
 						multiTurn={this.state.multiTurn}
 						multiAvatarId={this.state.multiAvatarId}
 						multiOpponentAvatarId={this.state.multiOpponentAvatarId}
+						multiClearState={this.multiClearState}
 					/>
 				)}
 

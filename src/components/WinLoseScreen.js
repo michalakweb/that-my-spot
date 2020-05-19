@@ -190,6 +190,9 @@ const WinLoseScreen = props => (
 		<div id="wlic_resetGame_btn">
 			<p
 				onClick={() => {
+					if (props.multiplayerModeOn) {
+						props.multiClearState()
+					}
 					props.switchWinLoseScreen()
 					props.switchWelcomeScreen()
 				}}
