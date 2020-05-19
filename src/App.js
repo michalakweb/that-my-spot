@@ -15,13 +15,13 @@ import MultiScreen from "./components/MultiScreen"
 import { db } from "./Firebase"
 
 // cards and items
-import { deckStats, deckStats2, deckStats3, itemStats } from "./cardsAndItems"
+import { deckStats, deckStats2, itemStats } from "./cardsAndItems"
 
 class App extends React.Component {
 	state = {
 		// Game info
 		deckPlayer: [...deckStats, ...deckStats2],
-		deckComputer: [...deckStats, ...deckStats3],
+		deckComputer: [...deckStats, ...deckStats2],
 		handPlayer: [],
 		handComputer: [],
 		items: [...itemStats],
@@ -199,13 +199,10 @@ class App extends React.Component {
 			}
 
 			// six turns - time for items
-			if (
-				this.state.turnCounter === 6 &&
-				this.state.itemsScreenFlag &&
-				this.state.noClicking === false
-			) {
+			if (this.state.turnCounter === 6 && this.state.itemsScreenFlag) {
 				this.setState(
 					{
+						itemsScreenFlag: false,
 						noClicking: true
 					},
 					() => {
@@ -230,7 +227,7 @@ class App extends React.Component {
 				this.multiSendCardToLinePlayer()
 			}
 
-			// six turns - time for items
+			// multi: six turns - time for items
 			if (this.state.turnCounter === 6 && this.state.itemsScreenFlag) {
 				this.setState(
 					{
@@ -1030,6 +1027,7 @@ class App extends React.Component {
 
 		this.setState(
 			prevState => ({
+				noClicking: true,
 				handPlayer: handPlayerCopy,
 				phaseTwoFlag: false,
 				currentPhase: 2,
@@ -1267,7 +1265,8 @@ class App extends React.Component {
 												turnCounter:
 													prevState.turnCounter + 1,
 												computerThinking: false,
-												computerDrawsCard: false
+												computerDrawsCard: false,
+												noClicking: false
 											}))
 										}
 									}, 1000)
@@ -1630,7 +1629,8 @@ class App extends React.Component {
 												currentPhase: 1,
 												turnCounter:
 													prevState.turnCounter + 1,
-												computerThinking: false
+												computerThinking: false,
+												noClicking: false
 											}),
 											() => {
 												this.calculateBonus()
@@ -1764,6 +1764,12 @@ class App extends React.Component {
 						}
 					)
 				}
+
+				if (!this.state.multiplayerModeOn) {
+					this.setState({
+						noClicking: false
+					})
+				}
 			}
 		)
 	}
@@ -1787,7 +1793,7 @@ class App extends React.Component {
 				this.setState(
 					{
 						deckPlayer: [...deckStats, ...deckStats2],
-						deckComputer: [...deckStats, ...deckStats3],
+						deckComputer: [...deckStats, ...deckStats2],
 						items: [...itemStats],
 						itemsLeft: null,
 						itemsCurrent: [],
@@ -2030,6 +2036,7 @@ class App extends React.Component {
 				{this.state.showWinLoseScreen && (
 					<WinLoseScreen
 						switchWinLoseScreen={this.switchWinLoseScreen}
+						switchWelcomeScreen={this.switchWelcomeScreen}
 						playerFinalScore={this.state.playerFinalScore}
 						computerFinalScore={this.state.computerFinalScore}
 						playerItems={this.state.playerItems}

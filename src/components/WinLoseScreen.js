@@ -115,6 +115,31 @@ const WinLoseScreen = props => (
 			</div>
 			<div id="wlic_wonItem">
 				<p>Your items:</p>
+				{/* Single player */}
+				{!props.multiplayerModeOn &&
+					props.playerItems.map((el, id) => (
+						<div key={id} id="wlic_wonItem_card">
+							<div id="wlic_wonItem_card_header">
+								<div id="wlic_wonItem_card_imgContainer">
+									<img
+										alt={el.name}
+										className="cardPhoto"
+										src={itemImages[el.id - 1]}
+									/>
+								</div>
+								<div id="wlic_wonItem_card_info_title">
+									<p>{el.trueName}</p>
+								</div>
+							</div>
+							<div id="wlic_wonItem_card_info">
+								<div id="wlic_wonItem_card_info_description">
+									<p>{el.description}</p>
+								</div>
+							</div>
+						</div>
+					))}
+
+				{/* Multiplayer */}
 				{props.multiTurn === 1 &&
 					props.playerItems.map((el, id) => (
 						<div key={id} id="wlic_wonItem_card">
@@ -166,9 +191,10 @@ const WinLoseScreen = props => (
 			<p
 				onClick={() => {
 					props.switchWinLoseScreen()
+					props.switchWelcomeScreen()
 				}}
 			>
-				Play again
+				Home screen
 			</p>
 		</div>
 	</div>
