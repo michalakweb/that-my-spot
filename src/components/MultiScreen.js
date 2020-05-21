@@ -56,8 +56,12 @@ const MultiScreen = props => {
 
 			{/* Showing a list of available players */}
 			{props.multiSpaceId !== null && props.multiOpponentId === null && (
-				<div>
-					<ul>
+				<div id="multi_screen_online_players">
+					<p>Send an ivitation to:</p>
+					<ul id="multi_screen_online_players_list">
+						{multiUsers.length === 0 && (
+							<li>No users logged in.</li>
+						)}
 						{multiUsers.map((user, id) => (
 							<li
 								key={id}

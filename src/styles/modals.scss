@@ -538,8 +538,8 @@
 	p {
 		display: flex;
 		align-self: flex-start;
-		margin: 0 0 2% 2%;
-		padding: clamp(10px, 2vw, 17px);
+		margin: 2% 0 2% 2%;
+		padding: clamp(13px, 3vw, 23px);
 		font-size: clamp(20px, 4vw, 34px);
 		background-color: whitesmoke;
 		clip-path: polygon(
@@ -553,6 +553,8 @@
 		);
 	}
 }
+
+// Selecting avatar and login
 
 #multi_screen_player_info {
 	height: 100vh;
@@ -621,5 +623,37 @@
 	button:disabled {
 		cursor: default;
 		background-color: darkgray;
+	}
+}
+
+// Online players list
+
+#multi_screen_online_players {
+	height: 100vh;
+	background: linear-gradient(
+		135deg,
+		rgba(237, 121, 100, 1) 0%,
+		rgba(133, 169, 157, 1) 100%
+	);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#multi_screen_online_players_list {
+	background-color: whitesmoke;
+	width: 50%;
+	padding: 15px;
+	max-height: 60vh;
+	overflow: auto;
+	list-style: none;
+	border-radius: 10px;
+	box-shadow: 5px -5px black;
+
+	li {
+		text-align: center;
+		font-size: 25px;
+		margin: 15px;
 	}
 }
