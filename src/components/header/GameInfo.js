@@ -5,8 +5,10 @@ import turnsLeftImage from "../../images/turnsleft.png"
 // Multiplayer
 import multiAvatar1 from "../../images/1multi.jpg"
 import multiAvatar2 from "../../images/2multi.jpg"
+import multiAvatar3 from "../../images/3multi.jpg"
+import multiAvatar4 from "../../images/4multi.jpg"
 
-const multiAvatars = [multiAvatar1, multiAvatar2]
+const multiAvatars = [multiAvatar1, multiAvatar2, multiAvatar3, multiAvatar4]
 
 const GameInfo = props => (
 	<div id="game_info">
@@ -28,10 +30,8 @@ const GameInfo = props => (
 						<img
 							src={
 								props.multiTurn === 1
-									? multiAvatars[props.multiAvatarId - 1]
-									: multiAvatars[
-											props.multiOpponentAvatarId - 1
-									  ]
+									? multiAvatars[props.multiAvatarId]
+									: multiAvatars[props.multiOpponentAvatarId]
 							}
 							alt="player avatar"
 							className={
@@ -68,10 +68,8 @@ const GameInfo = props => (
 						<img
 							src={
 								props.multiTurn === 2
-									? multiAvatars[props.multiAvatarId - 1]
-									: multiAvatars[
-											props.multiOpponentAvatarId - 1
-									  ]
+									? multiAvatars[props.multiAvatarId]
+									: multiAvatars[props.multiOpponentAvatarId]
 							}
 							alt="opponent avatar"
 							className={

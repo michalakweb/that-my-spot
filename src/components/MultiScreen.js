@@ -1,6 +1,10 @@
 import React from "react"
 import multiAvatar1 from "../images/1multi.jpg"
 import multiAvatar2 from "../images/2multi.jpg"
+import multiAvatar3 from "../images/3multi.jpg"
+import multiAvatar4 from "../images/4multi.jpg"
+
+const multiAvatars = [multiAvatar1, multiAvatar2, multiAvatar3, multiAvatar4]
 
 const MultiScreen = props => {
 	let multiUsers = [...props.multiUsers]
@@ -11,20 +15,16 @@ const MultiScreen = props => {
 			{props.multiSpaceId === null && (
 				<div>
 					multi screen
-					<img
-						src={multiAvatar1}
-						alt="woman"
-						onClick={() => {
-							props.setMultiAvatar(1)
-						}}
-					/>
-					<img
-						src={multiAvatar2}
-						alt="marx"
-						onClick={() => {
-							props.setMultiAvatar(2)
-						}}
-					/>
+					{multiAvatars.map((el, id) => (
+						<img
+							key={id}
+							src={multiAvatars[id]}
+							alt="multiplayer avatar"
+							onClick={() => {
+								props.setMultiAvatar(id)
+							}}
+						/>
+					))}
 					<input
 						onChange={props.changeMultiNick}
 						value={props.multiPlayerNick}
@@ -73,11 +73,7 @@ const MultiScreen = props => {
 				props.multiOpponentNick !== null && (
 					<div>
 						<img
-							src={
-								props.multiOpponentAvatarId === 1
-									? multiAvatar1
-									: multiAvatar2
-							}
+							src={multiAvatars[props.multiOpponentAvatarId]}
 							alt="opponent avatar"
 						/>
 						<p>{props.multiOpponentNick} wants to play with you!</p>

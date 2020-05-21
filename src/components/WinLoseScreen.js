@@ -4,8 +4,10 @@ import playerImage from "../images/player.jpg"
 // Multiplayer
 import multiAvatar1 from "../images/1multi.jpg"
 import multiAvatar2 from "../images/2multi.jpg"
+import multiAvatar3 from "../images/3multi.jpg"
+import multiAvatar4 from "../images/4multi.jpg"
 
-const multiAvatars = [multiAvatar1, multiAvatar2]
+const multiAvatars = [multiAvatar1, multiAvatar2, multiAvatar3, multiAvatar4]
 
 function importAll(r) {
 	return r.keys().map(r)
@@ -64,12 +66,9 @@ const WinLoseScreen = props => (
 								<img
 									src={
 										props.multiTurn === 1
-											? multiAvatars[
-													props.multiAvatarId - 1
-											  ]
+											? multiAvatars[props.multiAvatarId]
 											: multiAvatars[
-													props.multiOpponentAvatarId -
-														1
+													props.multiOpponentAvatarId
 											  ]
 									}
 									alt="player1 avatar"
@@ -93,12 +92,9 @@ const WinLoseScreen = props => (
 								<img
 									src={
 										props.multiTurn === 2
-											? multiAvatars[
-													props.multiAvatarId - 1
-											  ]
+											? multiAvatars[props.multiAvatarId]
 											: multiAvatars[
-													props.multiOpponentAvatarId -
-														1
+													props.multiOpponentAvatarId
 											  ]
 									}
 									alt="player1 avatar"
