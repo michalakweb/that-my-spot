@@ -1,4 +1,6 @@
 import React from "react"
+// Multiplayer
+import pendingImg from "../images/pending.png"
 import multiAvatar1 from "../images/1multi.jpg"
 import multiAvatar2 from "../images/2multi.jpg"
 import multiAvatar3 from "../images/3multi.jpg"
@@ -86,20 +88,35 @@ const MultiScreen = props => {
 				props.multiInviteReceived &&
 				props.multiOpponentAvatarId !== null &&
 				props.multiOpponentNick !== null && (
-					<div>
-						<img
-							src={multiAvatars[props.multiOpponentAvatarId]}
-							alt="opponent avatar"
-						/>
-						<p>{props.multiOpponentNick} wants to play with you!</p>
-						<button onClick={props.multiAcceptInvite}>
-							Accept
-						</button>
-						<button onClick={props.multiDeclineInvite}>
-							Decline
-						</button>
+					<div id="multi_screen_invitation">
+						<div id="multi_screen_invitation_card">
+							<img
+								src={multiAvatars[props.multiOpponentAvatarId]}
+								alt="opponent avatar"
+							/>
+							<p>
+								{props.multiOpponentNick} wants to play with
+								you!
+							</p>
+						</div>
+						<div id="multi_screen_invitation_btns">
+							<button onClick={props.multiAcceptInvite}>
+								Accept
+							</button>
+							<button onClick={props.multiDeclineInvite}>
+								Decline
+							</button>
+						</div>
 					</div>
 				)}
+
+			{/* Pending invitation screen */}
+			{props.multiInvitePending && (
+				<div id="multi_screen_invite_pending">
+					<img id="gagarin" src={pendingImg} alt="Gagarin in space" />
+					<p>waiting for response</p>
+				</div>
+			)}
 		</div>
 	)
 }

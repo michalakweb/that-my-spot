@@ -91,6 +91,7 @@ class App extends React.Component {
 		multiPlayerTurn: null,
 		multiNoCardsFlag: true,
 		multiOpponentHasNoCards: false,
+		multiInvitePending: null,
 
 		// Multiplayer scores
 		multiPlayerScore: 0,
@@ -308,6 +309,12 @@ class App extends React.Component {
 					.collection("users")
 					.doc(this.state.multiSpaceId)
 
+				if (playerData && playerData.action === "sent an invite") {
+					this.setState({
+						multiInvitePending: true
+					})
+				}
+
 				if (
 					playerData &&
 					playerData.invited !== null &&
@@ -324,6 +331,7 @@ class App extends React.Component {
 					if (playerData.accepted === 1) {
 						this.multiNormalizeItems()
 						this.setState({
+							multiInvitePending: false,
 							multiPlayerTurn: true
 						})
 					}
@@ -565,7 +573,8 @@ class App extends React.Component {
 					multiOpponentId: null,
 					multiOpponentAvatarId: null,
 					multiOpponentNick: null,
-					multiInviteReceived: false
+					multiInviteReceived: false,
+					multiInvitePending: false
 				})
 			})
 	}
@@ -2024,6 +2033,7 @@ class App extends React.Component {
 						multiUsers={this.state.multiUsers}
 						multiInviteReceived={this.state.multiInviteReceived}
 						multiTurn={this.state.multiTurn}
+						multiInvitePending={this.state.multiInvitePending}
 					/>
 				)}
 
