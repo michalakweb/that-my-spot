@@ -534,6 +534,24 @@
 #multi_screen {
 	min-height: 100vh;
 	background-color: white;
+
+	p {
+		display: flex;
+		align-self: flex-start;
+		margin: 0 0 2% 2%;
+		padding: clamp(10px, 2vw, 17px);
+		font-size: clamp(20px, 4vw, 34px);
+		background-color: whitesmoke;
+		clip-path: polygon(
+			50% 0%,
+			100% 8%,
+			95% 87%,
+			75% 100%,
+			4% 94%,
+			0% 60%,
+			7% 5%
+		);
+	}
 }
 
 #multi_screen_player_info {
@@ -547,24 +565,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-
-	p {
-		display: flex;
-		align-self: flex-start;
-		margin-left: 2%;
-		padding: 13px;
-		font-size: 26px;
-		background-color: whitesmoke;
-		clip-path: polygon(
-			50% 0%,
-			100% 8%,
-			95% 87%,
-			75% 100%,
-			4% 94%,
-			0% 60%,
-			7% 5%
-		);
-	}
 }
 
 #multi_screen_avatar_select {
@@ -585,4 +585,41 @@
 
 .full_opacity {
 	opacity: 1 !important;
+}
+
+#multi_screen_login {
+	display: flex;
+	flex-direction: row;
+
+	input {
+		font-family: "Cyrulik";
+		font-size: 20px;
+		width: fit-content;
+		width: 220px;
+		padding: 5px;
+		padding-left: 10px;
+		border-radius: 10px;
+		border: none;
+		background-image: none;
+		box-shadow: none;
+		outline: none;
+	}
+
+	button {
+		font-family: "Cyrulik";
+		font-size: 25px;
+		padding: 0 15px;
+		height: 50px;
+		border-style: none;
+		border-radius: 10px;
+		background-color: #85a99d;
+		cursor: pointer;
+		box-shadow: 5px -5px black;
+		margin: 0 10px;
+	}
+
+	button:disabled {
+		cursor: default;
+		background-color: darkgray;
+	}
 }

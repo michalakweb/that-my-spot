@@ -32,21 +32,25 @@ const MultiScreen = props => {
 							/>
 						))}
 					</div>
-					<input
-						onChange={props.changeMultiNick}
-						value={props.multiPlayerNick}
-					/>
-					<button
-						onClick={props.setMultiSpace}
-						disabled={
-							props.multiPlayerNick !== "" &&
-							props.multiAvatarId !== null
-								? false
-								: true
-						}
-					>
-						next
-					</button>
+					<div id="multi_screen_login">
+						<input
+							placeholder="Player nick - max 10 letters!"
+							onChange={props.changeMultiNick}
+							value={props.multiPlayerNick}
+							maxLength="10"
+						/>
+						<button
+							onClick={props.setMultiSpace}
+							disabled={
+								props.multiPlayerNick !== "" &&
+								props.multiAvatarId !== null
+									? false
+									: true
+							}
+						>
+							next
+						</button>
+					</div>
 				</div>
 			)}
 
