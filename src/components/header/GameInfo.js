@@ -51,6 +51,13 @@ const GameInfo = props => (
 					</p>
 				</div>
 			</div>
+			{props.multiplayerModeOn && (
+				<div className="multi_players_nick">
+					{props.multiTurn === 1
+						? props.multiPlayerNick
+						: props.multiOpponentNick}
+				</div>
+			)}
 		</div>
 		<div id="computer_info_container">
 			<div id="card">
@@ -89,13 +96,20 @@ const GameInfo = props => (
 					</p>
 				</div>
 			</div>
-			{props.computerDrawsCard && (
+			{!props.multiplayerModeOn && props.computerDrawsCard && (
 				<div id="computer_takes_card_info">takes card...</div>
+			)}
+			{props.multiplayerModeOn && (
+				<div className="multi_players_nick">
+					{props.multiTurn === 2
+						? props.multiPlayerNick
+						: props.multiOpponentNick}
+				</div>
 			)}
 		</div>
 		<div id="turns_left_container">
 			<img src={turnsLeftImage} alt="turns left" id="turns_left_image" />
-			<p id="turns_left_text">{Math.floor(3 - props.turnCounter / 2)}</p>
+			<p id="turns_left_text">{Math.floor(6 - props.turnCounter)}</p>
 		</div>
 	</div>
 )

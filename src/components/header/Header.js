@@ -20,6 +20,8 @@ const Header = props => (
 			multiOpponentAvatarId={props.multiOpponentAvatarId}
 			multiTurn={props.multiTurn}
 			multiPlayerTurn={props.multiPlayerTurn}
+			multiPlayerNick={props.multiPlayerNick}
+			multiOpponentNick={props.multiOpponentNick}
 		/>
 		<LangSettings switchTutorialScreen={props.switchTutorialScreen} />
 	</div>

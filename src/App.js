@@ -2114,6 +2114,8 @@ class App extends React.Component {
 							}
 							multiTurn={this.state.multiTurn}
 							multiPlayerTurn={this.state.multiPlayerTurn}
+							multiPlayerNick={this.state.multiPlayerNick}
+							multiOpponentNick={this.state.multiOpponentNick}
 						/>
 
 						<Body
