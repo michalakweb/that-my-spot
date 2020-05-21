@@ -13,18 +13,25 @@ const MultiScreen = props => {
 		<div id="multi_screen">
 			{/* Selecting avatar and nickname */}
 			{props.multiSpaceId === null && (
-				<div>
-					multi screen
-					{multiAvatars.map((el, id) => (
-						<img
-							key={id}
-							src={multiAvatars[id]}
-							alt="multiplayer avatar"
-							onClick={() => {
-								props.setMultiAvatar(id)
-							}}
-						/>
-					))}
+				<div id="multi_screen_player_info">
+					<p>Choose your avatar:</p>
+					<div id="multi_screen_avatar_select">
+						{multiAvatars.map((el, id) => (
+							<img
+								className={
+									props.multiAvatarId === id
+										? " full_opacity multi_avatar_img"
+										: "multi_avatar_img"
+								}
+								key={id}
+								src={multiAvatars[id]}
+								alt="multiplayer avatar"
+								onClick={() => {
+									props.setMultiAvatar(id)
+								}}
+							/>
+						))}
+					</div>
 					<input
 						onChange={props.changeMultiNick}
 						value={props.multiPlayerNick}
