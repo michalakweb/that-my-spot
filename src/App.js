@@ -2097,10 +2097,7 @@ class App extends React.Component {
 					/>
 				)}
 
-				<div
-					id="container"
-					className={this.state.noClicking ? "noClicking" : ""}
-				>
+				<div id="container">
 					<div id="flex-container">
 						<Header
 							playerScore={this.state.playerScore}
@@ -2140,6 +2137,7 @@ class App extends React.Component {
 							}
 							drawCard={this.drawCard}
 							currentPhase={this.state.currentPhase}
+							noClicking={this.state.noClicking}
 							// Multiplayer
 							multiDrawCard={this.multiDrawCard}
 							multiplayerModeOn={this.state.multiplayerModeOn}

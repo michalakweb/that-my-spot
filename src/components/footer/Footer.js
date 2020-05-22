@@ -4,7 +4,7 @@ import CardContainer from "./CardContainer"
 import ExtraInfo from "./ExtraInfo"
 
 const Footer = props => (
-	<div id="footer">
+	<div id="footer" className={props.noClicking ? "noClicking" : ""}>
 		<OverallScore
 			playerOverallScore={props.playerOverallScore}
 			computerOverallScore={props.computerOverallScore}
