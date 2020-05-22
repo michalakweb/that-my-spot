@@ -117,6 +117,12 @@ const MultiScreen = props => {
 					<p>waiting for response</p>
 				</div>
 			)}
+
+			{/* General Loading screen */}
+			<div id="multi_screen_invite_pending">
+				<img id="gagarin" src={pendingImg} alt="Gagarin in space" />
+				<p>loading...</p>
+			</div>
 		</div>
 	)
 }
