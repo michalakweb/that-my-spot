@@ -266,6 +266,10 @@
 	justify-content: center;
 }
 
+#multi_wisc_container_photo {
+	width: 20%;
+}
+
 #wisc_container_photo img {
 	width: 40%;
 	height: auto;
@@ -675,10 +679,11 @@
 
 #multi_screen_invitation_card {
 	display: flex;
+	max-width: 600px;
 	width: 80%;
 	background-color: whitesmoke;
 	border-radius: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 	box-shadow: 5px -5px black;
 
 	img {

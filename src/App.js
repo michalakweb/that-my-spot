@@ -100,6 +100,7 @@ class App extends React.Component {
 		multiComputerOverallScore: 0,
 		multiPlayerPenalty: 0,
 		multiOpponentPenalty: 0,
+		multiWhoWonRound: 0,
 
 		// Other
 		windowWidth: window.innerWidth,
@@ -1721,7 +1722,8 @@ class App extends React.Component {
 							showItemsScreen: true,
 							itemsScreenFlag: true,
 							playerScore: 0,
-							computerScore: 0
+							computerScore: 0,
+							multiWhoWonRound: 1
 						},
 						() => {
 							this.setState(
@@ -1757,7 +1759,8 @@ class App extends React.Component {
 							showItemsScreen: true,
 							itemsScreenFlag: true,
 							playerScore: 0,
-							computerScore: 0
+							computerScore: 0,
+							multiWhoWonRound: 1
 						},
 						() => {
 							this.setState(
@@ -1795,7 +1798,8 @@ class App extends React.Component {
 							playerScore: 0,
 							computerScore: 0,
 							itemPlayerMsg: "",
-							itemComputerMsg: ""
+							itemComputerMsg: "",
+							multiWhoWonRound: 0
 						},
 						() => {
 							this.setState({
@@ -2071,6 +2075,8 @@ class App extends React.Component {
 						multiOpponentHasNoCards={
 							this.state.multiOpponentHasNoCards
 						}
+						multiWhoWonRound={this.state.multiWhoWonRound}
+						multiTurn={this.state.multiTurn}
 					/>
 				)}
 

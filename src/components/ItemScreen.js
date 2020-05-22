@@ -48,14 +48,50 @@ const ItemScreen = props => (
 											props.playerItems.length - 1
 									  ].trueName
 									: ""}
-								{props.multiplayerModeOn ? (
+								{/* Single player */}
+								{!props.multiplayerModeOn && (
+									<span> goes to you.</span>
+								)}
+								{/* Multi - player wins */}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 1 &&
+									props.multiTurn === 1 && (
+										<span> goes to you.</span>
+									)}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 2 &&
+									props.multiTurn === 2 && (
+										<span> goes to you.</span>
+									)}
+								{/* Multi - opponent wins */}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 1 &&
+									props.multiTurn === 2 && (
+										<span>
+											{" "}
+											goes to {props.multiOpponentNick}.
+										</span>
+									)}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 2 &&
+									props.multiTurn === 1 && (
+										<span>
+											{" "}
+											goes to {props.multiOpponentNick}.
+										</span>
+									)}
+
+								{/* {props.multiplayerModeOn ? (
 									<span>
 										{" "}
-										goes to {props.multiPlayerNick}
+										goes to{" "}
+										{props.multiWhoWonRound === 1
+											? props.multiPlayerNick
+											: props.multiOpponentNick}
 									</span>
 								) : (
 									<span> goes to the opponent.</span>
-								)}
+								)} */}
 							</p>
 						</div>
 					</div>
@@ -103,14 +139,52 @@ const ItemScreen = props => (
 											props.computerItems.length - 1
 									  ].trueName
 									: ""}
-								{props.multiplayerModeOn ? (
+
+								{/* Single player */}
+								{!props.multiplayerModeOn && (
+									<span> goes to the opponent.</span>
+								)}
+								{/* Multi - player loses */}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 2 &&
+									props.multiTurn === 1 && (
+										<span> goes to you.</span>
+									)}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 1 &&
+									props.multiTurn === 2 && (
+										<span> goes to you.</span>
+									)}
+								{/* Multi - opponent loses */}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 1 &&
+									props.multiTurn === 1 && (
+										<span>
+											{" "}
+											goes to {props.multiOpponentNick}.
+										</span>
+									)}
+								{props.multiplayerModeOn &&
+									props.multiWhoWonRound === 2 &&
+									props.multiTurn === 2 && (
+										<span>
+											{" "}
+											goes to {props.multiOpponentNick}.
+										</span>
+									)}
+
+								{/* {props.multiplayerModeOn ? (
 									<span>
 										{" "}
-										goes to {props.multiOpponentNick}
+										goes to{" "}
+										{props.multiWhoWonRound === 1 &&
+										props.multiTurn === 1
+											? props.multiOpponentNick
+											: props.multiPlayerNick}
 									</span>
 								) : (
 									<span> goes to the opponent.</span>
-								)}
+								)} */}
 							</p>
 						</div>
 					</div>
