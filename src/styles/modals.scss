@@ -29,8 +29,8 @@
 	background-color: whitesmoke;
 	width: 50%;
 	padding: 7%;
-	max-width: 400px;
-	max-height: 200px;
+	max-width: 320px;
+	max-height: 150px;
 	z-index: 2;
 	position: relative;
 
@@ -579,6 +579,7 @@
 	margin-bottom: 10vh;
 
 	img {
+		border-radius: 5px;
 		width: 20%;
 		display: flex;
 		opacity: 0.6;
