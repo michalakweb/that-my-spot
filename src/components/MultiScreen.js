@@ -15,44 +15,47 @@ const MultiScreen = props => {
 		<div id="multi_screen">
 			{/* Selecting avatar and nickname */}
 			{props.multiSpaceId === null && (
-				<div id="multi_screen_player_info">
-					<p>Choose your avatar:</p>
-					<div id="multi_screen_avatar_select">
-						{multiAvatars.map((el, id) => (
-							<img
-								className={
-									props.multiAvatarId === id
-										? " full_opacity multi_avatar_img"
-										: "multi_avatar_img"
-								}
-								key={id}
-								src={multiAvatars[id]}
-								alt="multiplayer avatar"
-								onClick={() => {
-									props.setMultiAvatar(id)
-								}}
+				<div>
+					<div id="multi_screen_player_info">
+						<p>Choose your avatar:</p>
+						<div id="multi_screen_avatar_select">
+							{multiAvatars.map((el, id) => (
+								<img
+									className={
+										props.multiAvatarId === id
+											? " full_opacity multi_avatar_img"
+											: "multi_avatar_img"
+									}
+									key={id}
+									src={multiAvatars[id]}
+									alt="multiplayer avatar"
+									onClick={() => {
+										props.setMultiAvatar(id)
+									}}
+								/>
+							))}
+						</div>
+						<div id="multi_screen_login">
+							<input
+								placeholder="Player nick - max 8 letters!"
+								onChange={props.changeMultiNick}
+								value={props.multiPlayerNick}
+								maxLength="8"
 							/>
-						))}
+							<button
+								onClick={props.setMultiSpace}
+								disabled={
+									props.multiPlayerNick.trim() !== "" &&
+									props.multiAvatarId !== null
+										? false
+										: true
+								}
+							>
+								next
+							</button>
+						</div>
 					</div>
-					<div id="multi_screen_login">
-						<input
-							placeholder="Player nick - max 8 letters!"
-							onChange={props.changeMultiNick}
-							value={props.multiPlayerNick}
-							maxLength="8"
-						/>
-						<button
-							onClick={props.setMultiSpace}
-							disabled={
-								props.multiPlayerNick.trim() !== "" &&
-								props.multiAvatarId !== null
-									? false
-									: true
-							}
-						>
-							next
-						</button>
-					</div>
+					<div id="height_compressor"></div>
 				</div>
 			)}
 
