@@ -416,8 +416,13 @@
 	p {
 		width: max-content;
 		transform: rotate(-45deg);
-		font-size: 25px;
-		margin: 0;
+		font-size: 25px !important;
+		margin: 0 !important;
+		display: block !important;
+		align-self: unset !important;
+		padding: 0 !important;
+		background-color: unset !important;
+		clip-path: unset !important;
 	}
 }
 

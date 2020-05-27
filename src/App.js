@@ -2075,6 +2075,7 @@ class App extends React.Component {
 							multiAcceptInvite={this.multiAcceptInvite}
 							multiDeclineInvite={this.multiDeclineInvite}
 							switchKeyboard={this.switchKeyboard}
+							multiClearState={this.multiClearState}
 							// State
 							multiAvatarId={this.state.multiAvatarId}
 							multiPlayerNick={this.state.multiPlayerNick}
