@@ -535,6 +535,10 @@
 // Multiplayer screen
 //
 
+#multi_and_keyboard_container {
+	position: relative;
+}
+
 #multi_screen {
 	height: 100vh;
 	background-color: white;
@@ -602,7 +606,7 @@
 		font-family: "Cyrulik";
 		font-size: 20px;
 		width: fit-content;
-		width: 220px;
+		width: 220px !important;
 		padding: 5px;
 		padding-left: 10px;
 		border-radius: 10px;

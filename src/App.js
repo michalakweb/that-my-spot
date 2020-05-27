@@ -13,6 +13,8 @@ import TutorialScreen from "./components/TutorialScreen"
 // Multiplayer
 import MultiScreen from "./components/MultiScreen"
 import { db } from "./Firebase"
+import Keyboard from "react-simple-keyboard"
+import "react-simple-keyboard/build/css/index.css"
 
 // cards and items
 import { deckStats, deckStats2, itemStats } from "./cardsAndItems"
@@ -104,7 +106,9 @@ class App extends React.Component {
 
 		// Other
 		windowWidth: window.innerWidth,
-		error: false
+		error: false,
+		layoutName: "default",
+		input: ""
 	}
 
 	componentDidMount() {
@@ -2006,6 +2010,36 @@ class App extends React.Component {
 		})
 	}
 
+	// Keyboard
+
+	onChange = input => {
+		this.setState({ input })
+		console.log("Input changed", input)
+	}
+
+	onKeyPress = button => {
+		console.log("Button pressed", button)
+
+		/**
+		 * If you want to handle the shift and caps lock buttons
+		 */
+		if (button === "{shift}" || button === "{lock}") this.handleShift()
+	}
+
+	handleShift = () => {
+		const layoutName = this.state.layoutName
+
+		this.setState({
+			layoutName: layoutName === "default" ? "shift" : "default"
+		})
+	}
+
+	onChangeInput = event => {
+		const input = event.target.value
+		this.setState({ input })
+		this.keyboard.setInput(input)
+	}
+
 	render() {
 		return (
 			<div>
@@ -2017,28 +2051,38 @@ class App extends React.Component {
 				)}
 
 				{this.state.showMultiScreen && !this.state.multiplayerModeOn && (
-					<MultiScreen
-						// Methods
-						switchMultiScreen={this.switchMultiScreen}
-						switchWelcomeScreen={this.switchWelcomeScreen}
-						changeMultiNick={this.changeMultiNick}
-						setMultiAvatar={this.setMultiAvatar}
-						setMultiSpace={this.setMultiSpace}
-						multiSendInvite={this.multiSendInvite}
-						multiAcceptInvite={this.multiAcceptInvite}
-						multiDeclineInvite={this.multiDeclineInvite}
-						// State
-						multiAvatarId={this.state.multiAvatarId}
-						multiPlayerNick={this.state.multiPlayerNick}
-						multiSpaceId={this.state.multiSpaceId}
-						multiOpponentId={this.state.multiOpponentId}
-						multiOpponentAvatarId={this.state.multiOpponentAvatarId}
-						multiOpponentNick={this.state.multiOpponentNick}
-						multiUsers={this.state.multiUsers}
-						multiInviteReceived={this.state.multiInviteReceived}
-						multiTurn={this.state.multiTurn}
-						multiInvitePending={this.state.multiInvitePending}
-					/>
+					<div id="multi_and_keyboard_container">
+						<MultiScreen
+							// Methods
+							switchMultiScreen={this.switchMultiScreen}
+							switchWelcomeScreen={this.switchWelcomeScreen}
+							changeMultiNick={this.changeMultiNick}
+							setMultiAvatar={this.setMultiAvatar}
+							setMultiSpace={this.setMultiSpace}
+							multiSendInvite={this.multiSendInvite}
+							multiAcceptInvite={this.multiAcceptInvite}
+							multiDeclineInvite={this.multiDeclineInvite}
+							// State
+							multiAvatarId={this.state.multiAvatarId}
+							multiPlayerNick={this.state.multiPlayerNick}
+							multiSpaceId={this.state.multiSpaceId}
+							multiOpponentId={this.state.multiOpponentId}
+							multiOpponentAvatarId={
+								this.state.multiOpponentAvatarId
+							}
+							multiOpponentNick={this.state.multiOpponentNick}
+							multiUsers={this.state.multiUsers}
+							multiInviteReceived={this.state.multiInviteReceived}
+							multiTurn={this.state.multiTurn}
+							multiInvitePending={this.state.multiInvitePending}
+						/>
+						<Keyboard
+							keyboardRef={r => (this.keyboard = r)}
+							layoutName={this.state.layoutName}
+							onChange={this.onChange}
+							onKeyPress={this.onKeyPress}
+						/>
+					</div>
 				)}
 
 				{this.state.showSmallWidthScreen && (

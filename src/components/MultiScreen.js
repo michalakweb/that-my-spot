@@ -1,4 +1,5 @@
 import React from "react"
+import { isMobile } from "react-device-detect"
 // Multiplayer
 import pendingImg from "../images/pending.png"
 import multiAvatar1 from "../images/1multi.jpg"
@@ -43,9 +44,7 @@ const MultiScreen = props => {
 								maxLength="8"
 								readOnly={true}
 								onClick={() => {
-									console.log(
-										"testing if virtual keyboard can open"
-									)
+									console.log(`mobile device: ${isMobile}`)
 								}}
 							/>
 							<button

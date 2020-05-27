@@ -13,7 +13,8 @@
 		"react-detect-offline": "2.4.0",
 		"react-device-detect": "^1.12.1",
 		"react-dom": "16.12.0",
-		"react-scripts": "3.3.0"
+		"react-scripts": "3.3.0",
+		"react-simple-keyboard": "^2.3.42"
 	},
 	"scripts": {
 		"start": "npm install -g serve && serve -s build",
