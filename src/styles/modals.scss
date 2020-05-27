@@ -405,7 +405,8 @@
 	height: 17vw;
 }
 
-#wlic_resetGame_btn {
+#wlic_resetGame_btn,
+#wlic_resetGame_btn--multi {
 	position: fixed;
 	width: 40px;
 	height: 40px;
@@ -426,11 +427,24 @@
 	}
 }
 
-#wlic_resetGame_btn:hover {
+#wlic_resetGame_btn--multi {
+	left: unset;
+	right: 0px;
+
+	p {
+		transform: rotate(45deg);
+		position: relative;
+		right: 75px;
+	}
+}
+
+#wlic_resetGame_btn:hover,
+#wlic_resetGame_btn--multi:hover {
 	cursor: pointer;
 }
 
-#wlic_resetGame_btn_background {
+#wlic_resetGame_btn_background,
+#wlic_resetGame_btn_background--multi {
 	background-color: yellow;
 	position: fixed;
 	width: 150px;
@@ -439,6 +453,12 @@
 	top: 0%;
 	clip-path: polygon(0 0, 0% 100%, 100% 0);
 	z-index: 2;
+}
+
+#wlic_resetGame_btn_background--multi {
+	left: unset;
+	right: 0px;
+	clip-path: polygon(100% 0, 0 0, 100% 100%);
 }
 
 #wlic_wonItem_card {

@@ -62,8 +62,8 @@ const MultiScreen = props => {
 							</button>
 						</div>
 					</div>
-					<div id="wlic_resetGame_btn_background" />
-					<div id="wlic_resetGame_btn">
+					<div id="wlic_resetGame_btn_background--multi" />
+					<div id="wlic_resetGame_btn--multi">
 						<p
 							onClick={() => {
 								props.switchWelcomeScreen()
@@ -100,8 +100,8 @@ const MultiScreen = props => {
 							</li>
 						))}
 					</ul>
-					<div id="wlic_resetGame_btn_background" />
-					<div id="wlic_resetGame_btn">
+					<div id="wlic_resetGame_btn_background--multi" />
+					<div id="wlic_resetGame_btn--multi">
 						<p
 							onClick={() => {
 								props.multiClearState()
