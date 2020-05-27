@@ -1,5 +1,16 @@
 /* Overall */
 
+.react-simple-keyboard {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+#keyboardNotVisible {
+	position: relative;
+	z-index: -1;
+}
+
 @font-face {
 	font-family: "Cyrulik";
 	src: local("Cyrulik"), url("./fonts/Cyrulik-Sharp.ttf");

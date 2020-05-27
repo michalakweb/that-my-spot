@@ -42,9 +42,11 @@ const MultiScreen = props => {
 								onChange={props.changeMultiNick}
 								value={props.multiPlayerNick}
 								maxLength="8"
-								readOnly={true}
+								readOnly={isMobile}
 								onClick={() => {
-									console.log(`mobile device: ${isMobile}`)
+									if (isMobile) {
+										props.switchKeyboard()
+									}
 								}}
 							/>
 							<button

@@ -108,7 +108,8 @@ class App extends React.Component {
 		windowWidth: window.innerWidth,
 		error: false,
 		layoutName: "default",
-		input: ""
+		input: "",
+		multiKeyboardVisible: false
 	}
 
 	componentDidMount() {
@@ -271,6 +272,10 @@ class App extends React.Component {
 
 	changeMultiNick = e => {
 		this.setState({ multiPlayerNick: e.target.value })
+	}
+
+	changeMultiNickVirtualKeybaord = input => {
+		this.setState({ multiPlayerNick: input })
 	}
 
 	setMultiAvatar = num => {
@@ -2013,17 +2018,18 @@ class App extends React.Component {
 	// Keyboard
 
 	onChange = input => {
-		this.setState({ input })
-		console.log("Input changed", input)
+		if (input.length <= 8) {
+			this.setState({ input })
+			this.changeMultiNickVirtualKeybaord(input)
+		}
 	}
 
 	onKeyPress = button => {
-		console.log("Button pressed", button)
-
-		/**
-		 * If you want to handle the shift and caps lock buttons
-		 */
-		if (button === "{shift}" || button === "{lock}") this.handleShift()
+		console.log("Button pressed", typeof button)
+		if (button === "{enter}") {
+			this.switchKeyboard()
+		} else if (button === "{shift}" || button === "{lock}")
+			this.handleShift()
 	}
 
 	handleShift = () => {
@@ -2038,6 +2044,12 @@ class App extends React.Component {
 		const input = event.target.value
 		this.setState({ input })
 		this.keyboard.setInput(input)
+	}
+
+	switchKeyboard = () => {
+		this.setState(prevState => ({
+			multiKeyboardVisible: !prevState.multiKeyboardVisible
+		}))
 	}
 
 	render() {
@@ -2062,6 +2074,7 @@ class App extends React.Component {
 							multiSendInvite={this.multiSendInvite}
 							multiAcceptInvite={this.multiAcceptInvite}
 							multiDeclineInvite={this.multiDeclineInvite}
+							switchKeyboard={this.switchKeyboard}
 							// State
 							multiAvatarId={this.state.multiAvatarId}
 							multiPlayerNick={this.state.multiPlayerNick}
@@ -2076,12 +2089,37 @@ class App extends React.Component {
 							multiTurn={this.state.multiTurn}
 							multiInvitePending={this.state.multiInvitePending}
 						/>
-						<Keyboard
-							keyboardRef={r => (this.keyboard = r)}
-							layoutName={this.state.layoutName}
-							onChange={this.onChange}
-							onKeyPress={this.onKeyPress}
-						/>
+
+						<div
+							id={
+								this.state.multiKeyboardVisible
+									? ""
+									: "keyboardNotVisible"
+							}
+						>
+							<Keyboard
+								keyboardRef={r => (this.keyboard = r)}
+								// layoutName={this.state.layoutName}
+								layout={{
+									default: [
+										"1 2 3 4 5 6 7 8 9 0 {bksp}",
+										"q w e r t y u i o p",
+										"{lock} a s d f g h j k l",
+										"{shift} z x c v b n m",
+										"{enter}"
+									],
+									shift: [
+										"~ ! @ # $ % ^ & * ( ) _ + {bksp}",
+										"{tab} Q W E R T Y U I O P",
+										"{lock} A S D F G H J K L",
+										"{shift} Z X C V B N M",
+										"{enter}"
+									]
+								}}
+								onChange={this.onChange}
+								onKeyPress={this.onKeyPress}
+							/>
+						</div>
 					</div>
 				)}
 
