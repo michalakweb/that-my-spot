@@ -41,6 +41,12 @@ const MultiScreen = props => {
 								onChange={props.changeMultiNick}
 								value={props.multiPlayerNick}
 								maxLength="8"
+								readOnly={true}
+								onClick={() => {
+									console.log(
+										"testing if virtual keyboard can open"
+									)
+								}}
 							/>
 							<button
 								onClick={props.setMultiSpace}
@@ -55,7 +61,6 @@ const MultiScreen = props => {
 							</button>
 						</div>
 					</div>
-					<div id="height_compressor"></div>
 				</div>
 			)}
 
