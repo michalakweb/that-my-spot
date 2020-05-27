@@ -435,6 +435,8 @@ class App extends React.Component {
 			.where("action", "==", null)
 			.where("invited", "==", null)
 			.where("accepted", "==", null)
+			// show only the ones that are less than 10 minutes old
+			.where("timestamp", ">", Date.now() - 600000)
 			.onSnapshot(querySnapshot => {
 				multiUsers = []
 
