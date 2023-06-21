@@ -17,7 +17,7 @@
 		"sass": "^1.56.1"
 	},
 	"scripts": {
-		"start": "npm install -g serve && serve -s build",
+		"start": "yarn install -g serve && serve -s build",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
